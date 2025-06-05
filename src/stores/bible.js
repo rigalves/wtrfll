@@ -1,13 +1,20 @@
 import { defineStore } from "pinia";
 import ntv from "../assets/json/NTV.json";
+import rvr from "../assets/json/RVR1960.json";
 
-const bibleContent = ntv?.bible.b;
+const bibleData = {
+  NTV: ntv?.bible.b,
+  RVR1960: rvr?.bible.b,
+};
+
 const rawVersions = ["RVR1960", "NTV"];
-const rawBooks = [];
+
+// reactive state defaults
 const version = "NTV";
 let bookName = "";
 let chapterNumber = null;
 let verseNumber = null;
+let verseText = "";
 
 export const useBibleStore = defineStore({
   id: "bible",
@@ -15,36 +22,46 @@ export const useBibleStore = defineStore({
     version,
     rawVersions,
     bookName,
-    rawBooks,
     chapterNumber,
     verseNumber,
+    verseText,
   }),
   getters: {
     versions: (state) => state.rawVersions,
     books: (state) => {
-      if (!state.rawBooks || state.rawBooks != {}) {
-        state.rawBooks = bibleContent.map((book) => book._n);
-      }
-      return state.rawBooks;
+      return bibleData[state.version].map((book) => book._n);
     },
   },
   actions: {
     getChapterNumbers() {
-      chapterNumber = null;
-      let bookToSearch = bibleContent.find((book) => book._n === bookName);
-      console.log(bookName);
+      this.chapterNumber = null;
+      const bibleContent = bibleData[this.version];
+      const bookToSearch = bibleContent.find((book) => book._n === this.bookName);
       if (bookToSearch) {
-        chapterNumber = bookToSearch?.c.length;
+        this.chapterNumber = bookToSearch.c.length;
       }
-      return chapterNumber;
+      return this.chapterNumber;
     },
     getVerseNumbers() {
-      verseNumber = null;
-      let bookToSearch = bibleContent.find((book) => book._n === bookName);
-      if (bookToSearch && chapterNumber) {
-        verseNumber = bookToSearch?.c[chapterNumber - 1]?.v.length;
+      this.verseNumber = null;
+      const bibleContent = bibleData[this.version];
+      const bookToSearch = bibleContent.find((book) => book._n === this.bookName);
+      if (bookToSearch && this.chapterNumber) {
+        this.verseNumber = bookToSearch.c[this.chapterNumber - 1]?.v.length;
       }
-      return verseNumber;
+      return this.verseNumber;
+    },
+    updateVerseText() {
+      const bibleContent = bibleData[this.version];
+      const book = bibleContent.find((b) => b._n === this.bookName);
+      let text = "";
+      if (book && this.chapterNumber && this.verseNumber) {
+        const verse = book.c[this.chapterNumber - 1]?.v.find(
+          (v) => v._n === String(this.verseNumber)
+        );
+        text = verse ? verse.__text : "";
+      }
+      this.verseText = text;
     },
   },
 });

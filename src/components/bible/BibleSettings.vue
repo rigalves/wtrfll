@@ -1,5 +1,5 @@
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 //import { mapWritableState } from 'pinia'
 import { useBibleStore } from '../../stores/bible'
 
@@ -13,6 +13,29 @@ export default {
         const books = ref(bible.books)
         const chapters = ref(null)
         const verses = ref(null)
+
+        watch(() => bible.version, () => {
+            books.value = bible.books
+            chapters.value = null
+            verses.value = null
+        })
+
+        watch(() => bible.bookName, () => {
+            if (bible.bookName) {
+                chapters.value = [...Array(bible.getChapterNumbers()).keys()].map(x => x + 1)
+            } else {
+                chapters.value = null
+            }
+            verses.value = null
+        })
+
+        watch(() => bible.chapterNumber, () => {
+            if (bible.chapterNumber) {
+                verses.value = [...Array(bible.getVerseNumbers()).keys()].map(x => x + 1)
+            } else {
+                verses.value = null
+            }
+        })
 
         return {
             bible,
@@ -36,6 +59,9 @@ export default {
             },
             filterVerses() {
                 verses.value = [...Array(bible.getVerseNumbers()).keys()].map(x => x + 1)
+            },
+            onSubmit() {
+                bible.updateVerseText()
             }
         }
     }

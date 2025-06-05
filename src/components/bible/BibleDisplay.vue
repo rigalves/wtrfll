@@ -1,16 +1,16 @@
 <script>
-    import { ref } from 'vue'
-    
-    export default {
-        setup() {
-    
-            return {
-                verse: ref(null)
-            }
-        }
-    }
-    </script>
-        
-    <template>
-        test
-    </template>
+import { computed } from 'vue'
+import { useBibleStore } from '../../stores/bible'
+
+export default {
+  setup() {
+    const bible = useBibleStore()
+    const verse = computed(() => bible.verseText)
+    return { verse }
+  }
+}
+</script>
+
+<template>
+  <div>{{ verse }}</div>
+</template>

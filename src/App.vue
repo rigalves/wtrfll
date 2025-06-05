@@ -128,7 +128,7 @@
             </q-card-section>
 
             <q-card-section class="q-pt-none">
-              {{ 2 }}
+              <BibleDisplay />
             </q-card-section>
           </q-card>
         </div>
@@ -159,11 +159,13 @@
 
 <script>
 import BibleSettings from './components/bible/BibleSettings.vue'
+import BibleDisplay from './components/bible/BibleDisplay.vue'
 import { ref } from 'vue'
 
 export default {
   components: {
-    BibleSettings
+    BibleSettings,
+    BibleDisplay
   },
 
   setup() {
