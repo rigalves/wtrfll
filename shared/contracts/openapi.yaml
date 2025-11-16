@@ -1,0 +1,261 @@
+openapi: 3.0.3
+info:
+  title: wtrfll API
+  description: REST API for sessions, bibles, and passage retrieval.
+  version: 0.1.0
+  x-contractVersion: 2
+servers:
+  - url: http://localhost:5000
+    description: LAN default (server hosts API + static web)
+paths:
+  /api/sessions:
+    post:
+      summary: Create a new session
+      operationId: createSession
+      responses:
+        '201':
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionCreated'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /api/sessions/{id}/join:
+    post:
+      summary: Join an existing session
+      operationId: joinSession
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinRequest'
+      responses:
+        '200':
+          description: Joined session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinResult'
+        '409':
+          description: Controller already locked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JoinResult'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/bibles:
+    get:
+      summary: List available translations
+      operationId: listBibles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bible'
+  /api/bible-books:
+    get:
+      summary: List normalized bible book metadata
+      operationId: listBibleBooks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BibleBookMetadata'
+  /api/passage:
+    get:
+      summary: Retrieve a passage by reference and translation
+      operationId: getPassage
+      parameters:
+        - name: ref
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Scripture reference (e.g., 'Jn 3:16-18')
+        - name: translation
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Translation code (e.g., 'RVR1960', 'NTV')
+      responses:
+        '200':
+          description: Passage result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PassageResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+    SessionCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        shortCode:
+          type: string
+        controllerJoinToken:
+          type: string
+        displayJoinToken:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required: [id, shortCode, controllerJoinToken, displayJoinToken, createdAt]
+    JoinRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [controller, display]
+        joinToken:
+          type: string
+      required: [role, joinToken]
+    JoinResult:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        controllerLocked:
+          type: boolean
+        message:
+          type: string
+        sessionId:
+          type: string
+          format: uuid
+        shortCode:
+          type: string
+        role:
+          type: string
+          enum: [controller, display]
+      required: [ok, controllerLocked, sessionId, shortCode, role]
+    Bible:
+      type: object
+      properties:
+        code:
+          type: string
+          example: RVR1960
+        name:
+          type: string
+          example: Reina-Valera 1960
+        language:
+          type: string
+          example: es
+        provider:
+          type: string
+          example: external:RVR1960Provider
+        cachePolicy:
+          type: string
+          example: no-store
+        license:
+          type: string
+        version:
+          type: string
+      required: [code, name, language, provider]
+    BibleBookMetadata:
+      type: object
+      properties:
+        id:
+          type: string
+        englishDisplayName:
+          type: string
+        spanishDisplayName:
+          type: string
+        slug:
+          type: string
+        ordinal:
+          type: integer
+          nullable: true
+        aliases:
+          type: array
+          items:
+            type: string
+      required: [id, englishDisplayName, spanishDisplayName, slug, aliases]
+    PassageResult:
+      type: object
+      properties:
+        reference:
+          type: string
+          example: Juan 3:16-18
+        translation:
+          type: string
+          example: RVR1960
+        verses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Verse'
+        attribution:
+          $ref: '#/components/schemas/Attribution'
+        cachePolicy:
+          type: string
+          example: no-store
+      required: [reference, translation, verses]
+    Verse:
+      type: object
+      properties:
+        book:
+          type: string
+          example: Juan
+        chapter:
+          type: integer
+          example: 3
+        verse:
+          type: integer
+          example: 16
+        text:
+          type: string
+      required: [book, chapter, verse, text]
+    Attribution:
+      type: object
+      properties:
+        required:
+          type: boolean
+        text:
+          type: string
+        url:
+          type: string
+      required: [required]

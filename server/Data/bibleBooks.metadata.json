@@ -1,0 +1,1284 @@
+﻿[
+  {
+    "id": "GEN",
+    "englishDisplayName": "Genesis",
+    "spanishDisplayName": "Genesis",
+    "slug": "genesis",
+    "aliases": [
+      "genesis",
+      "gen",
+      "gn"
+    ]
+  },
+  {
+    "id": "EXO",
+    "englishDisplayName": "Exodus",
+    "spanishDisplayName": "Exodo",
+    "slug": "exodus",
+    "aliases": [
+      "exodus",
+      "exodo",
+      "exo",
+      "ex",
+      "exod"
+    ]
+  },
+  {
+    "id": "LEV",
+    "englishDisplayName": "Leviticus",
+    "spanishDisplayName": "Levitico",
+    "slug": "leviticus",
+    "aliases": [
+      "leviticus",
+      "levitico",
+      "lev",
+      "lv",
+      "levit"
+    ]
+  },
+  {
+    "id": "NUM",
+    "englishDisplayName": "Numbers",
+    "spanishDisplayName": "Numeros",
+    "slug": "numbers",
+    "aliases": [
+      "numbers",
+      "numeros",
+      "num",
+      "nm",
+      "nu"
+    ]
+  },
+  {
+    "id": "DEU",
+    "englishDisplayName": "Deuteronomy",
+    "spanishDisplayName": "Deuteronomio",
+    "slug": "deuteronomy",
+    "aliases": [
+      "deuteronomy",
+      "deuteronomio",
+      "deu",
+      "deut",
+      "dt"
+    ]
+  },
+  {
+    "id": "JOS",
+    "englishDisplayName": "Joshua",
+    "spanishDisplayName": "Josue",
+    "slug": "joshua",
+    "aliases": [
+      "joshua",
+      "josue",
+      "jos",
+      "js"
+    ]
+  },
+  {
+    "id": "JDG",
+    "englishDisplayName": "Judges",
+    "spanishDisplayName": "Jueces",
+    "slug": "judges",
+    "aliases": [
+      "judges",
+      "jueces",
+      "jdg",
+      "jue",
+      "judg"
+    ]
+  },
+  {
+    "id": "RUT",
+    "englishDisplayName": "Ruth",
+    "spanishDisplayName": "Rut",
+    "slug": "ruth",
+    "aliases": [
+      "ruth",
+      "rut",
+      "rth"
+    ]
+  },
+  {
+    "id": "1SA",
+    "englishDisplayName": "1 Samuel",
+    "spanishDisplayName": "1 Samuel",
+    "slug": "1samuel",
+    "ordinal": 1,
+    "aliases": [
+      "samuel",
+      "1samuel",
+      "sam",
+      "sa",
+      "1sam",
+      "1sa",
+      "1stsamuel",
+      "1stsam",
+      "1stsa",
+      "firstsamuel",
+      "firstsam",
+      "firstsa",
+      "1rasamuel",
+      "1rasam",
+      "1rasa",
+      "1asamuel",
+      "1asam",
+      "1asa",
+      "primerasamuel",
+      "primerasam",
+      "primerasa",
+      "primersamuel",
+      "primersam",
+      "primersa"
+    ]
+  },
+  {
+    "id": "2SA",
+    "englishDisplayName": "2 Samuel",
+    "spanishDisplayName": "2 Samuel",
+    "slug": "2samuel",
+    "ordinal": 2,
+    "aliases": [
+      "samuel",
+      "2samuel",
+      "sam",
+      "sa",
+      "2sam",
+      "2sa",
+      "2ndsamuel",
+      "2ndsam",
+      "2ndsa",
+      "secondsamuel",
+      "secondsam",
+      "secondsa",
+      "2dasamuel",
+      "2dasam",
+      "2dasa",
+      "2asamuel",
+      "2asam",
+      "2asa",
+      "segundasamuel",
+      "segundasam",
+      "segundasa",
+      "segundosamuel",
+      "segundosam",
+      "segundosa"
+    ]
+  },
+  {
+    "id": "1KI",
+    "englishDisplayName": "1 Kings",
+    "spanishDisplayName": "1 Reyes",
+    "slug": "1kings",
+    "ordinal": 1,
+    "aliases": [
+      "kings",
+      "reyes",
+      "1kings",
+      "1reyes",
+      "ki",
+      "kg",
+      "rei",
+      "rey",
+      "1ki",
+      "1kg",
+      "1rei",
+      "1rey",
+      "1stkings",
+      "1stki",
+      "1stkg",
+      "1strei",
+      "1strey",
+      "firstkings",
+      "firstki",
+      "firstkg",
+      "firstrei",
+      "firstrey",
+      "1rareyes",
+      "1raki",
+      "1rakg",
+      "1rarei",
+      "1rarey",
+      "1areyes",
+      "1aki",
+      "1akg",
+      "1arei",
+      "1arey",
+      "primerareyes",
+      "primeraki",
+      "primerakg",
+      "primerarei",
+      "primerarey",
+      "primerreyes",
+      "primerki",
+      "primerkg",
+      "primerrei",
+      "primerrey"
+    ]
+  },
+  {
+    "id": "2KI",
+    "englishDisplayName": "2 Kings",
+    "spanishDisplayName": "2 Reyes",
+    "slug": "2kings",
+    "ordinal": 2,
+    "aliases": [
+      "kings",
+      "reyes",
+      "2kings",
+      "2reyes",
+      "ki",
+      "kg",
+      "rei",
+      "rey",
+      "2ki",
+      "2kg",
+      "2rei",
+      "2rey",
+      "2ndkings",
+      "2ndki",
+      "2ndkg",
+      "2ndrei",
+      "2ndrey",
+      "secondkings",
+      "secondki",
+      "secondkg",
+      "secondrei",
+      "secondrey",
+      "2dareyes",
+      "2daki",
+      "2dakg",
+      "2darei",
+      "2darey",
+      "2areyes",
+      "2aki",
+      "2akg",
+      "2arei",
+      "2arey",
+      "segundareyes",
+      "segundaki",
+      "segundakg",
+      "segundarei",
+      "segundarey",
+      "segundoreyes",
+      "segundoki",
+      "segundokg",
+      "segundorei",
+      "segundorey"
+    ]
+  },
+  {
+    "id": "1CH",
+    "englishDisplayName": "1 Chronicles",
+    "spanishDisplayName": "1 Cronicas",
+    "slug": "1chronicles",
+    "ordinal": 1,
+    "aliases": [
+      "chronicles",
+      "cronicas",
+      "1chronicles",
+      "1cronicas",
+      "chr",
+      "cro",
+      "cron",
+      "1chr",
+      "1cro",
+      "1cron",
+      "1stchronicles",
+      "1stchr",
+      "1stcro",
+      "1stcron",
+      "firstchronicles",
+      "firstchr",
+      "firstcro",
+      "firstcron",
+      "1racronicas",
+      "1rachr",
+      "1racro",
+      "1racron",
+      "1acronicas",
+      "1achr",
+      "1acro",
+      "1acron",
+      "primeracronicas",
+      "primerachr",
+      "primeracro",
+      "primeracron",
+      "primercronicas",
+      "primerchr",
+      "primercro",
+      "primercron"
+    ]
+  },
+  {
+    "id": "2CH",
+    "englishDisplayName": "2 Chronicles",
+    "spanishDisplayName": "2 Cronicas",
+    "slug": "2chronicles",
+    "ordinal": 2,
+    "aliases": [
+      "chronicles",
+      "cronicas",
+      "2chronicles",
+      "2cronicas",
+      "chr",
+      "cro",
+      "cron",
+      "2chr",
+      "2cro",
+      "2cron",
+      "2ndchronicles",
+      "2ndchr",
+      "2ndcro",
+      "2ndcron",
+      "secondchronicles",
+      "secondchr",
+      "secondcro",
+      "secondcron",
+      "2dacronicas",
+      "2dachr",
+      "2dacro",
+      "2dacron",
+      "2acronicas",
+      "2achr",
+      "2acro",
+      "2acron",
+      "segundacronicas",
+      "segundachr",
+      "segundacro",
+      "segundacron",
+      "segundocronicas",
+      "segundochr",
+      "segundocro",
+      "segundocron"
+    ]
+  },
+  {
+    "id": "EZR",
+    "englishDisplayName": "Ezra",
+    "spanishDisplayName": "Esdras",
+    "slug": "ezra",
+    "aliases": [
+      "ezra",
+      "esdras",
+      "ezr",
+      "esd"
+    ]
+  },
+  {
+    "id": "NEH",
+    "englishDisplayName": "Nehemiah",
+    "spanishDisplayName": "Nehemias",
+    "slug": "nehemiah",
+    "aliases": [
+      "nehemiah",
+      "nehemias",
+      "neh",
+      "ne"
+    ]
+  },
+  {
+    "id": "EST",
+    "englishDisplayName": "Esther",
+    "spanishDisplayName": "Ester",
+    "slug": "esther",
+    "aliases": [
+      "esther",
+      "ester",
+      "est",
+      "es"
+    ]
+  },
+  {
+    "id": "JOB",
+    "englishDisplayName": "Job",
+    "spanishDisplayName": "Job",
+    "slug": "job",
+    "aliases": [
+      "job"
+    ]
+  },
+  {
+    "id": "PSA",
+    "englishDisplayName": "Psalms",
+    "spanishDisplayName": "Salmos",
+    "slug": "psalms",
+    "aliases": [
+      "psalms",
+      "salmos",
+      "ps",
+      "psa",
+      "psalm",
+      "pslm",
+      "sal",
+      "salmo"
+    ]
+  },
+  {
+    "id": "PRO",
+    "englishDisplayName": "Proverbs",
+    "spanishDisplayName": "Proverbios",
+    "slug": "proverbs",
+    "aliases": [
+      "proverbs",
+      "proverbios",
+      "prov",
+      "pro",
+      "pr"
+    ]
+  },
+  {
+    "id": "ECC",
+    "englishDisplayName": "Ecclesiastes",
+    "spanishDisplayName": "Eclesiastes",
+    "slug": "ecclesiastes",
+    "aliases": [
+      "ecclesiastes",
+      "eclesiastes",
+      "eccl",
+      "ecc",
+      "ecl",
+      "qohelet",
+      "qoh"
+    ]
+  },
+  {
+    "id": "SNG",
+    "englishDisplayName": "Song of Songs",
+    "spanishDisplayName": "Cantares",
+    "slug": "songofsongs",
+    "aliases": [
+      "songofsongs",
+      "cantares",
+      "sos",
+      "song",
+      "cant",
+      "cnt",
+      "songofsolomon",
+      "canticles",
+      "cantardeloscantares"
+    ]
+  },
+  {
+    "id": "ISA",
+    "englishDisplayName": "Isaiah",
+    "spanishDisplayName": "Isaias",
+    "slug": "isaiah",
+    "aliases": [
+      "isaiah",
+      "isaias",
+      "isa",
+      "is"
+    ]
+  },
+  {
+    "id": "JER",
+    "englishDisplayName": "Jeremiah",
+    "spanishDisplayName": "Jeremias",
+    "slug": "jeremiah",
+    "aliases": [
+      "jeremiah",
+      "jeremias",
+      "jer",
+      "je"
+    ]
+  },
+  {
+    "id": "LAM",
+    "englishDisplayName": "Lamentations",
+    "spanishDisplayName": "Lamentaciones",
+    "slug": "lamentations",
+    "aliases": [
+      "lamentations",
+      "lamentaciones",
+      "lam",
+      "lament"
+    ]
+  },
+  {
+    "id": "EZK",
+    "englishDisplayName": "Ezekiel",
+    "spanishDisplayName": "Ezequiel",
+    "slug": "ezekiel",
+    "aliases": [
+      "ezekiel",
+      "ezequiel",
+      "ezek",
+      "ezk",
+      "eze"
+    ]
+  },
+  {
+    "id": "DAN",
+    "englishDisplayName": "Daniel",
+    "spanishDisplayName": "Daniel",
+    "slug": "daniel",
+    "aliases": [
+      "daniel",
+      "dan",
+      "dn"
+    ]
+  },
+  {
+    "id": "HOS",
+    "englishDisplayName": "Hosea",
+    "spanishDisplayName": "Oseas",
+    "slug": "hosea",
+    "aliases": [
+      "hosea",
+      "oseas",
+      "hos",
+      "ose"
+    ]
+  },
+  {
+    "id": "JOL",
+    "englishDisplayName": "Joel",
+    "spanishDisplayName": "Joel",
+    "slug": "joel",
+    "aliases": [
+      "joel",
+      "joe",
+      "jl"
+    ]
+  },
+  {
+    "id": "AMO",
+    "englishDisplayName": "Amos",
+    "spanishDisplayName": "Amos",
+    "slug": "amos",
+    "aliases": [
+      "amos",
+      "amo",
+      "am"
+    ]
+  },
+  {
+    "id": "OBA",
+    "englishDisplayName": "Obadiah",
+    "spanishDisplayName": "Abdias",
+    "slug": "obadiah",
+    "aliases": [
+      "obadiah",
+      "abdias",
+      "oba",
+      "abd"
+    ]
+  },
+  {
+    "id": "JON",
+    "englishDisplayName": "Jonah",
+    "spanishDisplayName": "Jonas",
+    "slug": "jonah",
+    "aliases": [
+      "jonah",
+      "jonas",
+      "jon"
+    ]
+  },
+  {
+    "id": "MIC",
+    "englishDisplayName": "Micah",
+    "spanishDisplayName": "Miqueas",
+    "slug": "micah",
+    "aliases": [
+      "micah",
+      "miqueas",
+      "mic",
+      "miq"
+    ]
+  },
+  {
+    "id": "NAM",
+    "englishDisplayName": "Nahum",
+    "spanishDisplayName": "Nahum",
+    "slug": "nahum",
+    "aliases": [
+      "nahum",
+      "nah",
+      "na"
+    ]
+  },
+  {
+    "id": "HAB",
+    "englishDisplayName": "Habakkuk",
+    "spanishDisplayName": "Habacuc",
+    "slug": "habakkuk",
+    "aliases": [
+      "habakkuk",
+      "habacuc",
+      "hab",
+      "hbk"
+    ]
+  },
+  {
+    "id": "ZEP",
+    "englishDisplayName": "Zephaniah",
+    "spanishDisplayName": "Sofonias",
+    "slug": "zephaniah",
+    "aliases": [
+      "zephaniah",
+      "sofonias",
+      "zep",
+      "sof",
+      "sofo"
+    ]
+  },
+  {
+    "id": "HAG",
+    "englishDisplayName": "Haggai",
+    "spanishDisplayName": "Hageo",
+    "slug": "haggai",
+    "aliases": [
+      "haggai",
+      "hageo",
+      "hag",
+      "hg"
+    ]
+  },
+  {
+    "id": "ZEC",
+    "englishDisplayName": "Zechariah",
+    "spanishDisplayName": "Zacarias",
+    "slug": "zechariah",
+    "aliases": [
+      "zechariah",
+      "zacarias",
+      "zec",
+      "zac"
+    ]
+  },
+  {
+    "id": "MAL",
+    "englishDisplayName": "Malachi",
+    "spanishDisplayName": "Malaquias",
+    "slug": "malachi",
+    "aliases": [
+      "malachi",
+      "malaquias",
+      "mal",
+      "mla"
+    ]
+  },
+  {
+    "id": "MAT",
+    "englishDisplayName": "Matthew",
+    "spanishDisplayName": "Mateo",
+    "slug": "matthew",
+    "aliases": [
+      "matthew",
+      "mateo",
+      "mat",
+      "mt",
+      "mate"
+    ]
+  },
+  {
+    "id": "MRK",
+    "englishDisplayName": "Mark",
+    "spanishDisplayName": "Marcos",
+    "slug": "mark",
+    "aliases": [
+      "mark",
+      "marcos",
+      "mrk",
+      "mk",
+      "mar"
+    ]
+  },
+  {
+    "id": "LUK",
+    "englishDisplayName": "Luke",
+    "spanishDisplayName": "Lucas",
+    "slug": "luke",
+    "aliases": [
+      "luke",
+      "lucas",
+      "luk",
+      "lk",
+      "luc"
+    ]
+  },
+  {
+    "id": "JHN",
+    "englishDisplayName": "John",
+    "spanishDisplayName": "Juan",
+    "slug": "john",
+    "aliases": [
+      "john",
+      "juan",
+      "jn",
+      "jhn"
+    ]
+  },
+  {
+    "id": "ACT",
+    "englishDisplayName": "Acts",
+    "spanishDisplayName": "Hechos",
+    "slug": "acts",
+    "aliases": [
+      "acts",
+      "hechos",
+      "act",
+      "he"
+    ]
+  },
+  {
+    "id": "ROM",
+    "englishDisplayName": "Romans",
+    "spanishDisplayName": "Romanos",
+    "slug": "romans",
+    "aliases": [
+      "romans",
+      "romanos",
+      "rom",
+      "ro"
+    ]
+  },
+  {
+    "id": "1CO",
+    "englishDisplayName": "1 Corinthians",
+    "spanishDisplayName": "1 Corintios",
+    "slug": "1corinthians",
+    "ordinal": 1,
+    "aliases": [
+      "corinthians",
+      "corintios",
+      "1corinthians",
+      "1corintios",
+      "cor",
+      "co",
+      "1cor",
+      "1co",
+      "1stcorinthians",
+      "1stcor",
+      "1stco",
+      "firstcorinthians",
+      "firstcor",
+      "firstco",
+      "1racorintios",
+      "1racor",
+      "1raco",
+      "1acorintios",
+      "1acor",
+      "1aco",
+      "primeracorintios",
+      "primeracor",
+      "primeraco",
+      "primercorintios",
+      "primercor",
+      "primerco"
+    ]
+  },
+  {
+    "id": "2CO",
+    "englishDisplayName": "2 Corinthians",
+    "spanishDisplayName": "2 Corintios",
+    "slug": "2corinthians",
+    "ordinal": 2,
+    "aliases": [
+      "corinthians",
+      "corintios",
+      "2corinthians",
+      "2corintios",
+      "cor",
+      "co",
+      "2cor",
+      "2co",
+      "2ndcorinthians",
+      "2ndcor",
+      "2ndco",
+      "secondcorinthians",
+      "secondcor",
+      "secondco",
+      "2dacorintios",
+      "2dacor",
+      "2daco",
+      "2acorintios",
+      "2acor",
+      "2aco",
+      "segundacorintios",
+      "segundacor",
+      "segundaco",
+      "segundocorintios",
+      "segundocor",
+      "segundoco"
+    ]
+  },
+  {
+    "id": "GAL",
+    "englishDisplayName": "Galatians",
+    "spanishDisplayName": "Galatas",
+    "slug": "galatians",
+    "aliases": [
+      "galatians",
+      "galatas",
+      "gal",
+      "ga"
+    ]
+  },
+  {
+    "id": "EPH",
+    "englishDisplayName": "Ephesians",
+    "spanishDisplayName": "Efesios",
+    "slug": "ephesians",
+    "aliases": [
+      "ephesians",
+      "efesios",
+      "eph",
+      "ef",
+      "ephs"
+    ]
+  },
+  {
+    "id": "PHP",
+    "englishDisplayName": "Philippians",
+    "spanishDisplayName": "Filipenses",
+    "slug": "philippians",
+    "aliases": [
+      "philippians",
+      "filipenses",
+      "php",
+      "phil",
+      "fil"
+    ]
+  },
+  {
+    "id": "COL",
+    "englishDisplayName": "Colossians",
+    "spanishDisplayName": "Colosenses",
+    "slug": "colossians",
+    "aliases": [
+      "colossians",
+      "colosenses",
+      "col",
+      "colo",
+      "colos"
+    ]
+  },
+  {
+    "id": "1TH",
+    "englishDisplayName": "1 Thessalonians",
+    "spanishDisplayName": "1 Tesalonicenses",
+    "slug": "1thessalonians",
+    "ordinal": 1,
+    "aliases": [
+      "thessalonians",
+      "tesalonicenses",
+      "1thessalonians",
+      "1tesalonicenses",
+      "th",
+      "thes",
+      "tes",
+      "1th",
+      "1thes",
+      "1tes",
+      "1stthessalonians",
+      "1stth",
+      "1stthes",
+      "1sttes",
+      "firstthessalonians",
+      "firstth",
+      "firstthes",
+      "firsttes",
+      "1ratesalonicenses",
+      "1rath",
+      "1rathes",
+      "1rates",
+      "1atesalonicenses",
+      "1ath",
+      "1athes",
+      "1ates",
+      "primeratesalonicenses",
+      "primerath",
+      "primerathes",
+      "primerates",
+      "primertesalonicenses",
+      "primerth",
+      "primerthes",
+      "primertes"
+    ]
+  },
+  {
+    "id": "2TH",
+    "englishDisplayName": "2 Thessalonians",
+    "spanishDisplayName": "2 Tesalonicenses",
+    "slug": "2thessalonians",
+    "ordinal": 2,
+    "aliases": [
+      "thessalonians",
+      "tesalonicenses",
+      "2thessalonians",
+      "2tesalonicenses",
+      "th",
+      "thes",
+      "tes",
+      "2th",
+      "2thes",
+      "2tes",
+      "2ndthessalonians",
+      "2ndth",
+      "2ndthes",
+      "2ndtes",
+      "secondthessalonians",
+      "secondth",
+      "secondthes",
+      "secondtes",
+      "2datesalonicenses",
+      "2dath",
+      "2dathes",
+      "2dates",
+      "2atesalonicenses",
+      "2ath",
+      "2athes",
+      "2ates",
+      "segundatesalonicenses",
+      "segundath",
+      "segundathes",
+      "segundates",
+      "segundotesalonicenses",
+      "segundoth",
+      "segundothes",
+      "segundotes"
+    ]
+  },
+  {
+    "id": "1TI",
+    "englishDisplayName": "1 Timothy",
+    "spanishDisplayName": "1 Timoteo",
+    "slug": "1timothy",
+    "ordinal": 1,
+    "aliases": [
+      "timothy",
+      "timoteo",
+      "1timothy",
+      "1timoteo",
+      "tim",
+      "ti",
+      "1tim",
+      "1ti",
+      "1sttimothy",
+      "1sttim",
+      "1stti",
+      "firsttimothy",
+      "firsttim",
+      "firstti",
+      "1ratimoteo",
+      "1ratim",
+      "1rati",
+      "1atimoteo",
+      "1atim",
+      "1ati",
+      "primeratimoteo",
+      "primeratim",
+      "primerati",
+      "primertimoteo",
+      "primertim",
+      "primerti"
+    ]
+  },
+  {
+    "id": "2TI",
+    "englishDisplayName": "2 Timothy",
+    "spanishDisplayName": "2 Timoteo",
+    "slug": "2timothy",
+    "ordinal": 2,
+    "aliases": [
+      "timothy",
+      "timoteo",
+      "2timothy",
+      "2timoteo",
+      "tim",
+      "ti",
+      "2tim",
+      "2ti",
+      "2ndtimothy",
+      "2ndtim",
+      "2ndti",
+      "secondtimothy",
+      "secondtim",
+      "secondti",
+      "2datimoteo",
+      "2datim",
+      "2dati",
+      "2atimoteo",
+      "2atim",
+      "2ati",
+      "segundatimoteo",
+      "segundatim",
+      "segundati",
+      "segundotimoteo",
+      "segundotim",
+      "segundoti"
+    ]
+  },
+  {
+    "id": "TIT",
+    "englishDisplayName": "Titus",
+    "spanishDisplayName": "Tito",
+    "slug": "titus",
+    "aliases": [
+      "titus",
+      "tito",
+      "tit",
+      "ti"
+    ]
+  },
+  {
+    "id": "PHM",
+    "englishDisplayName": "Philemon",
+    "spanishDisplayName": "Filemon",
+    "slug": "philemon",
+    "aliases": [
+      "philemon",
+      "filemon",
+      "phm",
+      "flm",
+      "filem"
+    ]
+  },
+  {
+    "id": "HEB",
+    "englishDisplayName": "Hebrews",
+    "spanishDisplayName": "Hebreos",
+    "slug": "hebrews",
+    "aliases": [
+      "hebrews",
+      "hebreos",
+      "heb",
+      "hb"
+    ]
+  },
+  {
+    "id": "JAS",
+    "englishDisplayName": "James",
+    "spanishDisplayName": "Santiago",
+    "slug": "james",
+    "aliases": [
+      "james",
+      "santiago",
+      "jas",
+      "jam",
+      "stgo",
+      "sant"
+    ]
+  },
+  {
+    "id": "1PE",
+    "englishDisplayName": "1 Peter",
+    "spanishDisplayName": "1 Pedro",
+    "slug": "1peter",
+    "ordinal": 1,
+    "aliases": [
+      "peter",
+      "pedro",
+      "1peter",
+      "1pedro",
+      "pet",
+      "pe",
+      "1pet",
+      "1pe",
+      "1stpeter",
+      "1stpet",
+      "1stpe",
+      "firstpeter",
+      "firstpet",
+      "firstpe",
+      "1rapedro",
+      "1rapet",
+      "1rape",
+      "1apedro",
+      "1apet",
+      "1ape",
+      "primerapedro",
+      "primerapet",
+      "primerape",
+      "primerpedro",
+      "primerpet",
+      "primerpe"
+    ]
+  },
+  {
+    "id": "2PE",
+    "englishDisplayName": "2 Peter",
+    "spanishDisplayName": "2 Pedro",
+    "slug": "2peter",
+    "ordinal": 2,
+    "aliases": [
+      "peter",
+      "pedro",
+      "2peter",
+      "2pedro",
+      "pet",
+      "pe",
+      "2pet",
+      "2pe",
+      "2ndpeter",
+      "2ndpet",
+      "2ndpe",
+      "secondpeter",
+      "secondpet",
+      "secondpe",
+      "2dapedro",
+      "2dapet",
+      "2dape",
+      "2apedro",
+      "2apet",
+      "2ape",
+      "segundapedro",
+      "segundapet",
+      "segundape",
+      "segundopedro",
+      "segundopet",
+      "segundope"
+    ]
+  },
+  {
+    "id": "1JN",
+    "englishDisplayName": "1 John",
+    "spanishDisplayName": "1 Juan",
+    "slug": "1john",
+    "ordinal": 1,
+    "aliases": [
+      "john",
+      "juan",
+      "1john",
+      "1juan",
+      "jn",
+      "jhn",
+      "1jn",
+      "1jhn",
+      "1stjohn",
+      "1stjn",
+      "1stjhn",
+      "1stjuan",
+      "firstjohn",
+      "firstjn",
+      "firstjhn",
+      "firstjuan",
+      "1rajuan",
+      "1rajohn",
+      "1rajn",
+      "1rajhn",
+      "1ajuan",
+      "1ajohn",
+      "1ajn",
+      "1ajhn",
+      "primerajuan",
+      "primerajohn",
+      "primerajn",
+      "primerajhn",
+      "primerjuan",
+      "primerjohn",
+      "primerjn",
+      "primerjhn"
+    ]
+  },
+  {
+    "id": "2JN",
+    "englishDisplayName": "2 John",
+    "spanishDisplayName": "2 Juan",
+    "slug": "2john",
+    "ordinal": 2,
+    "aliases": [
+      "john",
+      "juan",
+      "2john",
+      "2juan",
+      "jn",
+      "jhn",
+      "2jn",
+      "2jhn",
+      "2ndjohn",
+      "2ndjn",
+      "2ndjhn",
+      "2ndjuan",
+      "secondjohn",
+      "secondjn",
+      "secondjhn",
+      "secondjuan",
+      "2dajuan",
+      "2dajohn",
+      "2dajn",
+      "2dajhn",
+      "2ajuan",
+      "2ajohn",
+      "2ajn",
+      "2ajhn",
+      "segundajuan",
+      "segundajohn",
+      "segundajn",
+      "segundajhn",
+      "segundojuan",
+      "segundojohn",
+      "segundojn",
+      "segundojhn"
+    ]
+  },
+  {
+    "id": "3JN",
+    "englishDisplayName": "3 John",
+    "spanishDisplayName": "3 Juan",
+    "slug": "3john",
+    "ordinal": 3,
+    "aliases": [
+      "john",
+      "juan",
+      "3john",
+      "3juan",
+      "jn",
+      "jhn",
+      "3jn",
+      "3jhn",
+      "3rdjohn",
+      "3rdjn",
+      "3rdjhn",
+      "3rdjuan",
+      "thirdjohn",
+      "thirdjn",
+      "thirdjhn",
+      "thirdjuan",
+      "3rajuan",
+      "3rajohn",
+      "3rajn",
+      "3rajhn",
+      "3ajuan",
+      "3ajohn",
+      "3ajn",
+      "3ajhn",
+      "tercerajuan",
+      "tercerajohn",
+      "tercerajn",
+      "tercerajhn",
+      "tercerjuan",
+      "tercerjohn",
+      "tercerjn",
+      "tercerjhn"
+    ]
+  },
+  {
+    "id": "JUD",
+    "englishDisplayName": "Jude",
+    "spanishDisplayName": "Judas",
+    "slug": "jude",
+    "aliases": [
+      "jude",
+      "judas",
+      "jud"
+    ]
+  },
+  {
+    "id": "REV",
+    "englishDisplayName": "Revelation",
+    "spanishDisplayName": "Apocalipsis",
+    "slug": "revelation",
+    "aliases": [
+      "revelation",
+      "apocalipsis",
+      "rev",
+      "revel",
+      "apo",
+      "apoc"
+    ]
+  }
+]
+

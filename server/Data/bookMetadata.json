@@ -1,0 +1,1184 @@
+﻿{
+    "books":  [
+                  {
+                      "id":  "GEN",
+                      "order":  1,
+                      "titles":  {
+                                     "en":  "Genesis",
+                                     "es":  "Génesis"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Genesis",
+                                                 "Gen"
+                                             ],
+                                      "es":  [
+                                                 "Génesis",
+                                                 "Gen"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "EXO",
+                      "order":  2,
+                      "titles":  {
+                                     "en":  "Exodus",
+                                     "es":  "Éxodo"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Exodus",
+                                                 "Exo"
+                                             ],
+                                      "es":  [
+                                                 "Éxodo",
+                                                 "Exo"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "LEV",
+                      "order":  3,
+                      "titles":  {
+                                     "en":  "Leviticus",
+                                     "es":  "Levítico"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Leviticus",
+                                                 "Lev"
+                                             ],
+                                      "es":  [
+                                                 "Levítico",
+                                                 "Lev"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "NUM",
+                      "order":  4,
+                      "titles":  {
+                                     "en":  "Numbers",
+                                     "es":  "Números"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Numbers",
+                                                 "Num"
+                                             ],
+                                      "es":  [
+                                                 "Números",
+                                                 "Num"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "DEU",
+                      "order":  5,
+                      "titles":  {
+                                     "en":  "Deuteronomy",
+                                     "es":  "Deuteronomio"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Deuteronomy",
+                                                 "Deut",
+                                                 "Deu"
+                                             ],
+                                      "es":  [
+                                                 "Deuteronomio",
+                                                 "Deut",
+                                                 "Deu"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JOS",
+                      "order":  6,
+                      "titles":  {
+                                     "en":  "Joshua",
+                                     "es":  "Josué"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Joshua",
+                                                 "Josh"
+                                             ],
+                                      "es":  [
+                                                 "Josué",
+                                                 "Jos"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JDG",
+                      "order":  7,
+                      "titles":  {
+                                     "en":  "Judges",
+                                     "es":  "Jueces"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Judges",
+                                                 "Judg"
+                                             ],
+                                      "es":  [
+                                                 "Jueces",
+                                                 "Jue"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "RUT",
+                      "order":  8,
+                      "titles":  {
+                                     "en":  "Ruth",
+                                     "es":  "Rut"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Ruth",
+                                                 "Rut"
+                                             ],
+                                      "es":  [
+                                                 "Rut"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1SA",
+                      "order":  9,
+                      "titles":  {
+                                     "en":  "1 Samuel",
+                                     "es":  "1 Samuel"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Samuel",
+                                                 "1Sam"
+                                             ],
+                                      "es":  [
+                                                 "1 Samuel",
+                                                 "1Sam"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2SA",
+                      "order":  10,
+                      "titles":  {
+                                     "en":  "2 Samuel",
+                                     "es":  "2 Samuel"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Samuel",
+                                                 "2Sam"
+                                             ],
+                                      "es":  [
+                                                 "2 Samuel",
+                                                 "2Sam"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1KI",
+                      "order":  11,
+                      "titles":  {
+                                     "en":  "1 Kings",
+                                     "es":  "1 Reyes"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Kings",
+                                                 "1Kgs"
+                                             ],
+                                      "es":  [
+                                                 "1 Reyes",
+                                                 "1Reyes"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2KI",
+                      "order":  12,
+                      "titles":  {
+                                     "en":  "2 Kings",
+                                     "es":  "2 Reyes"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Kings",
+                                                 "2Kgs"
+                                             ],
+                                      "es":  [
+                                                 "2 Reyes",
+                                                 "2Reyes"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1CH",
+                      "order":  13,
+                      "titles":  {
+                                     "en":  "1 Chronicles",
+                                     "es":  "1 Crónicas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Chronicles",
+                                                 "1Chr"
+                                             ],
+                                      "es":  [
+                                                 "1 Crónicas",
+                                                 "1Cron"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2CH",
+                      "order":  14,
+                      "titles":  {
+                                     "en":  "2 Chronicles",
+                                     "es":  "2 Crónicas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Chronicles",
+                                                 "2Chr"
+                                             ],
+                                      "es":  [
+                                                 "2 Crónicas",
+                                                 "2Cron"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "EZR",
+                      "order":  15,
+                      "titles":  {
+                                     "en":  "Ezra",
+                                     "es":  "Esdras"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Ezra"
+                                             ],
+                                      "es":  [
+                                                 "Esdras"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "NEH",
+                      "order":  16,
+                      "titles":  {
+                                     "en":  "Nehemiah",
+                                     "es":  "Nehemías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Nehemiah",
+                                                 "Neh"
+                                             ],
+                                      "es":  [
+                                                 "Nehemías",
+                                                 "Neh"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "EST",
+                      "order":  17,
+                      "titles":  {
+                                     "en":  "Esther",
+                                     "es":  "Ester"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Esther",
+                                                 "Est"
+                                             ],
+                                      "es":  [
+                                                 "Ester"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JOB",
+                      "order":  18,
+                      "titles":  {
+                                     "en":  "Job",
+                                     "es":  "Job"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Job"
+                                             ],
+                                      "es":  [
+                                                 "Job"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "PSA",
+                      "order":  19,
+                      "titles":  {
+                                     "en":  "Psalms",
+                                     "es":  "Salmos"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Psalms",
+                                                 "Psalm",
+                                                 "Ps"
+                                             ],
+                                      "es":  [
+                                                 "Salmos",
+                                                 "Sal"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "PRO",
+                      "order":  20,
+                      "titles":  {
+                                     "en":  "Proverbs",
+                                     "es":  "Proverbios"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Proverbs",
+                                                 "Prov"
+                                             ],
+                                      "es":  [
+                                                 "Proverbios",
+                                                 "Prov"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "ECC",
+                      "order":  21,
+                      "titles":  {
+                                     "en":  "Ecclesiastes",
+                                     "es":  "Eclesiastés"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Ecclesiastes",
+                                                 "Eccl"
+                                             ],
+                                      "es":  [
+                                                 "Eclesiastés",
+                                                 "Ecl"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "SNG",
+                      "order":  22,
+                      "titles":  {
+                                     "en":  "Song of Songs",
+                                     "es":  "Cantares"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Song of Songs",
+                                                 "Song of Solomon",
+                                                 "Song"
+                                             ],
+                                      "es":  [
+                                                 "Cantares",
+                                                 "Cantar"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "ISA",
+                      "order":  23,
+                      "titles":  {
+                                     "en":  "Isaiah",
+                                     "es":  "Isaías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Isaiah",
+                                                 "Isa"
+                                             ],
+                                      "es":  [
+                                                 "Isaías",
+                                                 "Isa"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JER",
+                      "order":  24,
+                      "titles":  {
+                                     "en":  "Jeremiah",
+                                     "es":  "Jeremías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Jeremiah",
+                                                 "Jer"
+                                             ],
+                                      "es":  [
+                                                 "Jeremías",
+                                                 "Jer"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "LAM",
+                      "order":  25,
+                      "titles":  {
+                                     "en":  "Lamentations",
+                                     "es":  "Lamentaciones"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Lamentations",
+                                                 "Lam"
+                                             ],
+                                      "es":  [
+                                                 "Lamentaciones",
+                                                 "Lam"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "EZK",
+                      "order":  26,
+                      "titles":  {
+                                     "en":  "Ezekiel",
+                                     "es":  "Ezequiel"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Ezekiel",
+                                                 "Ezek"
+                                             ],
+                                      "es":  [
+                                                 "Ezequiel",
+                                                 "Eze"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "DAN",
+                      "order":  27,
+                      "titles":  {
+                                     "en":  "Daniel",
+                                     "es":  "Daniel"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Daniel",
+                                                 "Dan"
+                                             ],
+                                      "es":  [
+                                                 "Daniel",
+                                                 "Dan"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "HOS",
+                      "order":  28,
+                      "titles":  {
+                                     "en":  "Hosea",
+                                     "es":  "Oseas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Hosea",
+                                                 "Hos"
+                                             ],
+                                      "es":  [
+                                                 "Oseas",
+                                                 "Ose"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JOL",
+                      "order":  29,
+                      "titles":  {
+                                     "en":  "Joel",
+                                     "es":  "Joel"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Joel"
+                                             ],
+                                      "es":  [
+                                                 "Joel"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "AMO",
+                      "order":  30,
+                      "titles":  {
+                                     "en":  "Amos",
+                                     "es":  "Amós"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Amos",
+                                                 "Am"
+                                             ],
+                                      "es":  [
+                                                 "Amós",
+                                                 "Am"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "OBA",
+                      "order":  31,
+                      "titles":  {
+                                     "en":  "Obadiah",
+                                     "es":  "Abdías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Obadiah",
+                                                 "Obad"
+                                             ],
+                                      "es":  [
+                                                 "Abdías",
+                                                 "Abd"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JON",
+                      "order":  32,
+                      "titles":  {
+                                     "en":  "Jonah",
+                                     "es":  "Jonás"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Jonah",
+                                                 "Jon"
+                                             ],
+                                      "es":  [
+                                                 "Jonás",
+                                                 "Jon"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "MIC",
+                      "order":  33,
+                      "titles":  {
+                                     "en":  "Micah",
+                                     "es":  "Miqueas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Micah",
+                                                 "Mic"
+                                             ],
+                                      "es":  [
+                                                 "Miqueas",
+                                                 "Miq"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "NAM",
+                      "order":  34,
+                      "titles":  {
+                                     "en":  "Nahum",
+                                     "es":  "Nahúm"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Nahum",
+                                                 "Nah"
+                                             ],
+                                      "es":  [
+                                                 "Nahúm",
+                                                 "Nah"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "HAB",
+                      "order":  35,
+                      "titles":  {
+                                     "en":  "Habakkuk",
+                                     "es":  "Habacuc"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Habakkuk",
+                                                 "Hab"
+                                             ],
+                                      "es":  [
+                                                 "Habacuc",
+                                                 "Hab"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "ZEP",
+                      "order":  36,
+                      "titles":  {
+                                     "en":  "Zephaniah",
+                                     "es":  "Sofonías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Zephaniah",
+                                                 "Zeph"
+                                             ],
+                                      "es":  [
+                                                 "Sofonías",
+                                                 "Sof"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "HAG",
+                      "order":  37,
+                      "titles":  {
+                                     "en":  "Haggai",
+                                     "es":  "Hageo"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Haggai",
+                                                 "Hag"
+                                             ],
+                                      "es":  [
+                                                 "Hageo",
+                                                 "Hag"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "ZEC",
+                      "order":  38,
+                      "titles":  {
+                                     "en":  "Zechariah",
+                                     "es":  "Zacarías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Zechariah",
+                                                 "Zech"
+                                             ],
+                                      "es":  [
+                                                 "Zacarías",
+                                                 "Zac"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "MAL",
+                      "order":  39,
+                      "titles":  {
+                                     "en":  "Malachi",
+                                     "es":  "Malaquías"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Malachi",
+                                                 "Mal"
+                                             ],
+                                      "es":  [
+                                                 "Malaquías",
+                                                 "Mal"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "MAT",
+                      "order":  40,
+                      "titles":  {
+                                     "en":  "Matthew",
+                                     "es":  "Mateo"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Matthew",
+                                                 "Matt"
+                                             ],
+                                      "es":  [
+                                                 "Mateo",
+                                                 "Mat"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "MRK",
+                      "order":  41,
+                      "titles":  {
+                                     "en":  "Mark",
+                                     "es":  "Marcos"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Mark",
+                                                 "Mk"
+                                             ],
+                                      "es":  [
+                                                 "Marcos",
+                                                 "Mar"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "LUK",
+                      "order":  42,
+                      "titles":  {
+                                     "en":  "Luke",
+                                     "es":  "Lucas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Luke",
+                                                 "Lk"
+                                             ],
+                                      "es":  [
+                                                 "Lucas",
+                                                 "Luc"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JHN",
+                      "order":  43,
+                      "titles":  {
+                                     "en":  "John",
+                                     "es":  "Juan"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "John",
+                                                 "Jn"
+                                             ],
+                                      "es":  [
+                                                 "Juan",
+                                                 "Jua"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "ACT",
+                      "order":  44,
+                      "titles":  {
+                                     "en":  "Acts",
+                                     "es":  "Hechos"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Acts",
+                                                 "Act"
+                                             ],
+                                      "es":  [
+                                                 "Hechos",
+                                                 "Hch"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "ROM",
+                      "order":  45,
+                      "titles":  {
+                                     "en":  "Romans",
+                                     "es":  "Romanos"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Romans",
+                                                 "Rom"
+                                             ],
+                                      "es":  [
+                                                 "Romanos",
+                                                 "Rom"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1CO",
+                      "order":  46,
+                      "titles":  {
+                                     "en":  "1 Corinthians",
+                                     "es":  "1 Corintios"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Corinthians",
+                                                 "1Cor"
+                                             ],
+                                      "es":  [
+                                                 "1 Corintios",
+                                                 "1Cor"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2CO",
+                      "order":  47,
+                      "titles":  {
+                                     "en":  "2 Corinthians",
+                                     "es":  "2 Corintios"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Corinthians",
+                                                 "2Cor"
+                                             ],
+                                      "es":  [
+                                                 "2 Corintios",
+                                                 "2Cor"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "GAL",
+                      "order":  48,
+                      "titles":  {
+                                     "en":  "Galatians",
+                                     "es":  "Gálatas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Galatians",
+                                                 "Gal"
+                                             ],
+                                      "es":  [
+                                                 "Gálatas",
+                                                 "Gal"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "EPH",
+                      "order":  49,
+                      "titles":  {
+                                     "en":  "Ephesians",
+                                     "es":  "Efesios"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Ephesians",
+                                                 "Eph"
+                                             ],
+                                      "es":  [
+                                                 "Efesios",
+                                                 "Efe"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "PHP",
+                      "order":  50,
+                      "titles":  {
+                                     "en":  "Philippians",
+                                     "es":  "Filipenses"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Philippians",
+                                                 "Phil"
+                                             ],
+                                      "es":  [
+                                                 "Filipenses",
+                                                 "Fil"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "COL",
+                      "order":  51,
+                      "titles":  {
+                                     "en":  "Colossians",
+                                     "es":  "Colosenses"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Colossians",
+                                                 "Col"
+                                             ],
+                                      "es":  [
+                                                 "Colosenses",
+                                                 "Col"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1TH",
+                      "order":  52,
+                      "titles":  {
+                                     "en":  "1 Thessalonians",
+                                     "es":  "1 Tesalonicenses"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Thessalonians",
+                                                 "1Thess"
+                                             ],
+                                      "es":  [
+                                                 "1 Tesalonicenses",
+                                                 "1Tes"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2TH",
+                      "order":  53,
+                      "titles":  {
+                                     "en":  "2 Thessalonians",
+                                     "es":  "2 Tesalonicenses"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Thessalonians",
+                                                 "2Thess"
+                                             ],
+                                      "es":  [
+                                                 "2 Tesalonicenses",
+                                                 "2Tes"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1TI",
+                      "order":  54,
+                      "titles":  {
+                                     "en":  "1 Timothy",
+                                     "es":  "1 Timoteo"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Timothy",
+                                                 "1Tim"
+                                             ],
+                                      "es":  [
+                                                 "1 Timoteo",
+                                                 "1Tim"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2TI",
+                      "order":  55,
+                      "titles":  {
+                                     "en":  "2 Timothy",
+                                     "es":  "2 Timoteo"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Timothy",
+                                                 "2Tim"
+                                             ],
+                                      "es":  [
+                                                 "2 Timoteo",
+                                                 "2Tim"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "TIT",
+                      "order":  56,
+                      "titles":  {
+                                     "en":  "Titus",
+                                     "es":  "Tito"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Titus"
+                                             ],
+                                      "es":  [
+                                                 "Tito"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "PHM",
+                      "order":  57,
+                      "titles":  {
+                                     "en":  "Philemon",
+                                     "es":  "Filemón"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Philemon",
+                                                 "Phm"
+                                             ],
+                                      "es":  [
+                                                 "Filemón",
+                                                 "Filem"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "HEB",
+                      "order":  58,
+                      "titles":  {
+                                     "en":  "Hebrews",
+                                     "es":  "Hebreos"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Hebrews",
+                                                 "Heb"
+                                             ],
+                                      "es":  [
+                                                 "Hebreos",
+                                                 "Heb"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JAS",
+                      "order":  59,
+                      "titles":  {
+                                     "en":  "James",
+                                     "es":  "Santiago"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "James",
+                                                 "Jas"
+                                             ],
+                                      "es":  [
+                                                 "Santiago",
+                                                 "Sant"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1PE",
+                      "order":  60,
+                      "titles":  {
+                                     "en":  "1 Peter",
+                                     "es":  "1 Pedro"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 Peter",
+                                                 "1Pet"
+                                             ],
+                                      "es":  [
+                                                 "1 Pedro",
+                                                 "1Ped"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2PE",
+                      "order":  61,
+                      "titles":  {
+                                     "en":  "2 Peter",
+                                     "es":  "2 Pedro"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 Peter",
+                                                 "2Pet"
+                                             ],
+                                      "es":  [
+                                                 "2 Pedro",
+                                                 "2Ped"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "1JN",
+                      "order":  62,
+                      "titles":  {
+                                     "en":  "1 John",
+                                     "es":  "1 Juan"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "1 John",
+                                                 "1Jn"
+                                             ],
+                                      "es":  [
+                                                 "1 Juan",
+                                                 "1Jua"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "2JN",
+                      "order":  63,
+                      "titles":  {
+                                     "en":  "2 John",
+                                     "es":  "2 Juan"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "2 John",
+                                                 "2Jn"
+                                             ],
+                                      "es":  [
+                                                 "2 Juan",
+                                                 "2Jua"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "3JN",
+                      "order":  64,
+                      "titles":  {
+                                     "en":  "3 John",
+                                     "es":  "3 Juan"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "3 John",
+                                                 "3Jn"
+                                             ],
+                                      "es":  [
+                                                 "3 Juan",
+                                                 "3Jua"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "JUD",
+                      "order":  65,
+                      "titles":  {
+                                     "en":  "Jude",
+                                     "es":  "Judas"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Jude"
+                                             ],
+                                      "es":  [
+                                                 "Judas"
+                                             ]
+                                  }
+                  },
+                  {
+                      "id":  "REV",
+                      "order":  66,
+                      "titles":  {
+                                     "en":  "Revelation",
+                                     "es":  "Apocalipsis"
+                                 },
+                      "aliases":  {
+                                      "en":  [
+                                                 "Revelation",
+                                                 "Rev"
+                                             ],
+                                      "es":  [
+                                                 "Apocalipsis",
+                                                 "Apo"
+                                             ]
+                                  }
+                  }
+              ]
+}

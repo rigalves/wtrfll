@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.wtrfll.local/realtime/control.lock.schema.json",
+  "title": "control.lock",
+  "type": "object",
+  "properties": {
+    "contractVersion": { "type": "integer", "const": 1 },
+    "sessionId": { "type": "string" },
+    "controllerId": { "type": "string" },
+    "locked": { "type": "boolean" }
+  },
+  "required": ["contractVersion", "sessionId", "locked"],
+  "additionalProperties": false
+}

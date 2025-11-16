@@ -1,0 +1,32 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.wtrfll.local/realtime/state.patch.schema.json",
+  "title": "state.patch",
+  "type": "object",
+  "properties": {
+    "contractVersion": { "type": "integer", "const": 1 },
+    "sessionId": { "type": "string" },
+    "patch": {
+      "type": "object",
+      "properties": {
+        "translation": { "type": "string" },
+        "passageRef": { "type": "string" },
+        "currentIndex": { "type": "integer", "minimum": 0 },
+        "options": {
+          "type": "object",
+          "properties": {
+            "showVerseNumbers": { "type": "boolean" },
+            "showReference": { "type": "boolean" },
+            "fontScale": { "type": "number", "minimum": 0.5, "maximum": 3 },
+            "safeMarginPct": { "type": "number", "minimum": 0, "maximum": 20 },
+            "theme": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["contractVersion", "sessionId", "patch"],
+  "additionalProperties": false
+}

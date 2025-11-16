@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.wtrfll.local/realtime/heartbeat.schema.json",
+  "title": "heartbeat",
+  "type": "object",
+  "properties": {
+    "contractVersion": { "type": "integer", "const": 1 },
+    "sessionId": { "type": "string" },
+    "ts": { "type": "string", "format": "date-time" },
+    "role": { "type": "string", "enum": ["controller", "viewer"] }
+  },
+  "required": ["contractVersion", "sessionId", "ts"],
+  "additionalProperties": false
+}

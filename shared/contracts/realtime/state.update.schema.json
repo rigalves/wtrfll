@@ -1,0 +1,57 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.wtrfll.local/realtime/state.update.schema.json",
+  "title": "state.update",
+  "type": "object",
+  "properties": {
+    "contractVersion": { "type": "integer", "const": 1 },
+    "sessionId": { "type": "string" },
+    "state": {
+      "type": "object",
+      "properties": {
+        "translation": { "type": "string" },
+        "reference": { "type": "string" },
+        "verses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "book": { "type": "string" },
+              "chapter": { "type": "integer" },
+              "verse": { "type": "integer" },
+              "text": { "type": "string" }
+            },
+            "required": ["book", "chapter", "verse", "text"],
+            "additionalProperties": false
+          }
+        },
+        "currentIndex": { "type": "integer", "minimum": 0 },
+        "options": {
+          "type": "object",
+          "properties": {
+            "showVerseNumbers": { "type": "boolean" },
+            "showReference": { "type": "boolean" },
+            "fontScale": { "type": "number" },
+            "safeMarginPct": { "type": "number" },
+            "theme": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "attribution": {
+          "type": "object",
+          "properties": {
+            "required": { "type": "boolean" },
+            "text": { "type": "string" },
+            "url": { "type": "string" }
+          },
+          "required": ["required"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["translation", "reference", "verses", "currentIndex"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["contractVersion", "sessionId", "state"],
+  "additionalProperties": false
+}
