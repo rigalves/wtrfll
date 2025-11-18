@@ -7,5 +7,6 @@ public sealed record BibleTranslation(
     string Provider,
     string CachePolicy,
     string? License,
-    string? Version);
+    string? Version,
+    bool IsOfflineReady);
 

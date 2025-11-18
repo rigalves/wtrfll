@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { apiClient } from '@/lib/apiClient'
 import type { paths } from '../../../shared/typescript/api'
@@ -12,15 +12,22 @@ export const useBiblesStore = defineStore('bibles', () => {
   const errorMessage = ref<string | null>(null)
   const hasLoaded = ref(false)
 
+  const offlineTranslations = computed(() =>
+    translations.value.filter((translation) => translation.isOfflineReady),
+  )
+
+  function findByCode(code: string): BibleTranslation | null {
+    return translations.value.find((translation) => translation.code === code) ?? null
+  }
+
   async function loadTranslations() {
-    if (hasLoaded.value) {
+    if (hasLoaded.value || loading.value) {
       return
     }
     loading.value = true
     errorMessage.value = null
     try {
       const response = await apiClient.GET('/api/bibles')
-      // openapi-fetch returns `error` as `never` when no non-200 responses exist; guard defensively.
       const data = response.data ?? []
       translations.value = data
       hasLoaded.value = true
@@ -33,8 +40,10 @@ export const useBiblesStore = defineStore('bibles', () => {
 
   return {
     translations,
+    offlineTranslations,
     loading,
     errorMessage,
     loadTranslations,
+    findByCode,
   }
 })

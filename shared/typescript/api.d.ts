@@ -136,6 +136,8 @@ export interface components {
             cachePolicy?: string;
             license?: string;
             version?: string;
+            /** @description true when the translation is bundled locally and works without network access */
+            isOfflineReady?: boolean;
         };
         BibleBookMetadata: {
             id: string;

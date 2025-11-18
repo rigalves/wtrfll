@@ -18,7 +18,8 @@ public sealed class BibleTranslationCatalog : IBibleTranslationCatalog
                 option.Provider,
                 option.CachePolicy,
                 option.License,
-                option.Version))
+                option.Version,
+                option.IsOfflineReady))
             .ToList();
     }
 

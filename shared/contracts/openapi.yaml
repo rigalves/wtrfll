@@ -195,6 +195,9 @@ components:
           type: string
         version:
           type: string
+        isOfflineReady:
+          type: boolean
+          description: true when the translation is bundled locally and works without network access
       required: [code, name, language, provider]
     BibleBookMetadata:
       type: object

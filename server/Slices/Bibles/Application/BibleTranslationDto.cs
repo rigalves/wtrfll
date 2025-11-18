@@ -9,6 +9,7 @@ public sealed record BibleTranslationDto
     public required string CachePolicy { get; init; }
     public string? License { get; init; }
     public string? Version { get; init; }
+    public bool IsOfflineReady { get; init; }
 }
 
 

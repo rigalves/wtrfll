@@ -30,6 +30,7 @@ public sealed class BibleTranslationReadService
             CachePolicy = translation.CachePolicy,
             License = translation.License,
             Version = translation.Version,
+            IsOfflineReady = translation.IsOfflineReady,
         };
     }
 }

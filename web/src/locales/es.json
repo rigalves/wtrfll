@@ -1,0 +1,87 @@
+{
+  "app": {
+    "nav": {
+      "home": "Inicio",
+      "newSession": "Crear sesión"
+    },
+    "catalog": {
+      "loadingTitle": "Cargando catálogos…",
+      "loadingDescription": "Esperando a que el backend exponga los libros bíblicos. Asegúrate de que el proyecto server esté en ejecución.",
+      "retrying": "Reintentaremos automáticamente en unos segundos…"
+    },
+    "language": {
+      "label": "Idioma"
+    }
+  },
+  "home": {
+    "tagline": "Bienvenido",
+    "title": "wtrfll mantiene Control y Display sincronizados",
+    "description": "Crea una sesión, comparte los enlaces generados y deja que el operador publique referencias mientras la pantalla las refleja en vivo.",
+    "cta": "Crear nueva sesión",
+    "howItWorks": "¿Cómo funciona?",
+    "steps": [
+      "Crea una sesión y comparte los enlaces de Control y Display.",
+      "Desde Control escribe una referencia (Juan 3:16-18, Salmo 23, etc.) y publícala.",
+      "Display recibe ese estado mediante SignalR para mantener todas las pantallas sincronizadas."
+    ]
+  },
+  "newSession": {
+    "tagline": "Nueva sesión",
+    "title": "Genera enlaces para Control y Display",
+    "description": "Crea una sesión para este servicio y comparte los enlaces del controlador y la pantalla. Cada enlace incluye un token único.",
+    "createButton": "Crear sesión",
+    "creating": "Creando…",
+    "shortCode": "Código corto",
+    "createdAt": "Creada {date}",
+    "controlLinkLabel": "Control",
+    "controlLinkDescription": "Comparte este enlace con el operador",
+    "displayLinkLabel": "Display",
+    "displayLinkDescription": "Comparte este enlace con la pantalla / Chromecast",
+    "errors": {
+      "createFailed": "No se pudo crear la sesión.",
+      "unexpected": "Ocurrió un error inesperado al crear la sesión."
+    }
+  },
+  "controller": {
+    "title": "Vista de Control",
+    "sessionLabel": "Sesión {code}",
+    "headerDescription": "La referencia que publiques alimenta el estado compartido y se reflejará en la vista Display (y clientes SignalR).",
+    "referenceLabel": "Referencia bíblica",
+    "referencePlaceholder": "Juan 3:16-18",
+    "historyLabel": "Historial reciente",
+    "historyEmpty": "Publica para llenar el historial.",
+    "publish": "Publicar",
+    "reset": "Restablecer",
+    "draftDifferent": "Borrador distinto al publicado",
+    "normalizedOutput": "Salida normalizada",
+    "normalizedUpdated": "Actualizado {time}",
+    "historyInfo": "Ingresa una referencia y publícala para registrarla.",
+    "versesLabel": "Versos:",
+    "fullChapter": "Capítulo completo",
+    "waitingConnection": "Conecta el enlace generado en /new para habilitar la sesión.",
+    "translations": {
+      "available": "Traducciones disponibles",
+      "provider": "Proveedor",
+      "providerHint": "Se cargan desde /api/bibles (backend). Las que dicen Offline están listas sin conexión.",
+      "offlineBadge": "Offline"
+    }
+  },
+  "display": {
+    "sessionLabel": "Sesión Display {code}",
+    "waiting": "Esperando enlace con token válido…",
+    "loading": "Esperando contenido…"
+  },
+  "session": {
+    "joinErrors": {
+      "missingToken": "Falta el token de unión en la URL.",
+      "controllerLocked": "El controlador ya está conectado a esta sesión.",
+      "notFound": "Sesión no encontrada.",
+      "invalidToken": "Token inválido."
+    },
+    "translationFallback": "No se pudo obtener {failed}. Cambiamos a {fallback}.",
+    "passageErrors": {
+      "requestFailed": "No se pudo obtener el pasaje.",
+      "unknown": "Error desconocido al cargar el pasaje."
+    }
+  }
+}

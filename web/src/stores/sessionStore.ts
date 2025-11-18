@@ -14,12 +14,16 @@ import {
   type SessionStateUpdatePayload,
 } from '@/lib/realtimeClient'
 import { apiClient } from '@/lib/apiClient'
+import type { LocalizedMessage } from '@/lib/i18n'
 import { useSessionParticipationStore } from '@/stores/sessionParticipationStore'
+import { useBiblesStore } from '@/stores/biblesStore'
 import type { paths } from '../../../shared/typescript/api'
 
 export const useSessionStore = defineStore('session', () => {
   const referenceInputStore = useReferenceInputStore()
   const participationStore = useSessionParticipationStore()
+  const biblesStore = useBiblesStore()
+  void biblesStore.loadTranslations()
 
   type PassageResponse = paths['/api/passage']['get']['responses']['200']['content']['application/json']
 
@@ -30,8 +34,9 @@ export const useSessionStore = defineStore('session', () => {
   const realtimeClient = ref<SessionRealtimeClient | null>(null)
   const enableRealtime = (import.meta.env.VITE_ENABLE_REALTIME ?? 'true') === 'true'
   const passageContent = ref<PassageResponse | null>(null)
-  const passageLoadError = ref<string | null>(null)
+  const passageLoadErrorMessage = ref<LocalizedMessage | null>(null)
   const isLoadingPassage = ref(false)
+  const translationNotice = ref<LocalizedMessage | null>(null)
   const defaultPresentationOptions: SessionPresentationOptions = {
     showReference: true,
     showVerseNumbers: true,
@@ -44,6 +49,7 @@ export const useSessionStore = defineStore('session', () => {
   const resolvedJoinState = computed(() => participationStore.joinState)
   const resolvedRole = computed(() => participationStore.activeRole ?? 'display')
   const resolvedJoinToken = computed(() => participationStore.activeJoinToken)
+  const activeTranslationMetadata = computed(() => biblesStore.findByCode(activeTranslationCode.value))
 
   const controllerViewModel = computed(() => ({
     normalizedReferenceLabel: currentPassage.value?.normalizedReferenceLabel ?? referenceInputStore.currentInput,
@@ -52,7 +58,7 @@ export const useSessionStore = defineStore('session', () => {
     lastParseError: lastParseError.value,
     lastNormalizedAt: lastNormalizedAt.value,
     passageVerses: passageContent.value?.verses ?? [],
-    passageError: passageLoadError.value,
+    passageErrorMessage: passageLoadErrorMessage.value,
     isLoadingPassage: isLoadingPassage.value,
     options: presentationOptions.value,
     currentIndex: currentPresentationIndex.value,
@@ -109,7 +115,7 @@ export const useSessionStore = defineStore('session', () => {
 
   async function loadPassageContent(parsed: ParsedScriptureReference, token: number) {
     isLoadingPassage.value = true
-    passageLoadError.value = null
+    passageLoadErrorMessage.value = null
     try {
       const { data, error } = await apiClient.GET('/api/passage', {
         params: {
@@ -126,17 +132,40 @@ export const useSessionStore = defineStore('session', () => {
         throw new Error(error.error ?? 'No se pudo obtener el pasaje')
       }
       passageContent.value = data ?? null
+      translationNotice.value = null
+      passageLoadErrorMessage.value = null
     } catch (error) {
       if (token !== latestLoadToken) {
         return
       }
       passageContent.value = null
-      passageLoadError.value = error instanceof Error ? error.message : 'Error desconocido'
+      passageLoadErrorMessage.value = { key: 'session.passageErrors.requestFailed' }
+      const fallback = selectOfflineFallback()
+      if (fallback && fallback.code !== activeTranslationCode.value) {
+        translationNotice.value = {
+          key: 'session.translationFallback',
+          params: {
+            failed: activeTranslationMetadata.value?.name ?? activeTranslationCode.value,
+            fallback: fallback.name,
+          },
+        }
+        activeTranslationCode.value = fallback.code
+        const retryToken = ++latestLoadToken
+        await loadPassageContent(parsed, retryToken)
+      }
     } finally {
       if (token === latestLoadToken) {
         isLoadingPassage.value = false
       }
     }
+  }
+
+  function selectOfflineFallback() {
+    if (activeTranslationMetadata.value?.isOfflineReady) {
+      return null
+    }
+    const fallback = biblesStore.offlineTranslations.find((translation) => translation.code !== activeTranslationCode.value)
+    return fallback ?? null
   }
 
   function handleStateUpdate(payload: SessionStateUpdatePayload) {
@@ -222,5 +251,6 @@ export const useSessionStore = defineStore('session', () => {
     publishDraftToSession,
     applyHistoryEntry,
     activeTranslationCode,
+    translationNotice,
   }
 })

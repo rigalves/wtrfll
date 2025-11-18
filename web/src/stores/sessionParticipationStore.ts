@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 import { apiClient } from '@/lib/apiClient'
 import { getErrorDetailsFromApiResponse } from '@/lib/httpErrors'
+import type { LocalizedMessage } from '@/lib/i18n'
 import type { paths } from '../../../shared/typescript/api'
 
 type JoinResponse = paths['/api/sessions/{id}/join']['post']['responses']['200']['content']['application/json']
@@ -12,20 +13,20 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
   const activeJoinToken = ref<string | null>(null)
   const activeRole = ref<'controller' | 'display' | null>(null)
   const joinState = ref<'idle' | 'joining' | 'joined'>('idle')
-  const joinError = ref<string | null>(null)
+  const joinErrorMessage = ref<LocalizedMessage | null>(null)
 
-  function setJoinError(message: string) {
-    joinError.value = message
+  function setJoinError(key: LocalizedMessage['key']) {
+    joinErrorMessage.value = { key }
     joinState.value = 'idle'
   }
 
   async function joinSession(options: { sessionId: string; joinToken: string; role: 'controller' | 'display' }) {
     if (!options.sessionId) {
-      setJoinError('Falta el id de sesion.')
+      setJoinError('session.joinErrors.missingToken')
       return
     }
     if (!options.joinToken) {
-      setJoinError('Falta el token de union en la URL.')
+      setJoinError('session.joinErrors.missingToken')
       return
     }
     if (joinState.value === 'joined' && activeSessionId.value === options.sessionId) {
@@ -33,7 +34,7 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
     }
 
     joinState.value = 'joining'
-    joinError.value = null
+    joinErrorMessage.value = null
     activeJoinToken.value = null
 
     try {
@@ -43,22 +44,22 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
       })
 
       if (error) {
-        const { statusCode, message } = getErrorDetailsFromApiResponse(error)
+        const { statusCode } = getErrorDetailsFromApiResponse(error)
         if (statusCode === 409) {
-          setJoinError('El controlador ya esta conectado a esta sesion.')
+          setJoinError('session.joinErrors.controllerLocked')
         } else if (statusCode === 404) {
-          setJoinError('Sesion no encontrada.')
+          setJoinError('session.joinErrors.notFound')
         } else if (statusCode === 400) {
-          setJoinError(message ?? 'Token invalido.')
+          setJoinError('session.joinErrors.invalidToken')
         } else {
-          setJoinError('No se pudo unir a la sesion.')
+          setJoinError('session.joinErrors.invalidToken')
         }
         return
       }
 
       const payload = data as JoinResponse | null
       if (!payload) {
-        setJoinError('Respuesta inesperada del servidor.')
+        setJoinError('session.joinErrors.invalidToken')
         return
       }
 
@@ -66,9 +67,9 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
       activeJoinToken.value = options.joinToken
       activeRole.value = options.role
       joinState.value = 'joined'
-      joinError.value = null
+      joinErrorMessage.value = null
     } catch (error) {
-      setJoinError(error instanceof Error ? error.message : 'No se pudo unir a la sesion.')
+      setJoinError('session.joinErrors.invalidToken')
     }
   }
 
@@ -77,7 +78,7 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
     activeJoinToken.value = null
     activeRole.value = null
     joinState.value = 'idle'
-    joinError.value = null
+    joinErrorMessage.value = null
   }
 
   return {
@@ -85,7 +86,7 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
     activeJoinToken,
     activeRole,
     joinState,
-    joinError,
+    joinErrorMessage,
     joinSession,
     setJoinError,
     reset,

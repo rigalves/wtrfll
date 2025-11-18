@@ -1,0 +1,87 @@
+{
+  "app": {
+    "nav": {
+      "home": "Home",
+      "newSession": "Create session"
+    },
+    "catalog": {
+      "loadingTitle": "Loading catalogs…",
+      "loadingDescription": "Waiting for the backend to expose bible book metadata. Make sure the server is running.",
+      "retrying": "Retrying automatically in a few seconds…"
+    },
+    "language": {
+      "label": "Language"
+    }
+  },
+  "home": {
+    "tagline": "Welcome",
+    "title": "wtrfll keeps controller and display views in sync",
+    "description": "Create a session, share the generated links, and let the operator publish references while the display mirrors them live.",
+    "cta": "Create new session",
+    "howItWorks": "How does it work?",
+    "steps": [
+      "Create a session and share the Control and Display links.",
+      "From Control, type a reference (John 3:16-18, Psalm 23, etc.) and publish it.",
+      "Display receives that state via SignalR so every screen stays in sync."
+    ]
+  },
+  "newSession": {
+    "tagline": "New session",
+    "title": "Generate Control and Display links",
+    "description": "Create a session for this service and share the controller/display URLs. Each link includes a unique join token.",
+    "createButton": "Create session",
+    "creating": "Creating…",
+    "shortCode": "Short code",
+    "createdAt": "Created {date}",
+    "controlLinkLabel": "Control",
+    "controlLinkDescription": "Share this link with the operator",
+    "displayLinkLabel": "Display",
+    "displayLinkDescription": "Share this link with the projector / Chromecast",
+    "errors": {
+      "createFailed": "Unable to create the session.",
+      "unexpected": "Unexpected error while creating the session."
+    }
+  },
+  "controller": {
+    "title": "Control view",
+    "sessionLabel": "Session {code}",
+    "headerDescription": "Published references power the shared state and reflect on the Display view (and SignalR clients).",
+    "referenceLabel": "Scripture reference",
+    "referencePlaceholder": "John 3:16-18",
+    "historyLabel": "Recent history",
+    "historyEmpty": "Publish to fill the history list.",
+    "publish": "Publish",
+    "reset": "Reset",
+    "draftDifferent": "Draft differs from published",
+    "normalizedOutput": "Normalized output",
+    "normalizedUpdated": "Updated {time}",
+    "historyInfo": "Enter a reference and publish to log it.",
+    "versesLabel": "Verses:",
+    "fullChapter": "Full chapter",
+    "waitingConnection": "Connect the generated link from /new to unlock the session.",
+    "translations": {
+      "available": "Available translations",
+      "provider": "Provider",
+      "providerHint": "Loaded from /api/bibles (backend). Entries marked Offline are bundled locally.",
+      "offlineBadge": "Offline ready"
+    }
+  },
+  "display": {
+    "sessionLabel": "Display session {code}",
+    "waiting": "Waiting for a valid join token…",
+    "loading": "Waiting for passage content…"
+  },
+  "session": {
+    "joinErrors": {
+      "missingToken": "Missing join token in the URL.",
+      "controllerLocked": "The controller is already connected to this session.",
+      "notFound": "Session not found.",
+      "invalidToken": "Invalid join token."
+    },
+    "translationFallback": "Could not load {failed}. Switched to {fallback}.",
+    "passageErrors": {
+      "requestFailed": "Unable to load the passage.",
+      "unknown": "Unexpected passage error."
+    }
+  }
+}

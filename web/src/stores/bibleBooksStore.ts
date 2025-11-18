@@ -18,7 +18,6 @@ type BibleBooksResponse = paths['/api/bible-books']['get']['responses']['200']['
 export const useBibleBooksStore = defineStore('bibleBooks', () => {
   const books = ref<BibleBookMetadata[]>([])
   const loadState = ref<'idle' | 'loading' | 'loaded' | 'error'>('idle')
-  const loadError = ref<string | null>(null)
   const aliasLookup = ref<Map<string, BibleBookMetadata>>(new Map())
 
   const isLoaded = computed(() => loadState.value === 'loaded')
@@ -32,13 +31,12 @@ export const useBibleBooksStore = defineStore('bibleBooks', () => {
     }
 
     loadState.value = 'loading'
-    loadError.value = null
 
     try {
       const response = await apiClient.GET('/api/bible-books')
       const payload = response.data as BibleBooksResponse | null
       if (!payload) {
-        throw new Error('No se pudo cargar el catalogo de libros.')
+        throw new Error('Bible book catalog unavailable.')
       }
 
       const normalized = payload.map((entry) => ({
@@ -64,7 +62,6 @@ export const useBibleBooksStore = defineStore('bibleBooks', () => {
       loadState.value = 'error'
       books.value = []
       aliasLookup.value = new Map()
-      loadError.value = error instanceof Error ? error.message : 'No se pudo cargar el catalogo de libros.'
       throw error
     }
   }
@@ -96,7 +93,6 @@ export const useBibleBooksStore = defineStore('bibleBooks', () => {
   return {
     books,
     loadState,
-    loadError,
     isLoaded,
     ensureLoaded,
     findBookByAlias,

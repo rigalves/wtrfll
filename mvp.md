@@ -50,7 +50,8 @@ wtrfll is a controller + display scripture tool built for a single church LAN. T
 | Bible book metadata loading | ✅ | Spinner overlay with auto retry until backend ready. |
 | Translation catalog UI | ✅ | `/new` surfaces codes + tokens; controller shows translation list. |
 | Chromecast-ready display view | ✅ | Minimal UI with references, verse numbers, and attribution. |
-| Offline/PWA | ⏳ | Placeholder; service worker not yet configured. |
+| Offline translation handling | ✅ | Local normalized translations auto-badge as offline ready; controller falls back when online sources fail. |
+| PWA / Wake Lock | ⏳ | Service worker + wake lock not yet configured. |
 | Wake-lock/screen controls | ⏳ | Not implemented. |
 | Clear/black/freeze controls | ⏳ | Placeholder for future iteration. |
 | Stepping (next/prev) | 🔄 Planned | Currently publishes entire passage; need explicit stepping controls. |

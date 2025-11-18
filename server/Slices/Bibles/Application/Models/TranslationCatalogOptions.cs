@@ -30,4 +30,6 @@ public sealed class BibleTranslationOption
     public string? License { get; init; }
 
     public string? Version { get; init; }
+
+    public bool IsOfflineReady { get; init; }
 }
