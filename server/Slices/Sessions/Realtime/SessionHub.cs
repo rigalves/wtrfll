@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using Microsoft.AspNetCore.SignalR;
 using Wtrfll.Server.Slices.Passages.Application;
 using Wtrfll.Server.Slices.Sessions.Application;
@@ -11,6 +12,7 @@ public sealed class SessionHub : Hub
     private readonly PassageReadService _passageReadService;
     private readonly SessionConnectionRegistry _connectionRegistry;
     private readonly ILogger<SessionHub> _logger;
+    private readonly ConcurrentDictionary<Guid, string> _displayCommands = new();
 
     public SessionHub(
         SessionLifecycleService sessionLifecycleService,
@@ -128,6 +130,8 @@ public sealed class SessionHub : Hub
             throw new HubException("Translation or reference not available.");
         }
 
+        var command = ResolveDisplayCommand(message.SessionId, message.Patch.DisplayCommand);
+
         var update = new SessionStateUpdateMessage
         {
             ContractVersion = SessionRealtimeContracts.ContractVersion,
@@ -140,6 +144,7 @@ public sealed class SessionHub : Hub
                 Attribution = passage.Attribution,
                 Options = message.Patch.Options,
                 CurrentIndex = message.Patch.CurrentIndex,
+                DisplayCommand = command,
             },
         };
 
@@ -163,5 +168,27 @@ public sealed class SessionHub : Hub
         };
 
         return Clients.Caller.SendAsync("heartbeat", response, Context.ConnectionAborted);
+    }
+
+    private string ResolveDisplayCommand(Guid sessionId, string? requestedCommand)
+    {
+        if (!string.IsNullOrWhiteSpace(requestedCommand))
+        {
+            if (!SessionDisplayCommands.IsValid(requestedCommand))
+            {
+                throw new HubException("Invalid display command.");
+            }
+
+            _displayCommands.AddOrUpdate(sessionId, requestedCommand, (_, _) => requestedCommand);
+            return requestedCommand;
+        }
+
+        if (_displayCommands.TryGetValue(sessionId, out var existing))
+        {
+            return existing;
+        }
+
+        _displayCommands[sessionId] = SessionDisplayCommands.Normal;
+        return SessionDisplayCommands.Normal;
     }
 }

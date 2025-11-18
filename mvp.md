@@ -51,10 +51,10 @@ wtrfll is a controller + display scripture tool built for a single church LAN. T
 | Translation catalog UI | ✅ | `/new` surfaces codes + tokens; controller shows translation list. |
 | Chromecast-ready display view | ✅ | Minimal UI with references, verse numbers, and attribution. |
 | Offline translation handling | ✅ | Local normalized translations auto-badge as offline ready; controller falls back when online sources fail. |
-| PWA / Wake Lock | ⏳ | Service worker + wake lock not yet configured. |
+| PWA / Wake Lock | ✅ | Manifest + service worker + display wake-lock in place. |
 | Wake-lock/screen controls | ⏳ | Not implemented. |
 | Clear/black/freeze controls | ⏳ | Placeholder for future iteration. |
-| Stepping (next/prev) | 🔄 Planned | Currently publishes entire passage; need explicit stepping controls. |
+| Stepping (next/prev) | ✅ | Controller now exposes next/previous verse controls with realtime highlighting. |
 
 ## Deferred / Next Wave
 

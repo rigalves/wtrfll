@@ -12,6 +12,7 @@ import {
   type SessionPresentationOptions,
   type SessionStatePatchPayload,
   type SessionStateUpdatePayload,
+  type DisplayCommand,
 } from '@/lib/realtimeClient'
 import { apiClient } from '@/lib/apiClient'
 import type { LocalizedMessage } from '@/lib/i18n'
@@ -37,6 +38,7 @@ export const useSessionStore = defineStore('session', () => {
   const passageLoadErrorMessage = ref<LocalizedMessage | null>(null)
   const isLoadingPassage = ref(false)
   const translationNotice = ref<LocalizedMessage | null>(null)
+  const displayCommand = ref<DisplayCommand>('normal')
   const defaultPresentationOptions: SessionPresentationOptions = {
     showReference: true,
     showVerseNumbers: true,
@@ -51,18 +53,24 @@ export const useSessionStore = defineStore('session', () => {
   const resolvedJoinToken = computed(() => participationStore.activeJoinToken)
   const activeTranslationMetadata = computed(() => biblesStore.findByCode(activeTranslationCode.value))
 
-  const controllerViewModel = computed(() => ({
-    normalizedReferenceLabel: currentPassage.value?.normalizedReferenceLabel ?? referenceInputStore.currentInput,
-    verseSpans: passageContent.value?.verses?.map((verse) => ({ startVerse: verse.verse, endVerse: verse.verse })) ?? currentPassage.value?.verseSpans ?? [],
-    isFullChapter: passageContent.value?.verses ? false : currentPassage.value?.isFullChapter ?? false,
-    lastParseError: lastParseError.value,
-    lastNormalizedAt: lastNormalizedAt.value,
-    passageVerses: passageContent.value?.verses ?? [],
-    passageErrorMessage: passageLoadErrorMessage.value,
-    isLoadingPassage: isLoadingPassage.value,
-    options: presentationOptions.value,
-    currentIndex: currentPresentationIndex.value,
-  }))
+  const controllerViewModel = computed(() => {
+    const verses = passageContent.value?.verses ?? []
+    const currentVerse = verses[currentPresentationIndex.value]
+    return {
+      normalizedReferenceLabel: currentPassage.value?.normalizedReferenceLabel ?? referenceInputStore.currentInput,
+      verseSpans: verses.map((verse) => ({ startVerse: verse.verse, endVerse: verse.verse })),
+      isFullChapter: verses.length ? false : currentPassage.value?.isFullChapter ?? false,
+      lastParseError: lastParseError.value,
+      lastNormalizedAt: lastNormalizedAt.value,
+      passageVerses: verses,
+      passageErrorMessage: passageLoadErrorMessage.value,
+      isLoadingPassage: isLoadingPassage.value,
+      options: presentationOptions.value,
+      currentIndex: currentPresentationIndex.value,
+      displayCommand: displayCommand.value,
+      activeVerseLabel: currentVerse ? `v${currentVerse.verse}` : null,
+    }
+  })
 
   const displayViewModel = computed(() => ({
     reference: passageContent.value?.reference ?? controllerViewModel.value.normalizedReferenceLabel,
@@ -71,6 +79,7 @@ export const useSessionStore = defineStore('session', () => {
     isLoading: isLoadingPassage.value,
     options: presentationOptions.value,
     currentIndex: currentPresentationIndex.value,
+    displayCommand: displayCommand.value,
   }))
 
   function publishDraftToSession(options?: { recordHistory?: boolean }) {
@@ -172,12 +181,18 @@ export const useSessionStore = defineStore('session', () => {
     if (payload.sessionId !== resolvedSessionId.value) {
       return
     }
-    passageContent.value = payload.state as PassageResponse
-    presentationOptions.value = {
-      ...defaultPresentationOptions,
-      ...(payload.state.options ?? {}),
+    const nextCommand = payload.state.displayCommand ?? displayCommand.value
+    displayCommand.value = nextCommand
+
+    const shouldApply = nextCommand !== 'freeze'
+    if (shouldApply) {
+      passageContent.value = payload.state as PassageResponse
+      presentationOptions.value = {
+        ...defaultPresentationOptions,
+        ...(payload.state.options ?? {}),
+      }
+      currentPresentationIndex.value = payload.state.currentIndex ?? 0
     }
-    currentPresentationIndex.value = payload.state.currentIndex ?? 0
   }
 
   watch(
@@ -234,6 +249,7 @@ export const useSessionStore = defineStore('session', () => {
         passageRef: passage.normalizedReferenceLabel,
         currentIndex: currentPresentationIndex.value,
         options: { ...presentationOptions.value },
+        displayCommand: displayCommand.value,
       },
     }
 
@@ -241,6 +257,47 @@ export const useSessionStore = defineStore('session', () => {
   }
 
   void normalizeAndLoad()
+
+  function stepPresentationIndex(delta: number) {
+    if (
+      participationStore.joinState !== 'joined' ||
+      participationStore.activeRole !== 'controller' ||
+      !currentPassage.value
+    ) {
+      return
+    }
+
+    const verses = controllerViewModel.value.passageVerses
+    if (!verses.length) {
+      return
+    }
+
+    const nextIndex = clampIndex(currentPresentationIndex.value + delta, verses.length)
+    if (nextIndex === currentPresentationIndex.value) {
+      return
+    }
+
+    currentPresentationIndex.value = nextIndex
+    broadcastStatePatch(currentPassage.value)
+  }
+
+  function setDisplayCommand(command: DisplayCommand) {
+    if (participationStore.joinState !== 'joined' || participationStore.activeRole !== 'controller') {
+      return
+    }
+    if (!currentPassage.value) {
+      return
+    }
+    displayCommand.value = command
+    broadcastStatePatch(currentPassage.value)
+  }
+
+  function clampIndex(index: number, total: number) {
+    if (total <= 0) {
+      return 0
+    }
+    return Math.min(Math.max(index, 0), total - 1)
+  }
 
   return {
     currentPassage,
@@ -252,5 +309,10 @@ export const useSessionStore = defineStore('session', () => {
     applyHistoryEntry,
     activeTranslationCode,
     translationNotice,
+    stepToPreviousVerse: () => stepPresentationIndex(-1),
+    stepToNextVerse: () => stepPresentationIndex(1),
+    setDisplayCommand,
+    displayCommand,
+    currentPresentationIndex,
   }
 })

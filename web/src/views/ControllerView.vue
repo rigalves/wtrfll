@@ -25,6 +25,23 @@
       {{ translationNoticeText }}
     </div>
 
+    <div class="flex flex-wrap gap-2" v-if="sessionParticipationStore.joinState === 'joined'">
+      <button
+        v-for="button in commandButtons"
+        :key="button.command"
+        type="button"
+        class="rounded-full border px-4 py-1 text-xs"
+        :class="
+          button.command === activeDisplayCommand
+            ? 'border-sky-400 bg-sky-500/20 text-sky-100'
+            : 'border-white/20 bg-black/30 text-slate-200'
+        "
+        @click="setDisplayCommand(button.command)"
+      >
+        {{ button.label }}
+      </button>
+    </div>
+
     <div class="grid gap-6 lg:grid-cols-[2fr,1fr]">
       <div class="space-y-5 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/30">
         <label class="block text-sm font-semibold">{{ t('controller.referenceLabel') }}</label>
@@ -69,7 +86,7 @@
           </div>
         </div>
 
-        <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-5">
+        <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-5 space-y-4">
           <p class="text-xs uppercase tracking-[0.3em] text-emerald-200">{{ t('controller.normalizedOutput') }}</p>
           <p v-if="controllerViewModel.lastParseError" class="text-rose-300">
             {{ controllerViewModel.lastParseError.message }}
@@ -80,12 +97,41 @@
               {{ t('controller.versesLabel') }} {{ verseSpanSummary }}
             </p>
             <p class="text-sm text-slate-300" v-else>{{ t('controller.fullChapter') }}</p>
+            <div class="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                class="rounded-lg border border-white/20 px-3 py-1 text-xs disabled:border-white/10 disabled:text-slate-500"
+                :disabled="!canStepBackward"
+                @click="sessionStore.stepToPreviousVerse()"
+              >
+                {{ t('controller.stepper.previous') }}
+              </button>
+              <button
+                type="button"
+                class="rounded-lg border border-white/20 px-3 py-1 text-xs disabled:border-white/10 disabled:text-slate-500"
+                :disabled="!canStepForward"
+                @click="sessionStore.stepToNextVerse()"
+              >
+                {{ t('controller.stepper.next') }}
+              </button>
+              <p class="text-xs text-slate-300" v-if="controllerViewModel.activeVerseLabel">
+                {{ t('controller.status.verse', { verse: controllerViewModel.activeVerseLabel }) }}
+              </p>
+              <p class="text-xs text-slate-300">
+                {{ t(`controller.status.command.${activeDisplayCommand}`) }}
+              </p>
+            </div>
             <div class="space-y-2 text-base text-slate-100">
               <p v-if="controllerViewModel.isLoadingPassage" class="text-slate-400">
                 {{ t('display.loading') }}
               </p>
               <p v-else-if="passageErrorText" class="text-rose-300">{{ passageErrorText }}</p>
-              <p v-else v-for="verse in controllerViewModel.passageVerses" :key="verse.verse">
+              <p
+                v-else
+                v-for="(verse, index) in controllerViewModel.passageVerses"
+                :key="verse.verse"
+                :class="{ 'text-sky-300': controllerViewModel.currentIndex === index }"
+              >
                 <span class="text-slate-500 mr-2">{{ verse.verse }}</span>{{ verse.text }}
               </p>
             </div>
@@ -136,6 +182,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
+import type { DisplayCommand } from '@/lib/realtimeClient'
 import { useBiblesStore } from '@/stores/biblesStore'
 import { useReferenceInputStore } from '@/stores/referenceInputStore'
 import { useSessionStore } from '@/stores/sessionStore'
@@ -192,12 +239,38 @@ const passageErrorText = computed(() =>
     : null,
 )
 
+const canStepBackward = computed(() => {
+  const verseCount = controllerViewModel.value.passageVerses.length
+  return verseCount > 0 && controllerViewModel.value.currentIndex > 0
+})
+
+const commandButtons = computed<{ command: DisplayCommand; label: string }[]>(() => [
+  { command: 'normal', label: t('controller.commands.normal') },
+  { command: 'black', label: t('controller.commands.black') },
+  { command: 'clear', label: t('controller.commands.clear') },
+  { command: 'freeze', label: t('controller.commands.freeze') },
+])
+
+const activeDisplayCommand = computed(() => sessionStore.displayCommand)
+
+const canStepForward = computed(() => {
+  const verseCount = controllerViewModel.value.passageVerses.length
+  if (verseCount === 0) {
+    return false
+  }
+  return controllerViewModel.value.currentIndex < verseCount - 1
+})
+
 function publishReference() {
   sessionStore.publishDraftToSession({ recordHistory: true })
 }
 
 function applyHistoryEntry(entry: string) {
   sessionStore.applyHistoryEntry(entry)
+}
+
+function setDisplayCommand(command: DisplayCommand) {
+  sessionStore.setDisplayCommand(command)
 }
 
 watch(

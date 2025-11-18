@@ -18,3 +18,11 @@ app.use(router).mount('#app')
 
 const bibleBooksStore = useBibleBooksStore()
 void bibleBooksStore.ensureLoaded()
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      // ignore SW registration failures
+    })
+  })
+}

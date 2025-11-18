@@ -46,6 +46,11 @@
           },
           "required": ["required"],
           "additionalProperties": false
+        },
+        "displayCommand": {
+          "type": "string",
+          "enum": ["normal", "black", "clear", "freeze"],
+          "default": "normal"
         }
       },
       "required": ["translation", "reference", "verses", "currentIndex"],

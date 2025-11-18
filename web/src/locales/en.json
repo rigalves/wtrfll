@@ -4,6 +4,15 @@
       "home": "Home",
       "newSession": "Create session"
     },
+    "status": {
+      "verse": "Currently showing verse {verse}",
+      "command": {
+        "normal": "Display is showing content",
+        "black": "Display is blacked out",
+        "clear": "Display cleared",
+        "freeze": "Display frozen"
+      }
+    },
     "catalog": {
       "loadingTitle": "Loading catalogs…",
       "loadingDescription": "Waiting for the backend to expose bible book metadata. Make sure the server is running.",
@@ -37,6 +46,10 @@
     "controlLinkDescription": "Share this link with the operator",
     "displayLinkLabel": "Display",
     "displayLinkDescription": "Share this link with the projector / Chromecast",
+    "copy": {
+      "copyButton": "Copy link",
+      "copied": "Copied!"
+    },
     "errors": {
       "createFailed": "Unable to create the session.",
       "unexpected": "Unexpected error while creating the session."
@@ -59,6 +72,25 @@
     "versesLabel": "Verses:",
     "fullChapter": "Full chapter",
     "waitingConnection": "Connect the generated link from /new to unlock the session.",
+    "commands": {
+      "normal": "Show content",
+      "black": "Black screen",
+      "clear": "Clear text",
+      "freeze": "Freeze display"
+    },
+    "stepper": {
+      "previous": "Previous verse",
+      "next": "Next verse"
+    },
+    "status": {
+      "verse": "Currently showing verse {verse}",
+      "command": {
+        "normal": "Display is showing content",
+        "black": "Display is blacked out",
+        "clear": "Display cleared",
+        "freeze": "Display frozen"
+      }
+    },
     "translations": {
       "available": "Available translations",
       "provider": "Provider",
@@ -69,7 +101,8 @@
   "display": {
     "sessionLabel": "Display session {code}",
     "waiting": "Waiting for a valid join token…",
-    "loading": "Waiting for passage content…"
+    "loading": "Waiting for passage content…",
+    "cleared": "Display cleared"
   },
   "session": {
     "joinErrors": {

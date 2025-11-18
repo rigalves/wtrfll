@@ -4,6 +4,15 @@
       "home": "Inicio",
       "newSession": "Crear sesión"
     },
+    "status": {
+      "verse": "Mostrando verso {verse}",
+      "command": {
+        "normal": "La pantalla muestra contenido",
+        "black": "Pantalla en negro",
+        "clear": "Pantalla sin texto",
+        "freeze": "Pantalla congelada"
+      }
+    },
     "catalog": {
       "loadingTitle": "Cargando catálogos…",
       "loadingDescription": "Esperando a que el backend exponga los libros bíblicos. Asegúrate de que el proyecto server esté en ejecución.",
@@ -37,6 +46,10 @@
     "controlLinkDescription": "Comparte este enlace con el operador",
     "displayLinkLabel": "Display",
     "displayLinkDescription": "Comparte este enlace con la pantalla / Chromecast",
+    "copy": {
+      "copyButton": "Copiar enlace",
+      "copied": "¡Copiado!"
+    },
     "errors": {
       "createFailed": "No se pudo crear la sesión.",
       "unexpected": "Ocurrió un error inesperado al crear la sesión."
@@ -59,6 +72,25 @@
     "versesLabel": "Versos:",
     "fullChapter": "Capítulo completo",
     "waitingConnection": "Conecta el enlace generado en /new para habilitar la sesión.",
+    "commands": {
+      "normal": "Mostrar contenido",
+      "black": "Pantalla negra",
+      "clear": "Limpiar texto",
+      "freeze": "Congelar display"
+    },
+    "stepper": {
+      "previous": "Verso anterior",
+      "next": "Siguiente verso"
+    },
+    "status": {
+      "verse": "Mostrando verso {verse}",
+      "command": {
+        "normal": "La pantalla muestra contenido",
+        "black": "Pantalla en negro",
+        "clear": "Pantalla sin texto",
+        "freeze": "Pantalla congelada"
+      }
+    },
     "translations": {
       "available": "Traducciones disponibles",
       "provider": "Proveedor",
@@ -69,7 +101,8 @@
   "display": {
     "sessionLabel": "Sesión Display {code}",
     "waiting": "Esperando enlace con token válido…",
-    "loading": "Esperando contenido…"
+    "loading": "Esperando contenido…",
+    "cleared": "Display sin contenido"
   },
   "session": {
     "joinErrors": {

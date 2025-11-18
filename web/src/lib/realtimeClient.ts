@@ -3,6 +3,8 @@ import * as signalR from '@microsoft/signalr'
 const REALTIME_URL = import.meta.env.VITE_REALTIME_URL ?? '/realtime'
 const ENABLE_REALTIME = (import.meta.env.VITE_ENABLE_REALTIME ?? 'true') === 'true'
 
+export type DisplayCommand = 'normal' | 'black' | 'clear' | 'freeze'
+
 export interface SessionPresentationOptions {
   showVerseNumbers?: boolean
   showReference?: boolean
@@ -19,6 +21,7 @@ export interface SessionStatePatchPayload {
     passageRef: string
     currentIndex?: number
     options?: SessionPresentationOptions
+    displayCommand?: DisplayCommand
   }
 }
 
@@ -41,6 +44,7 @@ export interface SessionStateUpdatePayload {
       text?: string | null
       url?: string | null
     }
+    displayCommand?: DisplayCommand
   }
 }
 

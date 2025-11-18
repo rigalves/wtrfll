@@ -8,6 +8,38 @@ import type { paths } from '../../../shared/typescript/api'
 
 type JoinResponse = paths['/api/sessions/{id}/join']['post']['responses']['200']['content']['application/json']
 
+const STORAGE_KEY = 'wtrfll.join-info'
+
+type StoredJoinInfo = {
+  sessionId: string
+  joinToken: string
+  role: 'controller' | 'display'
+}
+
+function loadStoredInfos(): StoredJoinInfo[] {
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY)
+    if (!raw) {
+      return []
+    }
+    return JSON.parse(raw) as StoredJoinInfo[]
+  } catch {
+    return []
+  }
+}
+
+function persistJoinInfo(info: StoredJoinInfo) {
+  const existing = loadStoredInfos().filter(
+    (entry) => !(entry.sessionId === info.sessionId && entry.role === info.role),
+  )
+  existing.push(info)
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(existing))
+}
+
+function getStoredJoinInfo(sessionId: string, role: 'controller' | 'display'): StoredJoinInfo | undefined {
+  return loadStoredInfos().find((entry) => entry.sessionId === sessionId && entry.role === role)
+}
+
 export const useSessionParticipationStore = defineStore('sessionParticipation', () => {
   const activeSessionId = ref<string | null>(null)
   const activeJoinToken = ref<string | null>(null)
@@ -33,6 +65,12 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
       return
     }
 
+    const stored = getStoredJoinInfo(options.sessionId, options.role)
+    if (stored && stored.joinToken === options.joinToken) {
+      resumeFromStorage(options)
+      return
+    }
+
     joinState.value = 'joining'
     joinErrorMessage.value = null
     activeJoinToken.value = null
@@ -45,10 +83,14 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
 
       if (error) {
         const { statusCode } = getErrorDetailsFromApiResponse(error)
-        if (statusCode === 409) {
+        if (statusCode === 409 && stored && stored.joinToken === options.joinToken) {
+          resumeFromStorage(options)
+        } else if (statusCode === 409) {
           setJoinError('session.joinErrors.controllerLocked')
         } else if (statusCode === 404) {
           setJoinError('session.joinErrors.notFound')
+        } else if (statusCode === 400 && stored && stored.joinToken === options.joinToken) {
+          resumeFromStorage(options)
         } else if (statusCode === 400) {
           setJoinError('session.joinErrors.invalidToken')
         } else {
@@ -68,8 +110,14 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
       activeRole.value = options.role
       joinState.value = 'joined'
       joinErrorMessage.value = null
-    } catch (error) {
-      setJoinError('session.joinErrors.invalidToken')
+      persistJoinInfo({ sessionId: options.sessionId, joinToken: options.joinToken, role: options.role })
+    } catch {
+      const fallback = getStoredJoinInfo(options.sessionId, options.role)
+      if (fallback && fallback.joinToken === options.joinToken) {
+        resumeFromStorage(options)
+      } else {
+        setJoinError('session.joinErrors.invalidToken')
+      }
     }
   }
 
@@ -88,7 +136,17 @@ export const useSessionParticipationStore = defineStore('sessionParticipation', 
     joinState,
     joinErrorMessage,
     joinSession,
+    getStoredJoinToken: (sessionId: string, role: 'controller' | 'display') =>
+      getStoredJoinInfo(sessionId, role)?.joinToken ?? null,
     setJoinError,
     reset,
+  }
+
+  function resumeFromStorage(options: { sessionId: string; joinToken: string; role: 'controller' | 'display' }) {
+    activeSessionId.value = options.sessionId
+    activeJoinToken.value = options.joinToken
+    activeRole.value = options.role
+    joinState.value = 'joined'
+    joinErrorMessage.value = null
   }
 })

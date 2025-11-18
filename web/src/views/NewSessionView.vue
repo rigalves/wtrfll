@@ -33,6 +33,13 @@
             <code class="mt-2 block break-all rounded bg-black/30 p-3 text-xs text-slate-200">
               {{ controllerLink }}
             </code>
+            <button
+              type="button"
+              class="mt-3 rounded-lg border border-white/20 px-3 py-1 text-xs text-slate-100"
+              @click="copyLink('controller')"
+            >
+              {{ copyStatus.controller ? t('newSession.copy.copied') : t('newSession.copy.copyButton') }}
+            </button>
           </div>
           <div class="rounded-xl border border-white/15 bg-black/20 p-4">
             <p class="text-sm uppercase tracking-[0.3em] text-slate-500">{{ t('newSession.displayLinkLabel') }}</p>
@@ -40,6 +47,13 @@
             <code class="mt-2 block break-all rounded bg-black/30 p-3 text-xs text-slate-200">
               {{ displayLink }}
             </code>
+            <button
+              type="button"
+              class="mt-3 rounded-lg border border-white/20 px-3 py-1 text-xs text-slate-100"
+              @click="copyLink('display')"
+            >
+              {{ copyStatus.display ? t('newSession.copy.copied') : t('newSession.copy.copyButton') }}
+            </button>
           </div>
         </div>
       </div>
@@ -60,6 +74,7 @@ const { t } = useI18n()
 const isCreating = ref(false)
 const errorMessageKey = ref<string | null>(null)
 const session = ref<CreateSessionResponse | null>(null)
+const copyStatus = ref({ controller: false, display: false })
 
 const controllerLink = computed(() => {
   if (!session.value) return ''
@@ -91,6 +106,22 @@ async function createSession() {
     session.value = null
   } finally {
     isCreating.value = false
+  }
+}
+
+async function copyLink(kind: 'controller' | 'display') {
+  const link = kind === 'controller' ? controllerLink.value : displayLink.value
+  if (!link) {
+    return
+  }
+  try {
+    await navigator.clipboard.writeText(link)
+    copyStatus.value[kind] = true
+    window.setTimeout(() => {
+      copyStatus.value[kind] = false
+    }, 2000)
+  } catch {
+    // ignore clipboard failures
   }
 }
 </script>

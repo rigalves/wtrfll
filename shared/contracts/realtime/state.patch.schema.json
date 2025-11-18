@@ -22,6 +22,10 @@
             "theme": { "type": "string" }
           },
           "additionalProperties": false
+        },
+        "displayCommand": {
+          "type": "string",
+          "enum": ["normal", "black", "clear", "freeze"]
         }
       },
       "additionalProperties": false

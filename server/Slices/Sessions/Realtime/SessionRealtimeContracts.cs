@@ -20,6 +20,7 @@ public sealed record SessionStatePatchBody
     public required string PassageRef { get; init; }
     public int CurrentIndex { get; init; }
     public SessionPresentationOptions? Options { get; init; }
+    public string? DisplayCommand { get; init; }
 }
 
 public sealed record SessionStateUpdateMessage
@@ -37,6 +38,7 @@ public sealed record SessionRealtimeState
     public required int CurrentIndex { get; init; }
     public SessionPresentationOptions? Options { get; init; }
     public AttributionDto? Attribution { get; init; }
+    public string DisplayCommand { get; init; } = SessionDisplayCommands.Normal;
 }
 
 public sealed record SessionPresentationOptions
@@ -60,4 +62,17 @@ public sealed record SessionHeartbeatRequest
 {
     public required int ContractVersion { get; init; }
     public required Guid SessionId { get; init; }
+}
+
+public static class SessionDisplayCommands
+{
+    public const string Normal = "normal";
+    public const string Black = "black";
+    public const string Clear = "clear";
+    public const string Freeze = "freeze";
+
+    public static bool IsValid(string? command)
+    {
+        return command is null or Normal or Black or Clear or Freeze;
+    }
 }
