@@ -3,7 +3,7 @@ info:
   title: wtrfll API
   description: REST API for sessions, bibles, and passage retrieval.
   version: 0.1.0
-  x-contractVersion: 2
+  x-contractVersion: 3
 servers:
   - url: http://localhost:5000
     description: LAN default (server hosts API + static web)
@@ -12,6 +12,12 @@ paths:
     post:
       summary: Create a new session
       operationId: createSession
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionRequest'
       responses:
         '201':
           description: Session created
@@ -21,6 +27,19 @@ paths:
                 $ref: '#/components/schemas/SessionCreated'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /api/sessions/upcoming:
+    get:
+      summary: List upcoming sessions
+      operationId: listUpcomingSessions
+      responses:
+        '200':
+          description: Upcoming sessions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UpcomingSession'
   /api/sessions/{id}/join:
     post:
       summary: Join an existing session
@@ -145,7 +164,23 @@ components:
         createdAt:
           type: string
           format: date-time
-      required: [id, shortCode, controllerJoinToken, displayJoinToken, createdAt]
+        name:
+          type: string
+        scheduledAt:
+          type: string
+          format: date-time
+          nullable: true
+      required: [id, shortCode, controllerJoinToken, displayJoinToken, createdAt, name]
+    CreateSessionRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 160
+        scheduledAt:
+          type: string
+          format: date-time
+          nullable: true
     JoinRequest:
       type: object
       properties:
@@ -172,7 +207,35 @@ components:
         role:
           type: string
           enum: [controller, display]
-      required: [ok, controllerLocked, sessionId, shortCode, role]
+        name:
+          type: string
+        scheduledAt:
+          type: string
+          format: date-time
+          nullable: true
+      required: [ok, controllerLocked, sessionId, shortCode, role, name]
+    UpcomingSession:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        shortCode:
+          type: string
+        controllerJoinToken:
+          type: string
+        displayJoinToken:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        scheduledAt:
+          type: string
+          format: date-time
+          nullable: true
+      required: [id, name, shortCode, controllerJoinToken, displayJoinToken, createdAt]
     Bible:
       type: object
       properties:

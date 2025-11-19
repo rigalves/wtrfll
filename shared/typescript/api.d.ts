@@ -21,6 +21,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/sessions/upcoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List upcoming sessions */
+        get: operations["listUpcomingSessions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/sessions/{id}/join": {
         parameters: {
             query?: never;
@@ -107,6 +124,14 @@ export interface components {
             displayJoinToken: string;
             /** Format: date-time */
             createdAt: string;
+            name: string;
+            /** Format: date-time */
+            scheduledAt?: string | null;
+        };
+        CreateSessionRequest: {
+            name?: string;
+            /** Format: date-time */
+            scheduledAt?: string | null;
         };
         JoinRequest: {
             /** @enum {string} */
@@ -122,6 +147,21 @@ export interface components {
             shortCode: string;
             /** @enum {string} */
             role: "controller" | "display";
+            name: string;
+            /** Format: date-time */
+            scheduledAt?: string | null;
+        };
+        UpcomingSession: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+            shortCode: string;
+            controllerJoinToken: string;
+            displayJoinToken: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            scheduledAt?: string | null;
         };
         Bible: {
             /** @example RVR1960 */
@@ -206,7 +246,11 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CreateSessionRequest"];
+            };
+        };
         responses: {
             /** @description Session created */
             201: {
@@ -218,6 +262,26 @@ export interface operations {
                 };
             };
             400: components["responses"]["BadRequest"];
+        };
+    };
+    listUpcomingSessions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Upcoming sessions */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpcomingSession"][];
+                };
+            };
         };
     };
     joinSession: {

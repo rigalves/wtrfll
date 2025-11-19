@@ -299,6 +299,22 @@ export const useSessionStore = defineStore('session', () => {
     return Math.min(Math.max(index, 0), total - 1)
   }
 
+  async function setActiveTranslation(code: string) {
+    if (!code || code === activeTranslationCode.value) {
+      return
+    }
+    activeTranslationCode.value = code
+    if (
+      participationStore.joinState === 'joined' &&
+      participationStore.activeRole === 'controller' &&
+      currentPassage.value
+    ) {
+      const loadToken = ++latestLoadToken
+      await loadPassageContent(currentPassage.value, loadToken)
+      broadcastStatePatch(currentPassage.value)
+    }
+  }
+
   return {
     currentPassage,
     lastParseError,
@@ -314,5 +330,6 @@ export const useSessionStore = defineStore('session', () => {
     setDisplayCommand,
     displayCommand,
     currentPresentationIndex,
+    setActiveTranslation,
   }
 })

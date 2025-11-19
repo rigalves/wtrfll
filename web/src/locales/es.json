@@ -5,47 +5,74 @@
       "newSession": "Crear sesión"
     },
     "status": {
-      "verse": "Mostrando verso {verse}",
+      "verse": "Mostrando versículo {verse}",
       "command": {
         "normal": "La pantalla muestra contenido",
         "black": "Pantalla en negro",
-        "clear": "Pantalla sin texto",
+        "clear": "Texto oculto",
         "freeze": "Pantalla congelada"
       }
     },
     "catalog": {
-      "loadingTitle": "Cargando catálogos…",
-      "loadingDescription": "Esperando a que el backend exponga los libros bíblicos. Asegúrate de que el proyecto server esté en ejecución.",
-      "retrying": "Reintentaremos automáticamente en unos segundos…"
+      "loadingTitle": "Cargando referencias...",
+      "loadingDescription": "wtrfll se esta preparando. Si el mensaje permanece, asegurate de que el servidor este encendido.",
+      "retrying": "Reintentaremos automaticamente en unos segundos."
     },
     "language": {
       "label": "Idioma"
     }
   },
-  "home": {
-    "tagline": "Bienvenido",
-    "title": "wtrfll mantiene Control y Display sincronizados",
-    "description": "Crea una sesión, comparte los enlaces generados y deja que el operador publique referencias mientras la pantalla las refleja en vivo.",
-    "cta": "Crear nueva sesión",
-    "howItWorks": "¿Cómo funciona?",
-    "steps": [
-      "Crea una sesión y comparte los enlaces de Control y Display.",
-      "Desde Control escribe una referencia (Juan 3:16-18, Salmo 23, etc.) y publícala.",
-      "Display recibe ese estado mediante SignalR para mantener todas las pantallas sincronizadas."
-    ]
+  "landing": {
+    "tagline": "Elige tu rol",
+    "title": "Inicia o únete a una sesión en vivo",
+    "description": "Selecciona Control o Display, abre la ventana correspondiente y aplicaremos el token correcto automáticamente.",
+    "status": {
+      "loading": "Cargando sesiones próximas..."
+    },
+    "errors": {
+      "loadUpcomingFailed": "No pudimos cargar las sesiones próximas."
+    },
+    "shortCodeLabel": "Código corto {code}",
+    "roles": {
+      "controller": {
+        "roleLabel": "Control",
+        "title": "Dirige desde la vista de control",
+        "description": "Crea sesiones con nombre para cada servicio, publica referencias y controla los comandos del display.",
+        "button": "Abrir control",
+        "empty": "Aún no hay sesiones. Crea una para comenzar.",
+        "primaryActionLabel": "Crear sesión"
+      },
+      "display": {
+        "roleLabel": "Display",
+        "title": "Proyecta los versículos sincronizados",
+        "description": "Abre la vista de display en el proyector y se mantendrá sincronizada con el controlador.",
+        "button": "Abrir display",
+        "empty": "No hay sesiones próximas disponibles. Pide al controlador que cree una."
+      }
+    }
   },
   "newSession": {
     "tagline": "Nueva sesión",
     "title": "Genera enlaces para Control y Display",
     "description": "Crea una sesión para este servicio y comparte los enlaces del controlador y la pantalla. Cada enlace incluye un token único.",
     "createButton": "Crear sesión",
-    "creating": "Creando…",
-    "shortCode": "Código corto",
-    "createdAt": "Creada {date}",
+    "creating": "Creando...",
     "controlLinkLabel": "Control",
-    "controlLinkDescription": "Comparte este enlace con el operador",
+    "controlLinkDescription": "Comparte este enlace con el dispositivo del controlador",
     "displayLinkLabel": "Display",
-    "displayLinkDescription": "Comparte este enlace con la pantalla / Chromecast",
+    "displayLinkDescription": "Comparte este enlace con la pantalla o Chromecast",
+    "form": {
+      "nameLabel": "Nombre de la sesión",
+      "namePlaceholder": "Ej. Culto domingo 9AM",
+      "scheduleLabel": "Fecha y hora programadas",
+      "scheduleHelp": "Opcional. Mostramos las sesiones próximas ordenadas por este horario."
+    },
+    "sessionSummary": {
+      "nameLabel": "Nombre de la sesión",
+      "shortCodeLabel": "Código corto",
+      "scheduleLabel": "Programada para",
+      "createdAt": "Creada {date}"
+    },
     "copy": {
       "copyButton": "Copiar enlace",
       "copied": "¡Copiado!"
@@ -58,7 +85,7 @@
   "controller": {
     "title": "Vista de Control",
     "sessionLabel": "Sesión {code}",
-    "headerDescription": "La referencia que publiques alimenta el estado compartido y se reflejará en la vista Display (y clientes SignalR).",
+    "headerDescription": "Todo lo que publiques aqui aparece al instante en cada pantalla conectada.",
     "referenceLabel": "Referencia bíblica",
     "referencePlaceholder": "Juan 3:16-18",
     "historyLabel": "Historial reciente",
@@ -66,24 +93,24 @@
     "publish": "Publicar",
     "reset": "Restablecer",
     "draftDifferent": "Borrador distinto al publicado",
-    "normalizedOutput": "Salida normalizada",
+    "normalizedOutput": "Mostrando ahora",
     "normalizedUpdated": "Actualizado {time}",
-    "historyInfo": "Ingresa una referencia y publícala para registrarla.",
-    "versesLabel": "Versos:",
+    "historyInfo": "Escribe una referencia y publicala cuando estes listo.",
+    "versesLabel": "Versículos:",
     "fullChapter": "Capítulo completo",
     "waitingConnection": "Conecta el enlace generado en /new para habilitar la sesión.",
     "commands": {
       "normal": "Mostrar contenido",
       "black": "Pantalla negra",
-      "clear": "Limpiar texto",
+      "clear": "Quitar texto",
       "freeze": "Congelar display"
     },
     "stepper": {
-      "previous": "Verso anterior",
-      "next": "Siguiente verso"
+      "previous": "Versículo anterior",
+      "next": "Siguiente versículo"
     },
     "status": {
-      "verse": "Mostrando verso {verse}",
+      "verse": "Mostrando versículo {verse}",
       "command": {
         "normal": "La pantalla muestra contenido",
         "black": "Pantalla en negro",
@@ -92,17 +119,21 @@
       }
     },
     "translations": {
-      "available": "Traducciones disponibles",
-      "provider": "Proveedor",
-      "providerHint": "Se cargan desde /api/bibles (backend). Las que dicen Offline están listas sin conexión.",
-      "offlineBadge": "Offline"
+      "available": "Traducciones",
+      "providerHint": "Elige el texto que vera la congregacion. \"Listo sin conexion\" significa que ya viene incluido.",
+      "offlineBadge": "Listo sin conexion",
+      "language": "Idioma: {code}",
+      "selectedLabel": "Activo",
+      "currentLabel": "Seleccionado: {code}"
     }
   },
   "display": {
-    "sessionLabel": "Sesión Display {code}",
-    "waiting": "Esperando enlace con token válido…",
-    "loading": "Esperando contenido…",
-    "cleared": "Display sin contenido"
+    "sessionLabel": "Sesion {code}",
+    "waiting": "Esperando al controlador...",
+    "loading": "Cargando pasaje...",
+    "cleared": "Display sin contenido",
+    "sessionBadge": "{name} - {code}",
+    "sessionBadgeFallback": "Codigo de sesion {code}"
   },
   "session": {
     "joinErrors": {

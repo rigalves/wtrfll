@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-surface text-textPrimary">
-    <header class="border-b border-white/10 bg-black/30">
+  <div :class="['min-h-screen', showAppChrome ? 'bg-surface text-textPrimary' : 'bg-black text-white']">
+    <header v-if="showAppChrome" class="border-b border-white/10 bg-black/30">
       <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <RouterLink to="/" class="text-lg font-semibold tracking-wide">wtrfll</RouterLink>
         <div class="flex items-center gap-6 text-sm text-slate-300">
@@ -42,9 +42,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 
 import { setLocale } from '@/lib/i18n'
 import { useBibleBooksStore } from '@/stores/bibleBooksStore'
@@ -53,6 +53,8 @@ const bibleBooksStore = useBibleBooksStore()
 const RETRY_DELAY_MS = 3000
 const { t, locale } = useI18n()
 const currentLocale = locale
+const route = useRoute()
+const showAppChrome = computed(() => route.name !== 'display')
 
 function triggerLoad() {
   bibleBooksStore.ensureLoaded().catch(() => {

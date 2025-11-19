@@ -143,33 +143,61 @@
       </div>
 
       <aside class="space-y-5 rounded-2xl border border-white/10 bg-white/5 p-6">
-        <div>
+        <div class="flex items-center justify-between">
           <p class="text-sm font-semibold text-slate-200">{{ t('controller.translations.available') }}</p>
-          <p class="text-xs text-slate-500">{{ t('controller.translations.providerHint') }}</p>
+          <p class="text-xs text-slate-500">
+            {{ t('controller.translations.currentLabel', { code: activeTranslationCode }) }}
+          </p>
         </div>
+        <p class="text-xs text-slate-500">{{ t('controller.translations.providerHint') }}</p>
+
         <div class="space-y-3 text-sm">
           <div v-if="biblesStore.loading" class="text-slate-400">{{ t('display.loading') }}</div>
-          <ul v-else class="space-y-2">
-            <li v-for="bible in biblesStore.translations" :key="bible.code" class="rounded border border-white/10 p-3">
-              <div class="flex items-center justify-between">
-                <div class="flex flex-col">
-                  <p class="font-semibold">{{ bible.name }}</p>
-                  <p class="text-xs text-slate-400">
-                    {{ t('controller.translations.provider') }}: {{ bible.provider }} · Cache: {{ bible.cachePolicy }}
-                  </p>
-                </div>
-                <div class="flex flex-col items-end gap-1">
-                  <span class="text-xs uppercase text-slate-400">{{ bible.language }}</span>
+          <fieldset v-else class="space-y-2">
+            <label
+              v-for="bible in biblesStore.translations"
+              :key="bible.code"
+              class="block cursor-pointer"
+            >
+              <input
+                type="radio"
+                class="sr-only"
+                :value="bible.code"
+                :checked="activeTranslationCode === bible.code"
+                @change="selectTranslation(bible.code)"
+              />
+              <div
+                :class="[
+                  'rounded-xl border p-4 transition',
+                  activeTranslationCode === bible.code
+                    ? 'border-sky-400 bg-sky-500/10'
+                    : 'border-white/15 bg-black/20 hover:border-sky-200/40',
+                ]"
+              >
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="font-semibold text-white">{{ bible.name }}</p>
+                    <p class="text-xs text-slate-400">
+                      {{ t('controller.translations.language', { code: (bible.language ?? '').toUpperCase() }) }}
+                    </p>
+                    <p class="text-xs text-slate-500">{{ bible.code }}</p>
+                  </div>
                   <span
-                    v-if="bible.isOfflineReady"
-                    class="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-200"
+                    v-if="activeTranslationCode === bible.code"
+                    class="text-xs font-semibold uppercase tracking-wide text-sky-300"
                   >
-                    {{ t('controller.translations.offlineBadge') }}
+                    {{ t('controller.translations.selectedLabel') }}
                   </span>
                 </div>
+                <span
+                  v-if="bible.isOfflineReady"
+                  class="mt-3 inline-flex items-center rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-200"
+                >
+                  {{ t('controller.translations.offlineBadge') }}
+                </span>
               </div>
-            </li>
-          </ul>
+            </label>
+          </fieldset>
         </div>
       </aside>
     </div>
@@ -206,7 +234,7 @@ const referenceInputFieldModel = computed({
 })
 
 const { recentHistory, hasDraftChanges } = storeToRefs(referenceInputStore)
-const { controllerViewModel } = storeToRefs(sessionStore)
+const { controllerViewModel, activeTranslationCode } = storeToRefs(sessionStore)
 
 const visibleHistory = computed(() => recentHistory.value.slice(0, 5))
 const verseSpanSummary = computed(() =>
@@ -271,6 +299,10 @@ function applyHistoryEntry(entry: string) {
 
 function setDisplayCommand(command: DisplayCommand) {
   sessionStore.setDisplayCommand(command)
+}
+
+function selectTranslation(code: string) {
+  sessionStore.setActiveTranslation(code)
 }
 
 watch(

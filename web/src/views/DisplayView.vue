@@ -1,7 +1,6 @@
 <template>
-  <main class="flex min-h-screen flex-col bg-black text-white">
+  <main class="relative flex min-h-screen flex-col bg-black text-white">
     <section class="flex flex-1 flex-col items-center justify-center gap-6 px-8 text-center">
-      <p class="text-sm uppercase tracking-[0.4em] text-slate-500">{{ sessionLabel }}</p>
       <div v-if="joinErrorText" class="rounded-xl border border-rose-300/40 bg-rose-500/15 p-4 text-rose-200">
         {{ joinErrorText }}
       </div>
@@ -29,6 +28,12 @@
         </template>
       </template>
     </section>
+    <div
+      v-if="sessionBadge"
+      class="pointer-events-none absolute left-6 top-6 text-xs uppercase tracking-[0.3em] text-slate-600"
+    >
+      {{ sessionBadge }}
+    </div>
   </main>
 </template>
 
@@ -68,9 +73,6 @@ const joinToken = computed(() => {
     ''
   )
 })
-const sessionLabel = computed(() =>
-  t('display.sessionLabel', { code: sessionParticipationStore.activeSessionId ?? 'demo' }),
-)
 const displayCommand = computed(() => displayViewModel.value.displayCommand ?? 'normal')
 
 const joinErrorText = computed(() =>
@@ -78,6 +80,22 @@ const joinErrorText = computed(() =>
     ? t(sessionParticipationStore.joinErrorMessage.key, sessionParticipationStore.joinErrorMessage.params ?? {})
     : null,
 )
+
+const sessionBadge = computed(() => {
+  const name = sessionParticipationStore.activeSessionName
+  const code = sessionParticipationStore.activeSessionShortCode
+  if (name && code) {
+    return t('display.sessionBadge', { name, code })
+  }
+  if (code) {
+    return t('display.sessionBadgeFallback', { code })
+  }
+  if (sessionParticipationStore.activeSessionId) {
+    const fallback = sessionParticipationStore.activeSessionId.slice(-6).toUpperCase()
+    return t('display.sessionBadgeFallback', { code: fallback })
+  }
+  return null
+})
 
 watch(
   () => [props.sessionId, joinToken.value],

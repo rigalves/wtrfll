@@ -37,6 +37,14 @@ public partial class AppDbContextModelSnapshot : ModelSnapshot
                 .HasMaxLength(64)
                 .HasColumnType("TEXT");
 
+            b.Property<string>("Name")
+                .IsRequired()
+                .HasMaxLength(160)
+                .HasColumnType("TEXT");
+
+            b.Property<DateTime?>("ScheduledAt")
+                .HasColumnType("TEXT");
+
             b.Property<string>("ShortCode")
                 .IsRequired()
                 .HasMaxLength(12)

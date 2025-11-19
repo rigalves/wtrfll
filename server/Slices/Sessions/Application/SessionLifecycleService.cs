@@ -17,16 +17,23 @@ public sealed class SessionLifecycleService
         _dbContext = dbContext;
     }
 
-    public async Task<SessionCreatedDto> CreateSessionAsync(CancellationToken cancellationToken)
+    public async Task<SessionCreatedDto> CreateSessionAsync(CreateSessionRequestDto request, CancellationToken cancellationToken)
     {
+        var desiredName = request.Name?.Trim();
+        var shortCode = await GenerateUniqueShortCodeAsync(cancellationToken);
+        var fallbackName = string.IsNullOrWhiteSpace(desiredName) ? $"Session {shortCode}" : desiredName!;
+        var scheduledAtUtc = NormalizeToUtc(request.ScheduledAt);
+
         var session = new Session
         {
             Id = Guid.NewGuid(),
-            ShortCode = await GenerateUniqueShortCodeAsync(cancellationToken),
+            ShortCode = shortCode,
             ControllerJoinCode = GenerateJoinToken(),
             DisplayJoinCode = GenerateJoinToken(),
             CreatedAt = DateTime.UtcNow,
             Status = SessionStatus.Pending,
+            Name = fallbackName,
+            ScheduledAt = scheduledAtUtc,
         };
 
         _dbContext.Sessions.Add(session);
@@ -39,6 +46,8 @@ public sealed class SessionLifecycleService
             ControllerJoinToken = session.ControllerJoinCode,
             DisplayJoinToken = session.DisplayJoinCode,
             CreatedAt = session.CreatedAt,
+            Name = session.Name,
+            ScheduledAt = session.ScheduledAt,
         };
     }
 
@@ -77,6 +86,8 @@ public sealed class SessionLifecycleService
                 SessionId = session.Id,
                 ShortCode = session.ShortCode,
                 Role = role,
+                Name = session.Name,
+                ScheduledAt = session.ScheduledAt,
             };
             return JoinSessionOperationResult.ControllerLocked(lockedPayload);
         }
@@ -100,6 +111,8 @@ public sealed class SessionLifecycleService
             SessionId = session.Id,
             ShortCode = session.ShortCode,
             Role = role,
+            Name = session.Name,
+            ScheduledAt = session.ScheduledAt,
         });
     }
 
@@ -155,6 +168,21 @@ public sealed class SessionLifecycleService
     private static string GenerateJoinToken()
     {
         return Convert.ToHexString(RandomNumberGenerator.GetBytes(16));
+    }
+
+    private static DateTime? NormalizeToUtc(DateTime? input)
+    {
+        if (input is null)
+        {
+            return null;
+        }
+
+        return input.Value.Kind switch
+        {
+            DateTimeKind.Local => input.Value.ToUniversalTime(),
+            DateTimeKind.Unspecified => DateTime.SpecifyKind(input.Value, DateTimeKind.Utc),
+            _ => input,
+        };
     }
 }
 

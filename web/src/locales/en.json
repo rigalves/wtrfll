@@ -14,38 +14,65 @@
       }
     },
     "catalog": {
-      "loadingTitle": "Loading catalogs…",
-      "loadingDescription": "Waiting for the backend to expose bible book metadata. Make sure the server is running.",
-      "retrying": "Retrying automatically in a few seconds…"
+      "loadingTitle": "Preparing verse references...",
+      "loadingDescription": "wtrfll is getting ready. If this takes longer than a few seconds, make sure the wtrfll server is running.",
+      "retrying": "Retrying automatically in a few seconds."
     },
     "language": {
       "label": "Language"
     }
   },
-  "home": {
-    "tagline": "Welcome",
-    "title": "wtrfll keeps controller and display views in sync",
-    "description": "Create a session, share the generated links, and let the operator publish references while the display mirrors them live.",
-    "cta": "Create new session",
-    "howItWorks": "How does it work?",
-    "steps": [
-      "Create a session and share the Control and Display links.",
-      "From Control, type a reference (John 3:16-18, Psalm 23, etc.) and publish it.",
-      "Display receives that state via SignalR so every screen stays in sync."
-    ]
+  "landing": {
+    "tagline": "Choose your role",
+    "title": "Start or join a live scripture session",
+    "description": "Pick the controller or display role, launch the appropriate window, and we will attach the correct join token automatically.",
+    "status": {
+      "loading": "Loading upcoming sessions..."
+    },
+    "errors": {
+      "loadUpcomingFailed": "Unable to load upcoming sessions."
+    },
+    "shortCodeLabel": "Short code {code}",
+    "roles": {
+      "controller": {
+        "roleLabel": "Controller",
+        "title": "Lead from the controller view",
+        "description": "Create named sessions for each service, publish references, and manage the display commands.",
+        "button": "Open controller",
+        "empty": "No sessions yet. Create one to get started.",
+        "primaryActionLabel": "Create session"
+      },
+      "display": {
+        "roleLabel": "Display",
+        "title": "Project scriptures in sync",
+        "description": "Launch the display view on the projector device and it will listen for controller updates automatically.",
+        "button": "Open display",
+        "empty": "No upcoming sessions available. Ask the controller to create one."
+      }
+    }
   },
   "newSession": {
     "tagline": "New session",
     "title": "Generate Control and Display links",
     "description": "Create a session for this service and share the controller/display URLs. Each link includes a unique join token.",
     "createButton": "Create session",
-    "creating": "Creating…",
-    "shortCode": "Short code",
-    "createdAt": "Created {date}",
+    "creating": "Creating...",
     "controlLinkLabel": "Control",
-    "controlLinkDescription": "Share this link with the operator",
+    "controlLinkDescription": "Share this link with the controller device",
     "displayLinkLabel": "Display",
     "displayLinkDescription": "Share this link with the projector / Chromecast",
+    "form": {
+      "nameLabel": "Session name",
+      "namePlaceholder": "e.g. Sunday 9AM service",
+      "scheduleLabel": "Scheduled date and time",
+      "scheduleHelp": "Optional. We show upcoming sessions ordered by this schedule."
+    },
+    "sessionSummary": {
+      "nameLabel": "Session name",
+      "shortCodeLabel": "Short code",
+      "scheduleLabel": "Scheduled for",
+      "createdAt": "Created {date}"
+    },
     "copy": {
       "copyButton": "Copy link",
       "copied": "Copied!"
@@ -58,7 +85,7 @@
   "controller": {
     "title": "Control view",
     "sessionLabel": "Session {code}",
-    "headerDescription": "Published references power the shared state and reflect on the Display view (and SignalR clients).",
+    "headerDescription": "Whatever you publish here appears instantly on every connected screen.",
     "referenceLabel": "Scripture reference",
     "referencePlaceholder": "John 3:16-18",
     "historyLabel": "Recent history",
@@ -66,9 +93,9 @@
     "publish": "Publish",
     "reset": "Reset",
     "draftDifferent": "Draft differs from published",
-    "normalizedOutput": "Normalized output",
+    "normalizedOutput": "Now showing",
     "normalizedUpdated": "Updated {time}",
-    "historyInfo": "Enter a reference and publish to log it.",
+    "historyInfo": "Enter a reference and publish it when you are ready.",
     "versesLabel": "Verses:",
     "fullChapter": "Full chapter",
     "waitingConnection": "Connect the generated link from /new to unlock the session.",
@@ -92,17 +119,21 @@
       }
     },
     "translations": {
-      "available": "Available translations",
-      "provider": "Provider",
-      "providerHint": "Loaded from /api/bibles (backend). Entries marked Offline are bundled locally.",
-      "offlineBadge": "Offline ready"
+      "available": "Translations",
+      "providerHint": "Choose the wording your church will see. \"Works offline\" means it is bundled with the app.",
+      "offlineBadge": "Works offline",
+      "language": "Language: {code}",
+      "selectedLabel": "Active",
+      "currentLabel": "Selected: {code}"
     }
   },
   "display": {
-    "sessionLabel": "Display session {code}",
-    "waiting": "Waiting for a valid join token…",
-    "loading": "Waiting for passage content…",
-    "cleared": "Display cleared"
+    "sessionLabel": "Session {code}",
+    "waiting": "Waiting for the controller to connect...",
+    "loading": "Loading passage...",
+    "cleared": "Display cleared",
+    "sessionBadge": "{name} - {code}",
+    "sessionBadgeFallback": "Session code {code}"
   },
   "session": {
     "joinErrors": {

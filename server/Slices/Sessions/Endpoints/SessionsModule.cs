@@ -9,6 +9,7 @@ public static class SessionsModule
     public static IServiceCollection AddSessionsModule(this IServiceCollection services)
     {
         services.AddScoped<SessionLifecycleService>();
+        services.AddScoped<SessionQueryService>();
         services.AddSingleton<SessionConnectionRegistry>();
         return services;
     }
@@ -17,9 +18,10 @@ public static class SessionsModule
     {
         var group = endpoints.MapGroup("/api/sessions");
 
-        group.MapPost("/", async (SessionLifecycleService service, CancellationToken cancellationToken) =>
+        group.MapPost("/", async (CreateSessionRequestDto? request, SessionLifecycleService service, CancellationToken cancellationToken) =>
             {
-                var session = await service.CreateSessionAsync(cancellationToken);
+                var payload = request ?? new CreateSessionRequestDto();
+                var session = await service.CreateSessionAsync(payload, cancellationToken);
                 return Results.Created($"/api/sessions/{session.Id}", session);
             })
             .WithName("CreateSession")
@@ -39,6 +41,14 @@ public static class SessionsModule
             .WithName("JoinSession")
             .WithOpenApi();
 
+        group.MapGet("/upcoming", async (SessionQueryService queryService, CancellationToken cancellationToken) =>
+            {
+                var sessions = await queryService.GetUpcomingSessionsAsync(DateTime.UtcNow, cancellationToken);
+                return Results.Ok(sessions);
+            })
+            .WithName("ListUpcomingSessions")
+            .WithOpenApi();
+
         return endpoints;
     }
 
@@ -48,5 +58,4 @@ public static class SessionsModule
         return endpoints;
     }
 }
-
 

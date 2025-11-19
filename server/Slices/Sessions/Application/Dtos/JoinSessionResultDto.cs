@@ -10,6 +10,8 @@ public sealed record JoinSessionResultDto
     public Guid SessionId { get; init; }
     public required string ShortCode { get; init; }
     public SessionParticipantRole Role { get; init; }
+    public required string Name { get; init; }
+    public DateTime? ScheduledAt { get; init; }
 }
 
 
