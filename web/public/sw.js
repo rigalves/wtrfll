@@ -37,38 +37,24 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') {
     return;
   }
-  if (new URL(request.url).pathname.startsWith('/api') || new URL(request.url).pathname.startsWith('/realtime')) {
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) {
     return;
   }
-  const isSameOrigin = new URL(request.url).origin === self.location.origin;
+  if (url.pathname.startsWith('/api') || url.pathname.startsWith('/realtime')) {
+    return;
+  }
+  const isNavigation = request.mode === 'navigate';
+  const isCoreAsset = CORE_ASSETS.includes(url.pathname);
+  if (!isNavigation && !isCoreAsset) {
+    return;
+  }
   event.respondWith(
     caches.match(request).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
-      return fetch(request)
-        .then((response) => {
-          if (!response || response.status !== 200 || response.type !== 'basic' || !isSameOrigin) {
-            return response;
-          }
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then(async (cache) => {
-            try {
-              await cache.put(request, responseToCache);
-            } catch (error) {
-              if (error?.name === 'InvalidAccessError') {
-                await cache.delete(request).catch(() => undefined);
-                await cache.put(request, responseToCache).catch(() =>
-                  console.warn('[wtrfll-sw] Unable to update cache entry', request.url, error),
-                );
-              } else {
-                console.warn('[wtrfll-sw] Failed to update cache', request.url, error);
-              }
-            }
-          });
-          return response;
-        })
-        .catch(() => caches.match('/'));
+      return fetch(request).catch(() => caches.match('/'));
     }),
   );
 });

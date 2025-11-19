@@ -2,7 +2,10 @@
   <div :class="['min-h-screen', showAppChrome ? 'bg-surface text-textPrimary' : 'bg-black text-white']">
     <header v-if="showAppChrome" class="border-b border-white/10 bg-black/30">
       <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <RouterLink to="/" class="text-lg font-semibold tracking-wide">wtrfll</RouterLink>
+        <RouterLink to="/" class="flex items-center gap-2 text-lg font-semibold tracking-wide">
+          <img src="/icons/icon_32.png" alt="wtrfll logo" class="h-8 w-8 rounded-lg" />
+          wtrfll
+        </RouterLink>
         <div class="flex items-center gap-6 text-sm text-slate-300">
           <nav class="flex items-center gap-4">
             <RouterLink class="hover:text-white" to="/">{{ t('app.nav.home') }}</RouterLink>
