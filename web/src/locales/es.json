@@ -15,8 +15,8 @@
     },
     "catalog": {
       "loadingTitle": "Cargando referencias...",
-      "loadingDescription": "wtrfll se esta preparando. Si el mensaje permanece, asegurate de que el servidor este encendido.",
-      "retrying": "Reintentaremos automaticamente en unos segundos."
+      "loadingDescription": "wtrfll se está preparando. Si el mensaje permanece, asegúrate de que el servidor esté encendido.",
+      "retrying": "Reintentaremos automáticamente en unos segundos."
     },
     "language": {
       "label": "Idioma"
@@ -85,20 +85,26 @@
   "controller": {
     "title": "Vista de Control",
     "sessionLabel": "Sesión {code}",
-    "headerDescription": "Todo lo que publiques aqui aparece al instante en cada pantalla conectada.",
+    "headerDescription": "Todo lo que publiques aquí aparece al instante en cada pantalla conectada.",
     "referenceLabel": "Referencia bíblica",
     "referencePlaceholder": "Juan 3:16-18",
-    "historyLabel": "Historial reciente",
-    "historyEmpty": "Publica para llenar el historial.",
+    "referenceHelper": "Elige la traducción y escribe la referencia para esta diapositiva.",
     "publish": "Publicar",
-    "reset": "Restablecer",
-    "draftDifferent": "Borrador distinto al publicado",
-    "normalizedOutput": "Mostrando ahora",
     "normalizedUpdated": "Actualizado {time}",
-    "historyInfo": "Escribe una referencia y publicala cuando estes listo.",
     "versesLabel": "Versículos:",
     "fullChapter": "Capítulo completo",
     "waitingConnection": "Conecta el enlace generado en /new para habilitar la sesión.",
+    "slidesTitle": "Diapositivas",
+    "slidesEmpty": "Sin diapositivas aún. Agrega una para comenzar.",
+    "slideTypes": {
+      "passage": "Escritura",
+      "lyrics": "Letra (pronto)",
+      "image": "Imagen (pronto)",
+      "text": "Notas (pronto)"
+    },
+    "removeSlide": "Eliminar {label}",
+    "livePreviewTitle": "Vista previa en vivo",
+    "livePreviewUpdatedLabel": "Actualizado",
     "commands": {
       "normal": "Mostrar contenido",
       "black": "Pantalla negra",
@@ -107,7 +113,9 @@
     },
     "stepper": {
       "previous": "Versículo anterior",
-      "next": "Siguiente versículo"
+      "next": "Siguiente versículo",
+      "previousShort": "Anterior",
+      "nextShort": "Siguiente"
     },
     "status": {
       "verse": "Mostrando versículo {verse}",
@@ -120,20 +128,21 @@
     },
     "translations": {
       "available": "Traducciones",
-      "providerHint": "Elige el texto que vera la congregacion. \"Listo sin conexion\" significa que ya viene incluido.",
-      "offlineBadge": "Listo sin conexion",
+      "providerHint": "Elige el texto que verá la congregación. \"Listo sin conexión\" significa que ya viene incluido.",
+      "offlineBadge": "Listo sin conexión",
       "language": "Idioma: {code}",
       "selectedLabel": "Activo",
-      "currentLabel": "Seleccionado: {code}"
+      "currentLabel": "Seleccionado: {code}",
+      "loading": "Cargando traducciones..."
     }
   },
   "display": {
-    "sessionLabel": "Sesion {code}",
+    "sessionLabel": "Sesión {code}",
     "waiting": "Esperando al controlador...",
     "loading": "Cargando pasaje...",
     "cleared": "Display sin contenido",
     "sessionBadge": "{name} - {code}",
-    "sessionBadgeFallback": "Codigo de sesion {code}"
+    "sessionBadgeFallback": "Código de sesión {code}"
   },
   "session": {
     "joinErrors": {

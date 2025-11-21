@@ -88,17 +88,23 @@
     "headerDescription": "Whatever you publish here appears instantly on every connected screen.",
     "referenceLabel": "Scripture reference",
     "referencePlaceholder": "John 3:16-18",
-    "historyLabel": "Recent history",
-    "historyEmpty": "Publish to fill the history list.",
+    "referenceHelper": "Pick a translation and type the reference for this slide.",
     "publish": "Publish",
-    "reset": "Reset",
-    "draftDifferent": "Draft differs from published",
-    "normalizedOutput": "Now showing",
     "normalizedUpdated": "Updated {time}",
-    "historyInfo": "Enter a reference and publish it when you are ready.",
     "versesLabel": "Verses:",
     "fullChapter": "Full chapter",
     "waitingConnection": "Connect the generated link from /new to unlock the session.",
+    "slidesTitle": "Slides",
+    "slidesEmpty": "No slides yet. Add one to begin.",
+    "slideTypes": {
+      "passage": "Scripture",
+      "lyrics": "Lyrics (soon)",
+      "image": "Image (soon)",
+      "text": "Notes (soon)"
+    },
+    "removeSlide": "Remove {label}",
+    "livePreviewTitle": "Live preview",
+    "livePreviewUpdatedLabel": "Updated",
     "commands": {
       "normal": "Show content",
       "black": "Black screen",
@@ -107,7 +113,9 @@
     },
     "stepper": {
       "previous": "Previous verse",
-      "next": "Next verse"
+      "next": "Next verse",
+      "previousShort": "Previous",
+      "nextShort": "Next"
     },
     "status": {
       "verse": "Currently showing verse {verse}",
@@ -124,7 +132,8 @@
       "offlineBadge": "Works offline",
       "language": "Language: {code}",
       "selectedLabel": "Active",
-      "currentLabel": "Selected: {code}"
+      "currentLabel": "Selected: {code}",
+      "loading": "Loading translations..."
     }
   },
   "display": {

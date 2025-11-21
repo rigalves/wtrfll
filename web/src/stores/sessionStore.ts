@@ -92,7 +92,8 @@ export const useSessionStore = defineStore('session', () => {
     void normalizeAndLoad()
   }
 
-  async function normalizeAndLoad() {
+  async function normalizeAndLoad(options: { broadcast?: boolean } = {}) {
+    const shouldBroadcast = options.broadcast ?? true
     if (participationStore.activeRole !== 'controller') {
       return
     }
@@ -111,7 +112,9 @@ export const useSessionStore = defineStore('session', () => {
       lastParseError.value = null
       lastNormalizedAt.value = new Date()
       currentPresentationIndex.value = 0
-      broadcastStatePatch(parseResult.value)
+      if (shouldBroadcast) {
+        broadcastStatePatch(parseResult.value)
+      }
       const loadToken = ++latestLoadToken
       await loadPassageContent(parseResult.value, loadToken)
       return
@@ -315,6 +318,21 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
+  let previewDebounceId: ReturnType<typeof setTimeout> | null = null
+  function schedulePreviewRefresh() {
+    if (participationStore.joinState !== 'joined' || participationStore.activeRole !== 'controller') {
+      return
+    }
+    if (previewDebounceId) {
+      clearTimeout(previewDebounceId)
+    }
+    previewDebounceId = setTimeout(() => {
+      previewDebounceId = null
+      referenceInputStore.publishDraftInput({ pushToHistory: false })
+      void normalizeAndLoad({ broadcast: false })
+    }, 500)
+  }
+
   return {
     currentPassage,
     lastParseError,
@@ -331,5 +349,6 @@ export const useSessionStore = defineStore('session', () => {
     displayCommand,
     currentPresentationIndex,
     setActiveTranslation,
+    schedulePreviewRefresh,
   }
 })
