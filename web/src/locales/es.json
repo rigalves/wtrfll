@@ -1,9 +1,6 @@
-{
+﻿{
   "app": {
-    "nav": {
-      "home": "Inicio",
-      "newSession": "Crear sesión"
-    },
+    "nav": { "home": "Inicio", "newSession": "Crear sesión" },
     "status": {
       "verse": "Mostrando versículo {verse}",
       "command": {
@@ -18,20 +15,14 @@
       "loadingDescription": "wtrfll se está preparando. Si el mensaje permanece, asegúrate de que el servidor esté encendido.",
       "retrying": "Reintentaremos automáticamente en unos segundos."
     },
-    "language": {
-      "label": "Idioma"
-    }
+    "language": { "label": "Idioma" }
   },
   "landing": {
     "tagline": "Elige tu rol",
     "title": "Inicia o únete a una sesión en vivo",
     "description": "Selecciona Control o Display, abre la ventana correspondiente y aplicaremos el token correcto automáticamente.",
-    "status": {
-      "loading": "Cargando sesiones próximas..."
-    },
-    "errors": {
-      "loadUpcomingFailed": "No pudimos cargar las sesiones próximas."
-    },
+    "status": { "loading": "Cargando sesiones próximas..." },
+    "errors": { "loadUpcomingFailed": "No pudimos cargar las sesiones próximas." },
     "shortCodeLabel": "Código corto {code}",
     "roles": {
       "controller": {
@@ -73,10 +64,7 @@
       "scheduleLabel": "Programada para",
       "createdAt": "Creada {date}"
     },
-    "copy": {
-      "copyButton": "Copiar enlace",
-      "copied": "¡Copiado!"
-    },
+    "copy": { "copyButton": "Copiar enlace", "copied": "¡Copiado!" },
     "errors": {
       "createFailed": "No se pudo crear la sesión.",
       "unexpected": "Ocurrió un error inesperado al crear la sesión."
@@ -98,7 +86,7 @@
     "slidesEmpty": "Sin diapositivas aún. Agrega una para comenzar.",
     "slideTypes": {
       "passage": "Escritura",
-      "lyrics": "Letra (pronto)",
+      "lyrics": "Letra",
       "image": "Imagen (pronto)",
       "text": "Notas (pronto)"
     },
@@ -134,12 +122,34 @@
       "selectedLabel": "Activo",
       "currentLabel": "Seleccionado: {code}",
       "loading": "Cargando traducciones..."
+    },
+    "lyrics": {
+      "songSearchLabel": "Canciones",
+      "searchPlaceholder": "Busca canciones por título, autor o letra...",
+      "emptySongs": "No se encontraron canciones.",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Título de la canción",
+      "authorLabel": "Autor",
+      "authorPlaceholder": "Opcional",
+      "saving": "Guardando...",
+      "saveButton": "Guardar canción",
+      "textLabel": "Letra (ChordPro v2)",
+      "textPlaceholder": "Escribe o pega el texto en formato ChordPro v2...",
+      "chordProHint": "Usa directivas y acordes de ChordPro v2. Los acordes se omiten al mostrar la letra.",
+      "previewLabel": "Vista previa de la letra",
+      "previewEmpty": "Agrega la letra para verla aquí.",
+      "saveValidation": "El título y la letra son obligatorios para guardar."
+    },
+    "drafts": {
+      "scriptureTitle": "Borrador de escritura",
+      "lyricsTitle": "Borrador de letra",
+      "emptyScripture": "Agrega una referencia para ver el borrador."
     }
   },
   "display": {
     "sessionLabel": "Sesión {code}",
     "waiting": "Esperando al controlador...",
-    "loading": "Cargando pasaje...",
+    "loading": "Cargando contenido...",
     "cleared": "Display sin contenido",
     "sessionBadge": "{name} - {code}",
     "sessionBadgeFallback": "Código de sesión {code}"

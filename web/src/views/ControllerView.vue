@@ -14,8 +14,8 @@
             v-for="button in commandButtons"
             :key="button.command"
             type="button"
-            class="flex h-14 w-14 items-center justify-center rounded-full border border-white/20 text-base text-slate-200 hover:border-sky-400 hover:text-white"
-            :class="button.command === activeDisplayCommand ? 'bg-sky-500 text-white border-sky-400' : 'bg-black/30'"
+            class="flex h-14 w-14 items-center justify-center rounded-full border text-base text-slate-200 hover:border-sky-400 hover:text-white transition"
+            :class="button.command === activeDisplayCommand ? 'bg-sky-500 text-white border-sky-400 shadow-lg shadow-sky-500/30' : 'bg-black/30 border-white/20'"
             :title="button.label"
             @click="setDisplayCommand(button.command)"
           >
@@ -145,7 +145,7 @@
           >
             {{ controllerViewModel.lastParseError.message }}
           </p>
-          <div class="flex w-full flex-wrap items-center gap-4">
+          <div class="flex w-full flex-wrap items-center gap-3">
             <button
               type="button"
               class="flex flex-1 min-w-[6rem] flex-col items-center justify-center gap-1 rounded-full border border-white/20 px-4 py-3 text-center text-slate-200 disabled:border-white/10 disabled:text-slate-500"
@@ -172,7 +172,7 @@
             </button>
           </div>
 
-          <div class="pt-4">
+          <div class="pt-3">
             <div v-if="filteredTranslations.length">
               <Listbox
                 as="div"
@@ -209,7 +209,7 @@
                       >
                         <div>
                           <p class="font-semibold">{{ bible.name }}</p>
-                          <p class="text-xs text-slate-400">{{ bible.code }} · {{ bible.language.toUpperCase() }}</p>
+                          <p class="text-xs text-slate-400">{{ bible.code }} - {{ bible.language.toUpperCase() }}</p>
                         </div>
                         <div class="flex items-center gap-2">
                           <span
@@ -247,10 +247,114 @@
               {{ t('controller.translations.loading') }}
             </div>
           </div>
+
+          <div class="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+            <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.scriptureTitle') }}</p>
+            <p class="text-base font-semibold text-white" v-if="controllerViewModel.referenceDisplay">{{ controllerViewModel.referenceDisplay }}</p>
+            <div class="mt-2 space-y-2 text-sm text-slate-100">
+              <p v-for="(verse, index) in controllerViewModel.passageVerses" :key="verse.verse" :class="{ 'text-sky-300': controllerViewModel.currentIndex === index }">
+                <span class="mr-2 text-slate-500">{{ verse.verse }}</span>
+                {{ verse.text }}
+              </p>
+              <p v-if="!controllerViewModel.passageVerses.length" class="text-emerald-200/70">
+                {{ t('controller.drafts.emptyScripture') }}
+              </p>
+            </div>
+          </div>
         </template>
-        <template v-else>
-          <div class="rounded-xl border border-dashed border-white/10 bg-black/20 p-6 text-center text-slate-400">
-            Media editor placeholder (lyrics, images, text) will appear here.
+        <template v-else-if="isLyricsSlide">
+          <div class="space-y-4">
+            <div class="grid gap-3 sm:grid-cols-[1.5fr,1fr]">
+              <div class="space-y-2">
+                <label class="block text-sm font-semibold">{{ t('controller.lyrics.songSearchLabel') }}</label>
+                <input
+                  v-model="lyricsSearchTerm"
+                  type="text"
+                  class="w-full rounded-lg border border-white/15 bg-black/40 px-4 py-2 text-base placeholder:text-slate-500 focus:border-sky-400 focus:outline-none"
+                  :placeholder="t('controller.lyrics.searchPlaceholder')"
+                />
+                <div class="rounded-xl border border-white/10 bg-black/30 max-h-48 overflow-y-auto">
+                  <ul>
+                    <li
+                      v-for="entry in lyricsStore.entries"
+                      :key="entry.id"
+                      class="border-b border-white/5 last:border-0"
+                    >
+                      <button
+                        type="button"
+                        class="flex w-full items-center justify-between px-4 py-2 text-left text-sm"
+                        :class="entry.id === activeLyricsPayload.lyricsId ? 'text-sky-300' : 'text-slate-200'"
+                        @click="selectLyricsEntry(entry.id)"
+                      >
+                        <span class="font-semibold">{{ entry.title }}</span>
+                        <span class="text-xs text-slate-500" v-if="entry.author">{{ entry.author }}</span>
+                      </button>
+                    </li>
+                    <li v-if="!lyricsStore.entries.length" class="px-4 py-3 text-xs text-slate-500">
+                      {{ t('controller.lyrics.emptySongs') }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="block text-sm font-semibold">{{ t('controller.lyrics.titleLabel') }}</label>
+                <input
+                  type="text"
+                  class="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-slate-100 focus:border-sky-400 focus:outline-none"
+                  :placeholder="t('controller.lyrics.titlePlaceholder')"
+                  :value="activeLyricsPayload.title ?? ''"
+                  @input="onLyricsTitleChange(($event.target as HTMLInputElement).value)"
+                />
+                <label class="block text-sm font-semibold">{{ t('controller.lyrics.authorLabel') }}</label>
+                <input
+                  type="text"
+                  class="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-slate-100 focus:border-sky-400 focus:outline-none"
+                  :placeholder="t('controller.lyrics.authorPlaceholder')"
+                  :value="activeLyricsPayload.author ?? ''"
+                  @input="onLyricsAuthorChange(($event.target as HTMLInputElement).value)"
+                />
+                <div class="flex gap-2 pt-2">
+                  <button
+                    type="button"
+                    class="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-white hover:border-sky-400 hover:text-sky-200 disabled:border-white/10 disabled:text-slate-500"
+                    :disabled="lyricsSaveBusy"
+                    @click="saveLyricsFromSlide"
+                  >
+                    {{ lyricsSaveBusy ? t('controller.lyrics.saving') : t('controller.lyrics.saveButton') }}
+                  </button>
+                  <p v-if="lyricsSaveError" class="text-xs text-rose-300">{{ lyricsSaveError }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold">{{ t('controller.lyrics.textLabel') }}</label>
+              <textarea
+                class="w-full min-h-[220px] rounded-xl border border-white/15 bg-black/40 px-4 py-3 text-sm font-mono text-slate-100 focus:border-sky-400 focus:outline-none"
+                :placeholder="t('controller.lyrics.textPlaceholder')"
+                :value="activeLyricsPayload.lyricsChordPro"
+                @input="onLyricsTextChange(($event.target as HTMLTextAreaElement).value)"
+              ></textarea>
+              <p class="text-[0.65rem] text-slate-500">
+                {{ t('controller.lyrics.chordProHint') }}
+              </p>
+            </div>
+            <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+              <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.lyricsTitle') }}</p>
+              <p class="text-lg font-semibold text-white" v-if="activeLyricsPayload.title">{{ activeLyricsPayload.title }}</p>
+              <p class="text-sm text-slate-400" v-if="activeLyricsPayload.author">{{ activeLyricsPayload.author }}</p>
+              <div class="mt-3 space-y-2 text-base text-slate-100">
+                <p
+                  v-for="(line, index) in lyricsPreviewLines"
+                  :key="index"
+                  :class="line.startsWith('__COMMENT__ ') ? 'text-slate-400 italic text-sm uppercase tracking-[0.15em]' : ''"
+                >
+                  {{ line.replace('__COMMENT__ ', '') }}
+                </p>
+                <p v-if="!lyricsPreviewLines.length" class="text-sm text-slate-500">
+                  {{ t('controller.lyrics.previewEmpty') }}
+                </p>
+              </div>
+            </div>
           </div>
         </template>
       </div>
@@ -258,9 +362,11 @@
       <aside class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6">
         <div class="flex items-center justify-between">
           <p class="text-sm font-semibold text-slate-200">{{ t('controller.livePreviewTitle') }}</p>
-          <p class="text-xs text-slate-500" v-if="displayViewModel.reference">
-            {{ t('controller.livePreviewUpdatedLabel') }} {{ displayTimestamp }}
-          </p>
+          <div class="flex items-center gap-3 text-xs text-slate-500">
+            <p v-if="displayViewModel.reference">
+              {{ t('controller.livePreviewUpdatedLabel') }} {{ displayTimestamp }}
+            </p>
+          </div>
         </div>
         <div class="rounded-xl border border-white/10 bg-black/50 p-4 text-left">
           <template v-if="activeDisplayCommand === 'black'">
@@ -269,16 +375,35 @@
           <template v-else-if="activeDisplayCommand === 'clear'">
             <p class="text-sm text-slate-400">{{ t('display.cleared') }}</p>
           </template>
+          <template v-else-if="activeSlide?.type === 'lyrics'">
+          <p class="text-lg font-semibold text-white" v-if="liveLyricsPreview?.title">{{ liveLyricsPreview?.title }}</p>
+          <p class="text-sm text-slate-400" v-if="liveLyricsPreview?.author">{{ liveLyricsPreview?.author }}</p>
+          <div class="space-y-2 text-base text-slate-100">
+              <p
+                v-for="(line, index) in liveLyricsPreview?.lines ?? []"
+                :key="index"
+                :class="line.startsWith('__COMMENT__ ') ? 'text-slate-400 italic text-sm uppercase tracking-[0.15em]' : ''"
+              >
+                {{ line.replace('__COMMENT__ ', '') }}
+              </p>
+              <p v-if="!liveLyricsPreview?.lines?.length" class="text-sm text-slate-500">
+                {{ t('controller.lyrics.previewEmpty') }}
+              </p>
+            </div>
+          </template>
           <template v-else>
-            <p class="text-lg font-semibold text-white">{{ displayViewModel.reference }}</p>
+            <p class="text-lg font-semibold text-white">{{ livePassagePreview.reference }}</p>
             <div class="space-y-2 text-base text-slate-100">
               <p
-                v-for="(verse, index) in displayViewModel.verses"
+                v-for="(verse, index) in livePassagePreview.verses"
                 :key="verse.verse"
-                :class="{ 'text-sky-300': displayViewModel.currentIndex === index }"
+                :class="{ 'text-sky-300': livePassagePreview.currentIndex === index }"
               >
                 <span class="mr-2 text-slate-400">{{ verse.verse }}</span>
                 {{ verse.text }}
+              </p>
+              <p v-if="!livePassagePreview.verses.length" class="text-sm text-slate-500">
+                {{ t('controller.drafts.emptyScripture') }}
               </p>
             </div>
           </template>
@@ -290,7 +415,7 @@
 
 <script setup lang="ts">
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
-import { computed, onMounted, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
@@ -298,9 +423,11 @@ import { useRoute } from 'vue-router'
 import type { DisplayCommand } from '@/lib/realtimeClient'
 import { useBiblesStore } from '@/stores/biblesStore'
 import { useReferenceInputStore } from '@/stores/referenceInputStore'
+import { useLyricsStore } from '@/stores/lyricsStore'
 import { useSessionSlidesStore } from '@/stores/sessionSlidesStore'
 import { useSessionStore } from '@/stores/sessionStore'
 import { useSessionParticipationStore } from '@/stores/sessionParticipationStore'
+import { extractChordProLines } from '@/lib/chordPro'
 
 interface Props {
   sessionId: string
@@ -312,6 +439,13 @@ interface SlideCreationButton {
   iconPaths: string[]
   disabled: boolean
   action?: () => void
+}
+
+interface LyricsSlidePayload {
+  lyricsId?: string | null
+  title?: string | null
+  author?: string | null
+  lyricsChordPro: string
 }
 
 const commandIconPaths: Record<DisplayCommand, string[]> = {
@@ -336,19 +470,64 @@ const sessionStore = useSessionStore()
 const sessionParticipationStore = useSessionParticipationStore()
 const biblesStore = useBiblesStore()
 const slidesStore = useSessionSlidesStore()
+const lyricsStore = useLyricsStore()
+const lyricsSearchTerm = ref('')
+const lyricsSaveError = ref<string | null>(null)
+const lyricsSaveBusy = ref(false)
+const lyricsPreviewState = computed(() => {
+  if (isLyricsSlide.value) {
+    const payload = activeLyricsPayload.value
+    return {
+      title: payload.title ?? '',
+      author: payload.author ?? '',
+      lines: extractChordProLines(payload.lyricsChordPro ?? ''),
+    }
+  }
+  const current = sessionStore.lyricsViewModel?.value ?? null
+  if (current && (current.lyricsChordPro || current.title)) {
+    return {
+      title: current.title ?? '',
+      author: current.author ?? '',
+      lines: extractChordProLines(current.lyricsChordPro ?? ''),
+    }
+  }
+  return null
+})
+
+const livePassagePreview = computed(() => ({
+  reference: publishedPassageViewModel.value.reference || t('controller.drafts.emptyScripture'),
+  verses: publishedPassageViewModel.value.verses,
+  currentIndex: publishedPassageViewModel.value.currentIndex ?? 0,
+}))
+
+const liveLyricsPreview = computed(() => {
+  const state = lyricsViewModel.value
+  if (!state) {
+    return null
+  }
+  const lines = Array.isArray((state as any).lines)
+    ? (state as any).lines
+    : extractChordProLines((state as any).lyricsChordPro ?? '')
+  return {
+    title: state.title ?? '',
+    author: state.author ?? '',
+    lines,
+  }
+})
 
 const referenceInputFieldModel = computed({
   get: () => referenceInputStore.draftInput,
   set: (value: string) => referenceInputStore.updateDraftInput(value, { autoPublish: false }),
 })
 
-const { controllerViewModel, displayViewModel, activeTranslationCode } = storeToRefs(sessionStore)
+const { controllerViewModel, displayViewModel, activeTranslationCode, lyricsViewModel, publishedPassageViewModel } =
+  storeToRefs(sessionStore)
 const { currentSlide } = storeToRefs(slidesStore)
 
 const activeTranslation = computed(() => biblesStore.findByCode(activeTranslationCode.value))
 const activeTranslationDisplayLabel = computed(() => {
   if (activeTranslation.value) {
-    return `${activeTranslation.value.name} · ${activeTranslation.value.code}`
+    return `${activeTranslation.value.name} - ${activeTranslation.value.code}`
   }
   return activeTranslationCode.value ?? t('controller.translations.available')
 })
@@ -375,7 +554,7 @@ const sessionLabel = computed(() => {
   const shortCode = sessionParticipationStore.activeSessionShortCode
   const fallback = sessionParticipationStore.activeSessionId?.slice(-6)
   if (name && shortCode) {
-    return `${name} · ${shortCode}`
+    return `${name} - ${shortCode}`
   }
   if (shortCode) {
     return shortCode
@@ -399,10 +578,35 @@ const activeSlide = computed(() => currentSlide.value)
 const activePassageSlide = computed(() =>
   activeSlide.value && activeSlide.value.type === 'passage' ? activeSlide.value : null,
 )
+const activeLyricsSlide = computed(() =>
+  activeSlide.value && activeSlide.value.type === 'lyrics' ? activeSlide.value : null,
+)
 
 const isPassageSlide = computed(() => Boolean(activePassageSlide.value))
+const isLyricsSlide = computed(() => Boolean(activeLyricsSlide.value))
+const activeLyricsPayload = computed<LyricsSlidePayload>(() => {
+  if (!activeLyricsSlide.value) {
+    return { lyricsChordPro: '' }
+  }
+  return {
+    lyricsId: (activeLyricsSlide.value.payload as LyricsSlidePayload).lyricsId ?? null,
+    title: (activeLyricsSlide.value.payload as LyricsSlidePayload).title ?? '',
+    author: (activeLyricsSlide.value.payload as LyricsSlidePayload).author ?? '',
+    lyricsChordPro: (activeLyricsSlide.value.payload as LyricsSlidePayload).lyricsChordPro ?? '',
+  }
+})
+const lyricsPreviewLines = computed(() => extractChordProLines(activeLyricsPayload.value.lyricsChordPro))
 
 const activeDisplayCommand = computed(() => sessionStore.displayCommand)
+const displayCommandLabel = computed(() => {
+  const labels: Record<DisplayCommand, string> = {
+    normal: t('controller.commands.normal'),
+    black: t('controller.commands.black'),
+    clear: t('controller.commands.clear'),
+    freeze: t('controller.commands.freeze'),
+  }
+  return labels[activeDisplayCommand.value]
+})
 const displayTimestamp = computed(() => {
   if (!displayViewModel.value.reference) {
     return ''
@@ -434,7 +638,8 @@ const slideCreationButtons = computed<SlideCreationButton[]>(() => [
     key: 'lyrics',
     label: t('controller.slideTypes.lyrics'),
     iconPaths: [...slideIconPaths.lyrics],
-    disabled: true,
+    disabled: false,
+    action: createLyricsSlide,
   },
   {
     key: 'image',
@@ -459,6 +664,16 @@ const canStepForward = computed(() => {
 })
 
 function publishActiveSlide() {
+  if (isLyricsSlide.value) {
+    const payload = activeLyricsPayload.value
+    sessionStore.publishLyricsPatch({
+      lyricsId: activeLyricsPayload.value.lyricsId,
+      title: payload.title,
+      author: payload.author,
+      lyricsChordPro: payload.lyricsChordPro,
+    })
+    return
+  }
   if (!isPassageSlide.value) {
     return
   }
@@ -486,10 +701,98 @@ function createPassageSlide() {
   })
 }
 
+function createLyricsSlide() {
+  const slideId = crypto.randomUUID()
+  slidesStore.addSlide({
+    id: slideId,
+    type: 'lyrics',
+    label: t('controller.slideTypes.lyrics'),
+    payload: {
+      lyricsId: null,
+      title: '',
+      author: '',
+      lyricsChordPro: '',
+    },
+  })
+}
+
 function removeSlide(id: string) {
   slidesStore.removeSlide(id)
   if (!slidesStore.slides.length) {
     createPassageSlide()
+  }
+}
+
+async function selectLyricsEntry(id: string) {
+  const detail = await lyricsStore.loadLyricsDetail(id)
+  if (!detail || !activeLyricsSlide.value) {
+    return
+  }
+  const payload: LyricsSlidePayload = {
+    lyricsId: detail.id,
+    title: detail.title,
+    author: detail.author ?? '',
+    lyricsChordPro: detail.lyricsChordPro ?? '',
+  }
+  slidesStore.updateSlide(activeLyricsSlide.value.id, {
+    label: detail.title,
+    payload,
+  })
+}
+
+function updateLyricsPayload(changes: Partial<LyricsSlidePayload>) {
+  const slide = activeLyricsSlide.value
+  if (!slide) return
+  const nextPayload: LyricsSlidePayload = {
+    ...(slide.payload as LyricsSlidePayload),
+    ...changes,
+  }
+  slidesStore.updateSlide(slide.id, {
+    payload: nextPayload,
+    label: nextPayload.title || t('controller.slideTypes.lyrics'),
+  })
+}
+
+function onLyricsTitleChange(value: string) {
+  updateLyricsPayload({ title: value })
+}
+
+function onLyricsAuthorChange(value: string) {
+  updateLyricsPayload({ author: value })
+}
+
+function onLyricsTextChange(value: string) {
+  updateLyricsPayload({ lyricsChordPro: value })
+}
+
+async function saveLyricsFromSlide() {
+  const payload = activeLyricsPayload.value
+  if (!payload.title || !payload.lyricsChordPro) {
+    lyricsSaveError.value = t('controller.lyrics.saveValidation')
+    return
+  }
+  lyricsSaveBusy.value = true
+  lyricsSaveError.value = null
+  try {
+    const saved = await lyricsStore.saveLyrics({
+      id: payload.lyricsId ?? undefined,
+      title: payload.title ?? '',
+      author: payload.author ?? null,
+      lyricsChordPro: payload.lyricsChordPro,
+    })
+    if (saved && activeLyricsSlide.value) {
+      updateLyricsPayload({
+        lyricsId: saved.id,
+        title: saved.title,
+        author: saved.author ?? '',
+        lyricsChordPro: saved.lyricsChordPro ?? payload.lyricsChordPro,
+      })
+      slidesStore.updateSlide(activeLyricsSlide.value.id, { label: saved.title })
+    }
+  } catch (error) {
+    lyricsSaveError.value = error instanceof Error ? error.message : 'Lyrics save failed'
+  } finally {
+    lyricsSaveBusy.value = false
   }
 }
 
@@ -512,6 +815,13 @@ watch(
     if (slide?.type === 'passage') {
       const raw = (slide.payload.referenceInput as string) ?? ''
       referenceInputStore.updateDraftInput(raw, { autoPublish: false })
+      return
+    }
+    if (slide?.type === 'lyrics') {
+      const payload = slide.payload as LyricsSlidePayload
+      if (payload.lyricsId) {
+        void lyricsStore.loadLyricsDetail(payload.lyricsId)
+      }
     }
   },
   { immediate: true },
@@ -545,10 +855,21 @@ watch(
   },
 )
 
+watch(
+  () => lyricsSearchTerm.value,
+  (term) => {
+    void lyricsStore.loadLyrics(term || undefined)
+  },
+  { immediate: true },
+)
+
 onMounted(() => {
   void biblesStore.loadTranslations()
+  void lyricsStore.loadLyrics()
   if (!slidesStore.slides.length) {
     createPassageSlide()
   }
 })
 </script>
+
+

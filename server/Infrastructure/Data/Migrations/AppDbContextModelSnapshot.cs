@@ -3,8 +3,9 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Wtrfll.Server.Slices.Sessions.Domain;
 using Wtrfll.Server.Infrastructure.Data;
+using Wtrfll.Server.Slices.Lyrics.Domain;
+using Wtrfll.Server.Slices.Sessions.Domain;
 
 #nullable disable
 
@@ -17,6 +18,36 @@ public partial class AppDbContextModelSnapshot : ModelSnapshot
     {
 #pragma warning disable 612, 618
         modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
+
+        modelBuilder.Entity("Wtrfll.Server.Slices.Lyrics.Domain.LyricsEntry", b =>
+        {
+            b.Property<Guid>("Id")
+                .ValueGeneratedOnAdd()
+                .HasColumnType("TEXT");
+
+            b.Property<string>("Author")
+                .HasMaxLength(160)
+                .HasColumnType("TEXT");
+
+            b.Property<DateTime>("CreatedAt")
+                .HasColumnType("TEXT");
+
+            b.Property<string>("LyricsChordPro")
+                .IsRequired()
+                .HasColumnType("TEXT");
+
+            b.Property<string>("Title")
+                .IsRequired()
+                .HasMaxLength(200)
+                .HasColumnType("TEXT");
+
+            b.Property<DateTime?>("UpdatedAt")
+                .HasColumnType("TEXT");
+
+            b.HasKey("Id");
+
+            b.ToTable("LyricsEntries");
+        });
 
         modelBuilder.Entity("Wtrfll.Server.Slices.Sessions.Domain.Session", b =>
         {

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Wtrfll.Server.Slices.Sessions.Domain;
+using Wtrfll.Server.Slices.Lyrics.Domain;
 
 namespace Wtrfll.Server.Infrastructure.Data;
 
@@ -12,6 +13,7 @@ public sealed class AppDbContext : DbContext
 
     public DbSet<Session> Sessions => Set<Session>();
     public DbSet<SessionParticipant> SessionParticipants => Set<SessionParticipant>();
+    public DbSet<LyricsEntry> LyricsEntries => Set<LyricsEntry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -50,6 +52,21 @@ public sealed class AppDbContext : DbContext
                 .WithMany(session => session.Participants)
                 .HasForeignKey(participant => participant.SessionId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<LyricsEntry>(entity =>
+        {
+            entity.HasKey(entry => entry.Id);
+            entity.ToTable("LyricsEntries");
+            entity.Property(entry => entry.Title)
+                .HasMaxLength(200)
+                .IsRequired();
+            entity.Property(entry => entry.Author)
+                .HasMaxLength(160);
+            entity.Property(entry => entry.LyricsChordPro)
+                .IsRequired();
+            entity.Property(entry => entry.CreatedAt)
+                .IsRequired();
         });
     }
 }

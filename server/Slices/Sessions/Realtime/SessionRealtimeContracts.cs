@@ -64,6 +64,36 @@ public sealed record SessionHeartbeatRequest
     public required Guid SessionId { get; init; }
 }
 
+public sealed record LyricsStatePatchMessage
+{
+    public required int ContractVersion { get; init; }
+    public required Guid SessionId { get; init; }
+    public required LyricsStatePatchBody Patch { get; init; }
+}
+
+public sealed record LyricsStatePatchBody
+{
+    public Guid? LyricsId { get; init; }
+    public string? Title { get; init; }
+    public string? Author { get; init; }
+    public string LyricsChordPro { get; init; } = string.Empty;
+}
+
+public sealed record LyricsStateUpdateMessage
+{
+    public required int ContractVersion { get; init; }
+    public required Guid SessionId { get; init; }
+    public required LyricsStatePayload State { get; init; }
+}
+
+public sealed record LyricsStatePayload
+{
+    public Guid? LyricsId { get; init; }
+    public string? Title { get; init; }
+    public string? Author { get; init; }
+    public IReadOnlyList<string> Lines { get; init; } = Array.Empty<string>();
+}
+
 public static class SessionDisplayCommands
 {
     public const string Normal = "normal";

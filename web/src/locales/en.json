@@ -98,7 +98,7 @@
     "slidesEmpty": "No slides yet. Add one to begin.",
     "slideTypes": {
       "passage": "Scripture",
-      "lyrics": "Lyrics (soon)",
+      "lyrics": "Lyrics",
       "image": "Image (soon)",
       "text": "Notes (soon)"
     },
@@ -106,7 +106,7 @@
     "livePreviewTitle": "Live preview",
     "livePreviewUpdatedLabel": "Updated",
     "commands": {
-      "normal": "Show content",
+      "normal": "Normal",
       "black": "Black screen",
       "clear": "Clear text",
       "freeze": "Freeze display"
@@ -134,12 +134,34 @@
       "selectedLabel": "Active",
       "currentLabel": "Selected: {code}",
       "loading": "Loading translations..."
+    },
+    "lyrics": {
+      "songSearchLabel": "Songs",
+      "searchPlaceholder": "Search songs by title, author, or lyrics...",
+      "emptySongs": "No songs found.",
+      "titleLabel": "Title",
+      "titlePlaceholder": "Song title",
+      "authorLabel": "Author",
+      "authorPlaceholder": "Optional",
+      "saving": "Saving...",
+      "saveButton": "Save song",
+      "textLabel": "Lyrics (ChordPro v2)",
+      "textPlaceholder": "Type or paste your song in ChordPro v2 format...",
+      "chordProHint": "Use ChordPro v2 directives and chords. Chords are stripped when displaying lyrics.",
+      "previewLabel": "Lyrics preview",
+      "previewEmpty": "Add lyrics to preview them here.",
+      "saveValidation": "Title and lyrics are required to save."
+    },
+    "drafts": {
+      "scriptureTitle": "Scripture draft",
+      "lyricsTitle": "Lyrics draft",
+      "emptyScripture": "Add a reference to see the draft."
     }
   },
   "display": {
     "sessionLabel": "Session {code}",
     "waiting": "Waiting for the controller to connect...",
-    "loading": "Loading passage...",
+    "loading": "Loading content...",
     "cleared": "Display cleared",
     "sessionBadge": "{name} - {code}",
     "sessionBadgeFallback": "Session code {code}"

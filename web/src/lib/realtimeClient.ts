@@ -25,6 +25,17 @@ export interface SessionStatePatchPayload {
   }
 }
 
+export interface LyricsStatePatchPayload {
+  contractVersion: number
+  sessionId: string
+  patch: {
+    lyricsId?: string | null
+    title?: string | null
+    author?: string | null
+    lyricsChordPro: string
+  }
+}
+
 export interface SessionStateUpdatePayload {
   contractVersion: number
   sessionId: string
@@ -48,6 +59,17 @@ export interface SessionStateUpdatePayload {
   }
 }
 
+export interface LyricsStateUpdatePayload {
+  contractVersion: number
+  sessionId: string
+  state: {
+    lyricsId?: string | null
+    title?: string | null
+    author?: string | null
+    lines: string[]
+  }
+}
+
 export interface SessionHeartbeatResponse {
   contractVersion: number
   sessionId: string
@@ -65,10 +87,14 @@ export class SessionRealtimeClient {
   private connection: signalR.HubConnection | null = null
   private readonly options: SessionRealtimeClientOptions
   private readonly stateUpdateHandlers = new Set<(payload: SessionStateUpdatePayload) => void>()
+  private readonly lyricsUpdateHandlers = new Set<(payload: LyricsStateUpdatePayload) => void>()
   private readonly heartbeatHandlers = new Set<(payload: SessionHeartbeatResponse) => void>()
   private connectPromise: Promise<void> | null = null
   private readonly handleStateUpdate = (payload: SessionStateUpdatePayload) => {
     this.stateUpdateHandlers.forEach((handler) => handler(payload))
+  }
+  private readonly handleLyricsUpdate = (payload: LyricsStateUpdatePayload) => {
+    this.lyricsUpdateHandlers.forEach((handler) => handler(payload))
   }
   private readonly handleHeartbeat = (payload: SessionHeartbeatResponse) => {
     this.heartbeatHandlers.forEach((handler) => handler(payload))
@@ -107,6 +133,7 @@ export class SessionRealtimeClient {
       .build()
 
     connection.on('state:update', this.handleStateUpdate)
+    connection.on('lyrics:update', this.handleLyricsUpdate)
     connection.on('heartbeat', this.handleHeartbeat)
 
     try {
@@ -114,6 +141,7 @@ export class SessionRealtimeClient {
       this.connection = connection
     } catch (error) {
       connection.off('state:update', this.handleStateUpdate)
+      connection.off('lyrics:update', this.handleLyricsUpdate)
       connection.off('heartbeat', this.handleHeartbeat)
       this.connectPromise = null
       throw error
@@ -122,6 +150,10 @@ export class SessionRealtimeClient {
 
   onStateUpdate(handler: (payload: SessionStateUpdatePayload) => void): void {
     this.stateUpdateHandlers.add(handler)
+  }
+
+  onLyricsUpdate(handler: (payload: LyricsStateUpdatePayload) => void): void {
+    this.lyricsUpdateHandlers.add(handler)
   }
 
   onHeartbeat(handler: (payload: SessionHeartbeatResponse) => void): void {
@@ -139,6 +171,17 @@ export class SessionRealtimeClient {
     }
 
     await this.connection.invoke('StatePatch', payload)
+  }
+
+  async sendLyricsPatch(payload: LyricsStatePatchPayload): Promise<void> {
+    if (!ENABLE_REALTIME) {
+      return
+    }
+    await this.connect()
+    if (!this.connection) {
+      return
+    }
+    await this.connection.invoke('PublishLyrics', payload)
   }
 
   async sendHeartbeat(): Promise<void> {
@@ -166,6 +209,7 @@ export class SessionRealtimeClient {
     }
     this.connectPromise = null
     this.stateUpdateHandlers.clear()
+    this.lyricsUpdateHandlers.clear()
     this.heartbeatHandlers.clear()
   }
 }

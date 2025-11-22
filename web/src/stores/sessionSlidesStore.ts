@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
-export type SessionSlideType = 'passage'
+export type SessionSlideType = 'passage' | 'lyrics'
 
 export interface SessionSlide {
   id: string

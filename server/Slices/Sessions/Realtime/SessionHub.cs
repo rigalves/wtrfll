@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using Wtrfll.Server.Slices.Passages.Application;
 using Wtrfll.Server.Slices.Sessions.Application;
 using Wtrfll.Server.Slices.Sessions.Domain;
+using Wtrfll.Server.Slices.Lyrics.Application;
 
 namespace Wtrfll.Server.Slices.Sessions.Realtime;
 
@@ -11,6 +12,7 @@ public sealed class SessionHub : Hub
     private readonly SessionLifecycleService _sessionLifecycleService;
     private readonly PassageReadService _passageReadService;
     private readonly SessionConnectionRegistry _connectionRegistry;
+    private readonly LyricsPresentationService _lyricsPresentationService;
     private readonly ILogger<SessionHub> _logger;
     private readonly ConcurrentDictionary<Guid, string> _displayCommands = new();
 
@@ -18,11 +20,13 @@ public sealed class SessionHub : Hub
         SessionLifecycleService sessionLifecycleService,
         PassageReadService passageReadService,
         SessionConnectionRegistry connectionRegistry,
+        LyricsPresentationService lyricsPresentationService,
         ILogger<SessionHub> logger)
     {
         _sessionLifecycleService = sessionLifecycleService;
         _passageReadService = passageReadService;
         _connectionRegistry = connectionRegistry;
+        _lyricsPresentationService = lyricsPresentationService;
         _logger = logger;
     }
 
@@ -168,6 +172,41 @@ public sealed class SessionHub : Hub
         };
 
         return Clients.Caller.SendAsync("heartbeat", response, Context.ConnectionAborted);
+    }
+
+    public async Task PublishLyrics(LyricsStatePatchMessage message)
+    {
+        if (!_connectionRegistry.TryGet(Context.ConnectionId, out var connectionContext) || connectionContext is null)
+        {
+            throw new HubException("Connection is not associated with a session.");
+        }
+
+        if (!connectionContext.IsController)
+        {
+            throw new HubException("Only controllers can publish lyrics.");
+        }
+
+        if (message.ContractVersion != SessionRealtimeContracts.ContractVersion)
+        {
+            throw new HubException("Unsupported contract version.");
+        }
+
+        if (message.SessionId != connectionContext.SessionId)
+        {
+            throw new HubException("Session mismatch.");
+        }
+
+        var payload = await _lyricsPresentationService.BuildLyricsStateAsync(message.Patch, Context.ConnectionAborted);
+
+        var update = new LyricsStateUpdateMessage
+        {
+            ContractVersion = SessionRealtimeContracts.ContractVersion,
+            SessionId = message.SessionId,
+            State = payload,
+        };
+
+        await Clients.Group(connectionContext.GroupName)
+            .SendAsync("lyrics:update", update, Context.ConnectionAborted);
     }
 
     private string ResolveDisplayCommand(Guid sessionId, string? requestedCommand)

@@ -6,12 +6,15 @@ import {
   type ParsedScriptureReference,
   type ReferenceParseError,
 } from '@/lib/parseReference'
+import { extractChordProLines } from '@/lib/chordPro'
 import { useReferenceInputStore } from '@/stores/referenceInputStore'
 import {
   SessionRealtimeClient,
   type SessionPresentationOptions,
   type SessionStatePatchPayload,
   type SessionStateUpdatePayload,
+  type LyricsStatePatchPayload,
+  type LyricsStateUpdatePayload,
   type DisplayCommand,
 } from '@/lib/realtimeClient'
 import { apiClient } from '@/lib/apiClient'
@@ -34,7 +37,10 @@ export const useSessionStore = defineStore('session', () => {
   const activeTranslationCode = ref('RVR1960')
   const realtimeClient = ref<SessionRealtimeClient | null>(null)
   const enableRealtime = (import.meta.env.VITE_ENABLE_REALTIME ?? 'true') === 'true'
+  const REALTIME_CONTRACT_VERSION = 1
   const passageContent = ref<PassageResponse | null>(null)
+  const publishedPassageContent = ref<PassageResponse | null>(null)
+  const lyricsState = ref<LyricsStateUpdatePayload['state'] | null>(null)
   const passageLoadErrorMessage = ref<LocalizedMessage | null>(null)
   const isLoadingPassage = ref(false)
   const translationNotice = ref<LocalizedMessage | null>(null)
@@ -57,6 +63,10 @@ export const useSessionStore = defineStore('session', () => {
     const verses = passageContent.value?.verses ?? []
     const currentVerse = verses[currentPresentationIndex.value]
     return {
+      referenceDisplay:
+        passageContent.value?.reference ??
+        currentPassage.value?.normalizedReferenceLabel ??
+        referenceInputStore.currentInput,
       normalizedReferenceLabel: currentPassage.value?.normalizedReferenceLabel ?? referenceInputStore.currentInput,
       verseSpans: verses.map((verse) => ({ startVerse: verse.verse, endVerse: verse.verse })),
       isFullChapter: verses.length ? false : currentPassage.value?.isFullChapter ?? false,
@@ -82,9 +92,58 @@ export const useSessionStore = defineStore('session', () => {
     displayCommand: displayCommand.value,
   }))
 
+  const publishedPassageViewModel = computed(() => {
+    const published = publishedPassageContent.value
+    const verses = published?.verses ?? []
+    return {
+      reference: published?.reference ?? '',
+      verses,
+      attribution: published?.attribution?.text ?? null,
+      options: published?.options ?? presentationOptions.value,
+      currentIndex: published?.currentIndex ?? 0,
+      displayCommand: published?.displayCommand ?? displayCommand.value,
+    }
+  })
+
+  const lyricsViewModel = computed(() => lyricsState.value)
+
   function publishDraftToSession(options?: { recordHistory?: boolean }) {
     referenceInputStore.publishDraftInput({ pushToHistory: options?.recordHistory ?? true })
     void normalizeAndLoad()
+    // When switching back to passages, clear any previous lyrics state so displays show the new passage.
+    lyricsState.value = null
+    if (passageContent.value) {
+      publishedPassageContent.value = {
+        ...passageContent.value,
+        displayCommand: displayCommand.value,
+        currentIndex: currentPresentationIndex.value,
+      }
+    }
+  }
+
+  function publishLyricsPatch(payload: { lyricsId?: string | null; title?: string | null; author?: string | null; lyricsChordPro: string }) {
+    if (participationStore.joinState !== 'joined' || participationStore.activeRole !== 'controller') {
+      return
+    }
+    const patch: LyricsStatePatchPayload['patch'] = {
+      lyricsId: payload.lyricsId ?? null,
+      title: payload.title,
+      author: payload.author,
+      lyricsChordPro: payload.lyricsChordPro,
+    }
+    const message: LyricsStatePatchPayload = {
+      contractVersion: REALTIME_CONTRACT_VERSION,
+      sessionId: resolvedSessionId.value,
+      patch,
+    }
+    // Optimistic preview for the controller while we wait for the broadcast.
+    lyricsState.value = {
+      lyricsId: patch.lyricsId,
+      title: patch.title ?? '',
+      author: patch.author ?? '',
+      lines: extractChordProLines(patch.lyricsChordPro ?? ''),
+    } as any
+    realtimeClient.value?.sendLyricsPatch(message).catch(() => {})
   }
 
   function applyHistoryEntry(value: string) {
@@ -195,6 +254,9 @@ export const useSessionStore = defineStore('session', () => {
         ...(payload.state.options ?? {}),
       }
       currentPresentationIndex.value = payload.state.currentIndex ?? 0
+      publishedPassageContent.value = payload.state as PassageResponse
+      // Clear any lingering lyrics state when a passage update arrives so displays render the new passage.
+      lyricsState.value = null
     }
   }
 
@@ -215,6 +277,9 @@ export const useSessionStore = defineStore('session', () => {
         role: resolvedRole.value,
       })
       client.onStateUpdate(handleStateUpdate)
+      client.onLyricsUpdate((payload) => {
+        lyricsState.value = payload.state
+      })
       realtimeClient.value = client
       client.connect().catch(() => {
         realtimeClient.value = null
@@ -313,8 +378,8 @@ export const useSessionStore = defineStore('session', () => {
       currentPassage.value
     ) {
       const loadToken = ++latestLoadToken
+      // Draft-only: reload the draft passage; do not broadcast until publish.
       await loadPassageContent(currentPassage.value, loadToken)
-      broadcastStatePatch(currentPassage.value)
     }
   }
 
@@ -339,7 +404,10 @@ export const useSessionStore = defineStore('session', () => {
     lastNormalizedAt,
     controllerViewModel,
     displayViewModel,
+    publishedPassageViewModel,
+    lyricsViewModel,
     publishDraftToSession,
+    publishLyricsPatch,
     applyHistoryEntry,
     activeTranslationCode,
     translationNotice,

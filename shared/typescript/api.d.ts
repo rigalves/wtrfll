@@ -106,6 +106,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/lyrics": {
+        parameters: {
+            query?: {
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List lyrics entries */
+        get: operations["listLyricsEntries"];
+        put?: never;
+        /** Create a lyrics entry */
+        post: operations["createLyricsEntry"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lyrics/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        /** Retrieve a lyrics entry */
+        get: operations["getLyricsEntry"];
+        /** Update a lyrics entry */
+        put: operations["updateLyricsEntry"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -210,6 +250,20 @@ export interface components {
             required: boolean;
             text?: string;
             url?: string;
+        };
+        LyricsEntrySummary: {
+            /** Format: uuid */
+            id: string;
+            title: string;
+            author?: string;
+        };
+        LyricsEntryDetail: components["schemas"]["LyricsEntrySummary"] & {
+            lyricsChordPro: string;
+        };
+        LyricsEntryUpsert: {
+            title: string;
+            author?: string;
+            lyricsChordPro: string;
         };
     };
     responses: {
@@ -384,6 +438,103 @@ export interface operations {
                 };
             };
             400: components["responses"]["BadRequest"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    listLyricsEntries: {
+        parameters: {
+            query?: {
+                /** @description Optional keyword (title, author, or lyrics text) */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Songs */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LyricsEntrySummary"][];
+                };
+            };
+        };
+    };
+    createLyricsEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LyricsEntryUpsert"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LyricsEntryDetail"];
+                };
+            };
+        };
+    };
+    getLyricsEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Song */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LyricsEntryDetail"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    updateLyricsEntry: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LyricsEntryUpsert"];
+            };
+        };
+        responses: {
+            /** @description Updated entry */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LyricsEntryDetail"];
+                };
+            };
             404: components["responses"]["NotFound"];
         };
     };

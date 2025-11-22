@@ -125,6 +125,87 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '404':
           $ref: '#/components/responses/NotFound'
+  /api/lyrics:
+    get:
+      summary: List lyrics entries
+      operationId: listLyricsEntries
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Optional keyword (title, author, or lyrics text)
+      responses:
+        '200':
+          description: Songs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LyricsEntrySummary'
+    post:
+      summary: Create a lyrics entry
+      operationId: createLyricsEntry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LyricsEntryUpsert'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LyricsEntryDetail'
+  /api/lyrics/{id}:
+    get:
+      summary: Retrieve a lyrics entry
+      operationId: getLyricsEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Song
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LyricsEntryDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      summary: Update a lyrics entry
+      operationId: updateLyricsEntry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LyricsEntryUpsert'
+      responses:
+        '200':
+          description: Updated entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LyricsEntryDetail'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
 components:
   responses:
@@ -325,3 +406,34 @@ components:
         url:
           type: string
       required: [required]
+    LyricsEntrySummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        author:
+          type: string
+          nullable: true
+      required: [id, title]
+    LyricsEntryDetail:
+      allOf:
+        - $ref: '#/components/schemas/LyricsEntrySummary'
+        - type: object
+          properties:
+            lyricsChordPro:
+              type: string
+          required: [lyricsChordPro]
+    LyricsEntryUpsert:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+          nullable: true
+        lyricsChordPro:
+          type: string
+      required: [title, lyricsChordPro]

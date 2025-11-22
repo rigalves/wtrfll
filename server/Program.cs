@@ -8,6 +8,7 @@ using Wtrfll.Server.Slices.Bibles.Endpoints;
 using Wtrfll.Server.Modules.Health;
 using Wtrfll.Server.Slices.Passages.Endpoints;
 using Wtrfll.Server.Slices.Sessions.Endpoints;
+using Wtrfll.Server.Slices.Lyrics.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddSessionsModule();
 builder.Services.AddBiblesModule(builder.Configuration);
 builder.Services.AddPassagesModule(builder.Configuration);
 builder.Services.AddBibleBooksModule(builder.Configuration);
+builder.Services.AddLyricsModule();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -54,6 +56,7 @@ app.MapBibleBooksEndpoints();
 app.MapPassageEndpoints();
 app.MapSessionsEndpoints();
 app.MapSessionsRealtimeEndpoints();
+app.MapLyricsEndpoints();
 
 app.Run();
 

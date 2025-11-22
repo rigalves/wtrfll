@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.wtrfll.local/realtime/lyrics.update.schema.json",
+  "title": "lyrics.update",
+  "type": "object",
+  "properties": {
+    "contractVersion": { "type": "integer", "const": 1 },
+    "sessionId": { "type": "string", "format": "uuid" },
+    "state": {
+      "type": "object",
+      "properties": {
+        "lyricsId": { "type": ["string", "null"], "format": "uuid" },
+        "title": { "type": ["string", "null"] },
+        "author": { "type": ["string", "null"] },
+        "lines": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["lines"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["contractVersion", "sessionId", "state"],
+  "additionalProperties": false
+}
