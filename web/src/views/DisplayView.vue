@@ -11,36 +11,23 @@
         <div v-if="displayCommand === 'black'" class="h-full w-full bg-black" />
         <div v-else-if="displayCommand === 'clear'" class="text-slate-500">{{ t('display.cleared') }}</div>
         <template v-else-if="lyricsDisplayState">
-          <p class="text-5xl font-semibold leading-tight" v-if="lyricsDisplayState.title">
-            {{ lyricsDisplayState.title }}
-          </p>
-          <p class="text-lg text-slate-400" v-if="lyricsDisplayState.author">{{ lyricsDisplayState.author }}</p>
-          <div class="space-y-4 text-2xl">
-            <p
-              v-for="(line, index) in lyricsDisplayState.lines"
-              :key="index"
-              class="leading-snug"
-              :class="line.startsWith('__COMMENT__ ') ? 'text-slate-400 italic text-lg uppercase tracking-[0.15em]' : ''"
-            >
-              {{ line.replace('__COMMENT__ ', '') }}
-            </p>
-            <p v-if="!lyricsDisplayState.lines.length" class="text-slate-500">{{ t('display.loading') }}</p>
-          </div>
+          <LyricsRenderer
+            class="space-y-4 text-2xl"
+            :title="lyricsDisplayState.title"
+            :author="lyricsDisplayState.author"
+            :lines="lyricsDisplayState.lines"
+            :emptyMessage="t('display.loading')"
+          />
         </template>
         <template v-else>
-          <p class="text-5xl font-semibold leading-tight">{{ displayViewModel.reference }}</p>
-          <div class="space-y-4 text-2xl">
-            <p
-              v-for="(verse, index) in displayViewModel.verses"
-              :key="verse.verse"
-              class="leading-snug"
-              :class="{ 'text-sky-300': displayViewModel.currentIndex === index }"
-            >
-              <span class="text-slate-400 mr-2">{{ verse.verse }}</span>
-              {{ verse.text }}
-            </p>
-            <p v-if="displayViewModel.isLoading" class="text-slate-500">{{ t('display.loading') }}</p>
-          </div>
+          <ScriptureRenderer
+            class="space-y-4 text-2xl"
+            :reference="displayViewModel.reference"
+            :verses="displayViewModel.verses"
+            :currentIndex="displayViewModel.currentIndex ?? 0"
+            :showVerseNumbers="true"
+            :emptyMessage="t('display.loading')"
+          />
           <p v-if="displayViewModel.attribution" class="text-sm text-slate-400">{{ displayViewModel.attribution }}</p>
         </template>
       </template>
@@ -63,6 +50,8 @@ import { useRoute } from 'vue-router'
 import { useSessionStore } from '@/stores/sessionStore'
 import { useSessionParticipationStore } from '@/stores/sessionParticipationStore'
 import { extractChordProLines } from '@/lib/chordPro'
+import LyricsRenderer from '@/components/LyricsRenderer.vue'
+import ScriptureRenderer from '@/components/ScriptureRenderer.vue'
 
 interface Props {
   sessionId: string

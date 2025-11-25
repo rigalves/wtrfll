@@ -124,7 +124,7 @@
       </aside>
 
       <div class="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl shadow-black/30">
-        <template v-if="isPassageSlide">
+<template v-if="isPassageSlide">
           <div class="space-y-1">
             <label class="block text-sm font-semibold">{{ t('controller.referenceLabel') }}</label>
             <p class="text-xs text-slate-500">
@@ -250,16 +250,13 @@
 
           <div class="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
             <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.scriptureTitle') }}</p>
-            <p class="text-base font-semibold text-white" v-if="controllerViewModel.referenceDisplay">{{ controllerViewModel.referenceDisplay }}</p>
-            <div class="mt-2 space-y-2 text-sm text-slate-100">
-              <p v-for="(verse, index) in controllerViewModel.passageVerses" :key="verse.verse" :class="{ 'text-sky-300': controllerViewModel.currentIndex === index }">
-                <span class="mr-2 text-slate-500">{{ verse.verse }}</span>
-                {{ verse.text }}
-              </p>
-              <p v-if="!controllerViewModel.passageVerses.length" class="text-emerald-200/70">
-                {{ t('controller.drafts.emptyScripture') }}
-              </p>
-            </div>
+            <ScriptureRenderer
+              :reference="controllerViewModel.referenceDisplay"
+              :verses="controllerViewModel.passageVerses"
+              :currentIndex="controllerViewModel.currentIndex"
+              :showVerseNumbers="true"
+              :emptyMessage="t('controller.drafts.emptyScripture')"
+            />
           </div>
         </template>
         <template v-else-if="isLyricsSlide">
@@ -339,21 +336,13 @@
               </p>
             </div>
             <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
-              <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.lyricsTitle') }}</p>
-              <p class="text-lg font-semibold text-white" v-if="activeLyricsPayload.title">{{ activeLyricsPayload.title }}</p>
-              <p class="text-sm text-slate-400" v-if="activeLyricsPayload.author">{{ activeLyricsPayload.author }}</p>
-              <div class="mt-3 space-y-2 text-base text-slate-100">
-                <p
-                  v-for="(line, index) in lyricsPreviewLines"
-                  :key="index"
-                  :class="line.startsWith('__COMMENT__ ') ? 'text-slate-400 italic text-sm uppercase tracking-[0.15em]' : ''"
-                >
-                  {{ line.replace('__COMMENT__ ', '') }}
-                </p>
-                <p v-if="!lyricsPreviewLines.length" class="text-sm text-slate-500">
-                  {{ t('controller.lyrics.previewEmpty') }}
-                </p>
-              </div>
+            <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.lyricsTitle') }}</p>
+              <LyricsRenderer
+                :title="activeLyricsPayload.title ?? ''"
+                :author="activeLyricsPayload.author ?? ''"
+                :lines="lyricsPreviewLines"
+                :emptyMessage="t('controller.lyrics.previewEmpty')"
+              />
             </div>
           </div>
         </template>
@@ -375,37 +364,22 @@
           <template v-else-if="activeDisplayCommand === 'clear'">
             <p class="text-sm text-slate-400">{{ t('display.cleared') }}</p>
           </template>
-          <template v-else-if="activeSlide?.type === 'lyrics'">
-          <p class="text-lg font-semibold text-white" v-if="liveLyricsPreview?.title">{{ liveLyricsPreview?.title }}</p>
-          <p class="text-sm text-slate-400" v-if="liveLyricsPreview?.author">{{ liveLyricsPreview?.author }}</p>
-          <div class="space-y-2 text-base text-slate-100">
-              <p
-                v-for="(line, index) in liveLyricsPreview?.lines ?? []"
-                :key="index"
-                :class="line.startsWith('__COMMENT__ ') ? 'text-slate-400 italic text-sm uppercase tracking-[0.15em]' : ''"
-              >
-                {{ line.replace('__COMMENT__ ', '') }}
-              </p>
-              <p v-if="!liveLyricsPreview?.lines?.length" class="text-sm text-slate-500">
-                {{ t('controller.lyrics.previewEmpty') }}
-              </p>
-            </div>
+          <template v-else-if="liveLyricsPreview">
+            <LyricsRenderer
+              :title="liveLyricsPreview?.title ?? ''"
+              :author="liveLyricsPreview?.author ?? ''"
+              :lines="liveLyricsPreview?.lines ?? []"
+              :emptyMessage="t('controller.lyrics.previewEmpty')"
+            />
           </template>
           <template v-else>
-            <p class="text-lg font-semibold text-white">{{ livePassagePreview.reference }}</p>
-            <div class="space-y-2 text-base text-slate-100">
-              <p
-                v-for="(verse, index) in livePassagePreview.verses"
-                :key="verse.verse"
-                :class="{ 'text-sky-300': livePassagePreview.currentIndex === index }"
-              >
-                <span class="mr-2 text-slate-400">{{ verse.verse }}</span>
-                {{ verse.text }}
-              </p>
-              <p v-if="!livePassagePreview.verses.length" class="text-sm text-slate-500">
-                {{ t('controller.drafts.emptyScripture') }}
-              </p>
-            </div>
+            <ScriptureRenderer
+              :reference="livePassagePreview.reference"
+              :verses="livePassagePreview.verses"
+              :currentIndex="livePassagePreview.currentIndex"
+              :showVerseNumbers="true"
+              :emptyMessage="t('controller.drafts.emptyScripture')"
+            />
           </template>
         </div>
       </aside>
@@ -421,6 +395,8 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 import type { DisplayCommand } from '@/lib/realtimeClient'
+import LyricsRenderer from '@/components/LyricsRenderer.vue'
+import ScriptureRenderer from '@/components/ScriptureRenderer.vue'
 import { useBiblesStore } from '@/stores/biblesStore'
 import { useReferenceInputStore } from '@/stores/referenceInputStore'
 import { useLyricsStore } from '@/stores/lyricsStore'
