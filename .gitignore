@@ -28,11 +28,9 @@ web/.env.local
 web/.env.*
 !web/.env.example
 
-# .NET build output
-server/bin/
-server/obj/
-tools/**/bin/
-tools/**/obj/
+# Build output (all projects)
+**/bin/
+**/obj/
 **/*.user
 **/*.suo
 **/*.swp
