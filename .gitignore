@@ -28,6 +28,10 @@ web/.env.local
 web/.env.*
 !web/.env.example
 
+# Local-only docs/meta
+AGENTS.md
+docs/
+
 # Build output (all projects)
 **/bin/
 **/obj/
