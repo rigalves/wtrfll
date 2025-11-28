@@ -2,32 +2,26 @@
 
 ![wtrfll icon](web/public/icons/icon_128.png)
 
-wtrfll is a LAN-friendly controller + display web app for projecting scripture, lyrics, and media in church gatherings.
+LAN-friendly controller + display app for projecting scripture and lyrics in gatherings. Designed to be fast for volunteers and work well on local networks.
 
-## Features (MVP)
-
-- Create/join sessions with short codes and auto-resuming links.
-- Controller dashboard:
-  - Normalize scripture references, fetch verses from offline translations (RVR1960, NTV), and broadcast them via SignalR.
-  - Translation selector with offline badges and realtime fallback notices.
-  - Display commands: show content, black screen, clear text, freeze display.
+## What you can do (user-facing)
+- Create or join a named session with a short code; controller/display links are auto-generated.
+- Control view:
+  - Add slides (scripture, lyrics; media placeholders ready).
+  - Type a reference; we normalize it, fetch verses (RVR1960, NTV offline), and broadcast via realtime.
+  - Choose translation with offline badges; send display commands (normal, black, clear, freeze).
+  - Edit lyrics (ChordPro-style text), search saved songs, and publish to the display.
 - Display view:
-  - Token-based join, projector-first layout, subtle session badge, wake-lock to keep screens awake.
-- Service worker + PWA manifest for quick reloads and future offline media.
-- Backend: .NET 8 Minimal API + SignalR + SQLite with normalized translation providers.
+  - Join via link/token; projector-friendly layout; wake-lock to keep screens awake; minimal chrome.
+- PWA ready: service worker + manifest for quick reloads/offline translations.
+
+## Getting started (quick)
+1) Backend: `dotnet run --project server/Wtrfll.Server.csproj`
+2) Frontend: `npm install && npm run dev --prefix web`
+3) Create a session at `http://localhost:5173/new`, open controller and display links, and start publishing.
+
+## Technical details
+- Backend: .NET 8 Minimal API + SignalR + SQLite; normalized translation providers.
 - Frontend: Vue 3 + Vite + Pinia + Tailwind + Headless UI.
-
-## Roadmap Highlights
-
-- Controller remodel (ProPresenter-style slide list + tabbed editors).
-- Lyrics storage (JSON sections) and media library.
-- Image slides and styling presets.
-- Tests for Pinia stores / realtime client.
-
-## Getting Started
-
-1. Backend: `dotnet run --project server/Wtrfll.Server.csproj`
-2. Frontend: `npm install && npm run dev --prefix web`
-3. Visit `http://localhost:5173/new` to create a session and open the controller/display links.
-
-More docs: `docs/` (architecture, boundaries, UI flow, controller remodel plan).
+- Tests: xUnit + FluentAssertions; in-memory SQLite; real SignalR via TestServer. Run `dotnet test tests/server/Wtrfll.Server.Tests.csproj`.
+- Documentation: see `docs/` for boundaries, architecture, UI flow, controller remodel plan, and test plan.
