@@ -12,19 +12,21 @@
         <div v-else-if="displayCommand === 'clear'" class="text-slate-500">{{ t('display.cleared') }}</div>
         <template v-else-if="lyricsDisplayState">
           <LyricsRenderer
-            class="space-y-4 text-2xl"
+            class="space-y-4"
             :title="lyricsDisplayState.title"
             :author="lyricsDisplayState.author"
             :lines="lyricsDisplayState.lines"
+            :fontScale="lyricsDisplayState.fontScale ?? passageFontScale"
             :emptyMessage="t('display.loading')"
           />
         </template>
         <template v-else>
           <ScriptureRenderer
-            class="space-y-4 text-2xl"
+            class="space-y-4"
             :reference="displayViewModel.reference"
             :verses="displayViewModel.verses"
             :currentIndex="displayViewModel.currentIndex ?? 0"
+            :fontScale="passageFontScale"
             :showVerseNumbers="true"
             :emptyMessage="t('display.loading')"
           />
@@ -62,7 +64,7 @@ const route = useRoute()
 const { t } = useI18n()
 const sessionStore = useSessionStore()
 const sessionParticipationStore = useSessionParticipationStore()
-const { displayViewModel, lyricsViewModel } = storeToRefs(sessionStore)
+const { displayViewModel, lyricsViewModel, presentationOptions } = storeToRefs(sessionStore)
 const wakeLock = ref<WakeLockSentinel | null>(null)
 type WakeLockNavigator = Navigator & {
   wakeLock?: {
@@ -91,8 +93,10 @@ const lyricsDisplayState = computed(() => {
     title: state.title ?? '',
     author: state.author ?? '',
     lines,
+    fontScale: (state as any).fontScale ?? presentationOptions.value.fontScale ?? 1,
   }
 })
+const passageFontScale = computed(() => displayViewModel.value.options?.fontScale ?? presentationOptions.value.fontScale ?? 1)
 
 const joinErrorText = computed(() =>
   sessionParticipationStore.joinErrorMessage

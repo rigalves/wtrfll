@@ -1,8 +1,8 @@
 <template>
-  <div class="space-y-2">
-    <p v-if="title" class="text-lg font-semibold text-white">{{ title }}</p>
-    <p v-if="author" class="text-sm text-slate-400">{{ author }}</p>
-    <div class="space-y-2 text-base text-slate-100">
+  <div class="space-y-2" :style="{ fontSize: `${fontScale}rem` }">
+    <p v-if="title" class="font-serif text-amber-200 text-2xl font-semibold">{{ title }}</p>
+    <p v-if="author" class="text-slate-400">{{ author }}</p>
+    <div class="space-y-2 text-slate-100">
       <p
         v-for="(line, index) in lines"
         :key="index"
@@ -10,7 +10,7 @@
       >
         {{ line.replace(commentPrefix, '') }}
       </p>
-      <p v-if="!lines.length" class="text-sm text-slate-500">
+      <p v-if="!lines.length" class="text-slate-500">
         {{ emptyMessage }}
       </p>
     </div>
@@ -26,6 +26,7 @@ interface Props {
   lines: string[]
   emptyMessage?: string
   commentPrefix?: string
+  fontScale?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -34,6 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   lines: () => [],
   emptyMessage: 'Add lyrics to preview them here.',
   commentPrefix: '__COMMENT__ ',
+  fontScale: 1,
 })
 
 const title = computed(() => props.title ?? '')
@@ -41,4 +43,5 @@ const author = computed(() => props.author ?? '')
 const lines = computed(() => props.lines ?? [])
 const emptyMessage = computed(() => props.emptyMessage ?? 'Add lyrics to preview them here.')
 const commentPrefix = computed(() => props.commentPrefix ?? '__COMMENT__ ')
+const fontScale = computed(() => props.fontScale ?? 1)
 </script>

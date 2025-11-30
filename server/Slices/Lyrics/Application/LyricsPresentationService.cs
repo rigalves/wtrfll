@@ -33,6 +33,7 @@ public sealed class LyricsPresentationService
         }
 
         var lines = LyricsChordProParser.ExtractLines(chordPro);
+        var fontScale = patch.FontScale.HasValue && patch.FontScale > 0 ? patch.FontScale : 1.0;
 
         return new LyricsStatePayload
         {
@@ -40,6 +41,7 @@ public sealed class LyricsPresentationService
             Title = title,
             Author = author,
             Lines = lines,
+            FontScale = fontScale,
         };
     }
 }

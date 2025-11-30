@@ -247,6 +247,26 @@
               {{ t('controller.translations.loading') }}
             </div>
           </div>
+          <div class="mt-3 flex items-center gap-3">
+            <p class="text-[0.65rem] uppercase tracking-[0.2em] text-slate-500">Appearance</p>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                class="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-200 hover:border-sky-400 hover:text-white"
+                @click="adjustFontScale(-0.1)"
+              >
+                A-
+              </button>
+              <span class="text-xs text-slate-400">{{ fontScale.toFixed(1) }}x</span>
+              <button
+                type="button"
+                class="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-200 hover:border-sky-400 hover:text-white"
+                @click="adjustFontScale(0.1)"
+              >
+                A+
+              </button>
+            </div>
+          </div>
 
           <div class="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
             <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.scriptureTitle') }}</p>
@@ -255,6 +275,7 @@
               :verses="controllerViewModel.passageVerses"
               :currentIndex="controllerViewModel.currentIndex"
               :showVerseNumbers="true"
+              :fontScale="fontScale"
               :emptyMessage="t('controller.drafts.emptyScripture')"
             />
           </div>
@@ -334,6 +355,26 @@
               <p class="text-[0.65rem] text-slate-500">
                 {{ t('controller.lyrics.chordProHint') }}
               </p>
+              <div class="flex items-center gap-3 pt-1">
+                <p class="text-[0.65rem] uppercase tracking-[0.2em] text-slate-500">Appearance</p>
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    class="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-200 hover:border-sky-400 hover:text-white"
+                    @click="adjustFontScale(-0.1)"
+                  >
+                    A-
+                  </button>
+                  <span class="text-xs text-slate-400">{{ fontScale.toFixed(1) }}x</span>
+                  <button
+                    type="button"
+                    class="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-200 hover:border-sky-400 hover:text-white"
+                    @click="adjustFontScale(0.1)"
+                  >
+                    A+
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
             <p class="text-xs uppercase tracking-[0.2em] text-emerald-200">{{ t('controller.drafts.lyricsTitle') }}</p>
@@ -341,6 +382,7 @@
                 :title="activeLyricsPayload.title ?? ''"
                 :author="activeLyricsPayload.author ?? ''"
                 :lines="lyricsPreviewLines"
+                :fontScale="fontScale"
                 :emptyMessage="t('controller.lyrics.previewEmpty')"
               />
             </div>
@@ -369,17 +411,19 @@
               :title="liveLyricsPreview?.title ?? ''"
               :author="liveLyricsPreview?.author ?? ''"
               :lines="liveLyricsPreview?.lines ?? []"
+              :fontScale="liveLyricsPreview?.fontScale ?? fontScale"
               :emptyMessage="t('controller.lyrics.previewEmpty')"
             />
           </template>
-          <template v-else>
-            <ScriptureRenderer
-              :reference="livePassagePreview.reference"
-              :verses="livePassagePreview.verses"
-              :currentIndex="livePassagePreview.currentIndex"
-              :showVerseNumbers="true"
-              :emptyMessage="t('controller.drafts.emptyScripture')"
-            />
+            <template v-else>
+              <ScriptureRenderer
+                :reference="livePassagePreview.reference"
+                :verses="livePassagePreview.verses"
+                :currentIndex="livePassagePreview.currentIndex"
+                :fontScale="livePassagePreview.fontScale ?? fontScale"
+                :showVerseNumbers="true"
+                :emptyMessage="t('controller.drafts.emptyScripture')"
+              />
           </template>
         </div>
       </aside>
@@ -474,6 +518,7 @@ const livePassagePreview = computed(() => ({
   reference: publishedPassageViewModel.value.reference || t('controller.drafts.emptyScripture'),
   verses: publishedPassageViewModel.value.verses,
   currentIndex: publishedPassageViewModel.value.currentIndex ?? 0,
+  fontScale: publishedPassageViewModel.value.options?.fontScale ?? fontScale.value,
 }))
 
 const liveLyricsPreview = computed(() => {
@@ -488,6 +533,7 @@ const liveLyricsPreview = computed(() => {
     title: state.title ?? '',
     author: state.author ?? '',
     lines,
+    fontScale: (state as any).fontScale ?? fontScale.value,
   }
 })
 
@@ -496,7 +542,7 @@ const referenceInputFieldModel = computed({
   set: (value: string) => referenceInputStore.updateDraftInput(value, { autoPublish: false }),
 })
 
-const { controllerViewModel, displayViewModel, activeTranslationCode, lyricsViewModel, publishedPassageViewModel } =
+const { controllerViewModel, displayViewModel, activeTranslationCode, lyricsViewModel, publishedPassageViewModel, presentationOptions } =
   storeToRefs(sessionStore)
 const { currentSlide } = storeToRefs(slidesStore)
 
@@ -519,6 +565,7 @@ const filteredTranslations = computed(() => {
   )
   return matching.length ? matching : available
 })
+const fontScale = computed(() => presentationOptions.value.fontScale ?? 1)
 
 const joinToken = computed(() =>
   typeof route.query.token === 'string'
@@ -662,6 +709,10 @@ function setDisplayCommand(command: DisplayCommand) {
 
 function selectTranslation(code: string) {
   sessionStore.setActiveTranslation(code)
+}
+
+function adjustFontScale(delta: number) {
+  sessionStore.setFontScale(fontScale.value + delta)
 }
 
 function createPassageSlide() {

@@ -48,6 +48,7 @@ export const useSessionStore = defineStore('session', () => {
   const defaultPresentationOptions: SessionPresentationOptions = {
     showReference: true,
     showVerseNumbers: true,
+    fontScale: 1,
   }
   const presentationOptions = ref<SessionPresentationOptions>({ ...defaultPresentationOptions })
   const currentPresentationIndex = ref(0)
@@ -117,6 +118,7 @@ export const useSessionStore = defineStore('session', () => {
         ...passageContent.value,
         displayCommand: displayCommand.value,
         currentIndex: currentPresentationIndex.value,
+        options: { ...presentationOptions.value },
       }
     }
   }
@@ -130,6 +132,7 @@ export const useSessionStore = defineStore('session', () => {
       title: payload.title,
       author: payload.author,
       lyricsChordPro: payload.lyricsChordPro,
+      fontScale: presentationOptions.value.fontScale,
     }
     const message: LyricsStatePatchPayload = {
       contractVersion: REALTIME_CONTRACT_VERSION,
@@ -142,6 +145,7 @@ export const useSessionStore = defineStore('session', () => {
       title: patch.title ?? '',
       author: patch.author ?? '',
       lines: extractChordProLines(patch.lyricsChordPro ?? ''),
+      fontScale: patch.fontScale ?? presentationOptions.value.fontScale,
     } as any
     realtimeClient.value?.sendLyricsPatch(message).catch(() => {})
   }
@@ -398,6 +402,11 @@ export const useSessionStore = defineStore('session', () => {
     }, 500)
   }
 
+  function setFontScale(next: number) {
+    const clamped = Math.min(Math.max(next, 0.8), 2.5)
+    presentationOptions.value = { ...presentationOptions.value, fontScale: clamped }
+  }
+
   return {
     currentPassage,
     lastParseError,
@@ -405,6 +414,7 @@ export const useSessionStore = defineStore('session', () => {
     controllerViewModel,
     displayViewModel,
     publishedPassageViewModel,
+    presentationOptions,
     lyricsViewModel,
     publishDraftToSession,
     publishLyricsPatch,
@@ -418,5 +428,6 @@ export const useSessionStore = defineStore('session', () => {
     currentPresentationIndex,
     setActiveTranslation,
     schedulePreviewRefresh,
+    setFontScale,
   }
 })

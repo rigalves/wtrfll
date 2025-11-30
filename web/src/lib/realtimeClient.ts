@@ -33,6 +33,7 @@ export interface LyricsStatePatchPayload {
     title?: string | null
     author?: string | null
     lyricsChordPro: string
+    fontScale?: number
   }
 }
 
@@ -67,6 +68,7 @@ export interface LyricsStateUpdatePayload {
     title?: string | null
     author?: string | null
     lines: string[]
+    fontScale?: number
   }
 }
 
