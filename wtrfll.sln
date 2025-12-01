@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{87008D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wtrfll.Server.Tests", "tests\server\Wtrfll.Server.Tests.csproj", "{E4D6451E-4342-4E33-BC23-83F87923BE4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChordImport", "tools\ChordImport\ChordImport.csproj", "{47B16447-4D05-4310-85ED-16D6FD1FC287}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,18 @@ Global
 		{E4D6451E-4342-4E33-BC23-83F87923BE4C}.Release|x64.Build.0 = Release|Any CPU
 		{E4D6451E-4342-4E33-BC23-83F87923BE4C}.Release|x86.ActiveCfg = Release|Any CPU
 		{E4D6451E-4342-4E33-BC23-83F87923BE4C}.Release|x86.Build.0 = Release|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Debug|x64.Build.0 = Debug|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Debug|x86.Build.0 = Debug|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Release|x64.ActiveCfg = Release|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Release|x64.Build.0 = Release|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Release|x86.ActiveCfg = Release|Any CPU
+		{47B16447-4D05-4310-85ED-16D6FD1FC287}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +83,7 @@ Global
 		{1EA899A0-B34A-E077-9CED-2AD08FBDA13A} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
 		{87008D2B-D29E-68B5-A223-E2B1CD68373E} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{E4D6451E-4342-4E33-BC23-83F87923BE4C} = {87008D2B-D29E-68B5-A223-E2B1CD68373E}
+		{47B16447-4D05-4310-85ED-16D6FD1FC287} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D2A9F96-8003-4134-A623-0D898444C48A}

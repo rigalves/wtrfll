@@ -6,6 +6,8 @@ import type { components } from '../../../shared/typescript/api'
 
 type LyricsEntrySummary = components['schemas']['LyricsEntrySummary']
 type LyricsEntryDetail = components['schemas']['LyricsEntryDetail']
+type LyricsStyle = { fontScale?: number | null }
+type LyricsEntryDetailWithStyle = LyricsEntryDetail & { style?: LyricsStyle }
 
 export const useLyricsStore = defineStore('lyrics', () => {
   const entries = ref<LyricsEntrySummary[]>([])
@@ -29,9 +31,9 @@ export const useLyricsStore = defineStore('lyrics', () => {
     }
   }
 
-  async function loadLyricsDetail(id: string) {
+  async function loadLyricsDetail(id: string): Promise<LyricsEntryDetailWithStyle | null> {
     if (details.value[id]) {
-      return details.value[id]
+      return details.value[id] as LyricsEntryDetailWithStyle
     }
     const response = await apiClient.GET('/api/lyrics/{id}', {
       params: { path: { id } },
@@ -42,11 +44,11 @@ export const useLyricsStore = defineStore('lyrics', () => {
     if (response.data) {
       details.value[id] = response.data
     }
-    return response.data ?? null
+    return (response.data as LyricsEntryDetailWithStyle) ?? null
   }
 
-  async function saveLyrics(payload: { id?: string; title: string; author?: string | null; lyricsChordPro: string }) {
-    let saved: LyricsEntryDetail | null = null
+  async function saveLyrics(payload: { id?: string; title: string; author?: string | null; lyricsChordPro: string; style?: LyricsStyle }) {
+    let saved: LyricsEntryDetailWithStyle | null = null
     if (payload.id) {
       const response = await apiClient.PUT('/api/lyrics/{id}', {
         params: { path: { id: payload.id } },
@@ -54,6 +56,7 @@ export const useLyricsStore = defineStore('lyrics', () => {
           title: payload.title,
           author: payload.author,
           lyricsChordPro: payload.lyricsChordPro,
+          style: payload.style,
         },
       })
       if (response.error) throw new Error(response.error.error ?? 'Lyrics save failed')
@@ -64,6 +67,7 @@ export const useLyricsStore = defineStore('lyrics', () => {
           title: payload.title,
           author: payload.author,
           lyricsChordPro: payload.lyricsChordPro,
+          style: payload.style,
         },
       })
       if (response.error) throw new Error(response.error.error ?? 'Lyrics save failed')

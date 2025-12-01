@@ -448,6 +448,7 @@ import { useSessionSlidesStore } from '@/stores/sessionSlidesStore'
 import { useSessionStore } from '@/stores/sessionStore'
 import { useSessionParticipationStore } from '@/stores/sessionParticipationStore'
 import { extractChordProLines } from '@/lib/chordPro'
+import presentationDefaults from '@/lib/presentationDefaults.json'
 
 interface Props {
   sessionId: string
@@ -761,6 +762,11 @@ async function selectLyricsEntry(id: string) {
     author: detail.author ?? '',
     lyricsChordPro: detail.lyricsChordPro ?? '',
   }
+  const styleFontScale = (detail as any)?.style?.fontScale
+  const defaultLyricsScale = (presentationDefaults as any)?.lyrics?.fontScale ?? 1
+  sessionStore.setFontScale(
+    typeof styleFontScale === 'number' && !Number.isNaN(styleFontScale) ? styleFontScale : defaultLyricsScale,
+  )
   slidesStore.updateSlide(activeLyricsSlide.value.id, {
     label: detail.title,
     payload,
@@ -806,6 +812,7 @@ async function saveLyricsFromSlide() {
       title: payload.title ?? '',
       author: payload.author ?? null,
       lyricsChordPro: payload.lyricsChordPro,
+      style: { fontScale: fontScale.value },
     })
     if (saved && activeLyricsSlide.value) {
       updateLyricsPayload({

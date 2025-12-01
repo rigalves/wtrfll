@@ -51,3 +51,4 @@ server/wtrfll.db
 *.nupkg
 *.snk
 web/package-lock.json
+tools/ChordImport/imports/

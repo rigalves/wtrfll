@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using Wtrfll.Server.Infrastructure.Data;
 using Wtrfll.Server.Slices.Lyrics.Application.Models;
 using Wtrfll.Server.Slices.Lyrics.Domain;
@@ -37,7 +38,12 @@ public sealed class LyricsReadService
         return await dbContext.LyricsEntries
             .AsNoTracking()
             .Where(entry => entry.Id == id)
-            .Select(entry => new LyricsEntryDetailDto(entry.Id, entry.Title, entry.Author, entry.LyricsChordPro))
+            .Select(entry => new LyricsEntryDetailDto(
+                entry.Id,
+                entry.Title,
+                entry.Author,
+                entry.LyricsChordPro,
+                DeserializeStyle(entry.LyricsStyleJson)))
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -51,6 +57,7 @@ public sealed class LyricsReadService
             entry.Title = request.Title;
             entry.Author = request.Author;
             entry.LyricsChordPro = request.LyricsChordPro;
+            entry.LyricsStyleJson = SerializeStyle(request.Style);
             entry.UpdatedAt = DateTime.UtcNow;
         }
         else
@@ -61,12 +68,52 @@ public sealed class LyricsReadService
                 Title = request.Title,
                 Author = request.Author,
                 LyricsChordPro = request.LyricsChordPro,
+                LyricsStyleJson = SerializeStyle(request.Style),
                 CreatedAt = DateTime.UtcNow,
             };
             await dbContext.LyricsEntries.AddAsync(entry, cancellationToken);
         }
 
         await dbContext.SaveChangesAsync(cancellationToken);
-        return new LyricsEntryDetailDto(entry.Id, entry.Title, entry.Author, entry.LyricsChordPro);
+        return new LyricsEntryDetailDto(entry.Id, entry.Title, entry.Author, entry.LyricsChordPro, DeserializeStyle(entry.LyricsStyleJson));
+    }
+
+    private static string? SerializeStyle(LyricsStyleDto? style)
+    {
+        if (style is null)
+        {
+            return null;
+        }
+
+        var normalized = NormalizeStyle(style);
+        return JsonSerializer.Serialize(normalized);
+    }
+
+    private static LyricsStyleDto? DeserializeStyle(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            return null;
+        }
+
+        try
+        {
+            var dto = JsonSerializer.Deserialize<LyricsStyleDto>(json);
+            return dto is null ? null : NormalizeStyle(dto);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static LyricsStyleDto NormalizeStyle(LyricsStyleDto style)
+    {
+        double? clamped = style.FontScale;
+        if (clamped.HasValue)
+        {
+            clamped = Math.Clamp(clamped.Value, 0.6, 3.0);
+        }
+        return new LyricsStyleDto(clamped);
     }
 }
