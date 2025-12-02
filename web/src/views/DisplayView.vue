@@ -17,6 +17,7 @@
             :author="lyricsDisplayState.author"
             :lines="lyricsDisplayState.lines"
             :fontScale="lyricsDisplayState.fontScale ?? passageFontScale"
+            :columnCount="lyricsDisplayState.columnCount ?? 1"
             :emptyMessage="t('display.loading')"
           />
         </template>
@@ -94,6 +95,7 @@ const lyricsDisplayState = computed(() => {
     author: state.author ?? '',
     lines,
     fontScale: (state as any).fontScale ?? presentationOptions.value.fontScale ?? 1,
+    columnCount: (state as any).columnCount ?? 1,
   }
 })
 const passageFontScale = computed(() => displayViewModel.value.options?.fontScale ?? presentationOptions.value.fontScale ?? 1)

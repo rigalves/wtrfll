@@ -29,7 +29,12 @@ export const useSessionStore = defineStore('session', () => {
   const biblesStore = useBiblesStore()
   void biblesStore.loadTranslations()
 
-  type PassageResponse = paths['/api/passage']['get']['responses']['200']['content']['application/json']
+  type PassageResponseBase = paths['/api/passage']['get']['responses']['200']['content']['application/json']
+  type PassageResponse = PassageResponseBase & {
+    options?: SessionPresentationOptions
+    currentIndex?: number
+    displayCommand?: DisplayCommand
+  }
 
   const currentPassage = ref<ParsedScriptureReference | null>(null)
   const lastParseError = ref<ReferenceParseError | null>(null)
@@ -123,7 +128,7 @@ export const useSessionStore = defineStore('session', () => {
     }
   }
 
-  function publishLyricsPatch(payload: { lyricsId?: string | null; title?: string | null; author?: string | null; lyricsChordPro: string }) {
+  function publishLyricsPatch(payload: { lyricsId?: string | null; title?: string | null; author?: string | null; lyricsChordPro: string; columnCount?: number | null }) {
     if (participationStore.joinState !== 'joined' || participationStore.activeRole !== 'controller') {
       return
     }
@@ -133,6 +138,7 @@ export const useSessionStore = defineStore('session', () => {
       author: payload.author,
       lyricsChordPro: payload.lyricsChordPro,
       fontScale: presentationOptions.value.fontScale,
+      columnCount: payload.columnCount ?? 2,
     }
     const message: LyricsStatePatchPayload = {
       contractVersion: REALTIME_CONTRACT_VERSION,
@@ -146,6 +152,7 @@ export const useSessionStore = defineStore('session', () => {
       author: patch.author ?? '',
       lines: extractChordProLines(patch.lyricsChordPro ?? ''),
       fontScale: patch.fontScale ?? presentationOptions.value.fontScale,
+      columnCount: patch.columnCount ?? 2,
     } as any
     realtimeClient.value?.sendLyricsPatch(message).catch(() => {})
   }

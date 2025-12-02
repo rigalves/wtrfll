@@ -17,6 +17,7 @@ public sealed class LyricsPresentationService
         var chordPro = patch.LyricsChordPro;
         var title = patch.Title;
         var author = patch.Author;
+        var columnCount = patch.ColumnCount is >= 1 and <= 2 ? patch.ColumnCount : 2;
 
         if (string.IsNullOrWhiteSpace(chordPro) && patch.LyricsId is Guid id)
         {
@@ -42,6 +43,7 @@ public sealed class LyricsPresentationService
             Author = author,
             Lines = lines,
             FontScale = fontScale,
+            ColumnCount = columnCount,
         };
     }
 }

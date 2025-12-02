@@ -7,7 +7,7 @@ export interface SessionSlide {
   id: string
   type: SessionSlideType
   label: string
-  payload: Record<string, unknown>
+  payload: any
 }
 
 export const useSessionSlidesStore = defineStore('sessionSlides', () => {

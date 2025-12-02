@@ -1,6 +1,7 @@
 {
   "lyrics": {
-    "fontScale": 1
+    "fontScale": 1,
+    "columnCount": 2
   },
   "scripture": {
     "fontScale": 1

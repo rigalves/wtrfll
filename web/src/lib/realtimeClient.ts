@@ -34,6 +34,7 @@ export interface LyricsStatePatchPayload {
     author?: string | null
     lyricsChordPro: string
     fontScale?: number
+    columnCount?: number
   }
 }
 
@@ -69,6 +70,7 @@ export interface LyricsStateUpdatePayload {
     author?: string | null
     lines: string[]
     fontScale?: number
+    columnCount?: number
   }
 }
 

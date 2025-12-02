@@ -2,11 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import { apiClient } from '@/lib/apiClient'
-import type { components } from '../../../shared/typescript/api'
-
-type LyricsEntrySummary = components['schemas']['LyricsEntrySummary']
-type LyricsEntryDetail = components['schemas']['LyricsEntryDetail']
-type LyricsStyle = { fontScale?: number | null }
+type LyricsEntrySummary = { id: string; title: string; author?: string | null }
+type LyricsEntryDetail = { id: string; title: string; author?: string | null; lyricsChordPro: string; style?: LyricsStyle }
+type LyricsStyle = { fontScale?: number | null; columnCount?: number | null }
 type LyricsEntryDetailWithStyle = LyricsEntryDetail & { style?: LyricsStyle }
 
 export const useLyricsStore = defineStore('lyrics', () => {
@@ -23,7 +21,10 @@ export const useLyricsStore = defineStore('lyrics', () => {
       const response = await apiClient.GET('/api/lyrics', {
         params: search ? { query: { search } } : undefined,
       })
-      entries.value = response.data ?? []
+      entries.value = ((response.data ?? []).map((entry: any) => ({
+        ...entry,
+        author: entry.author ?? null,
+      })) as LyricsEntrySummary[])
     } catch (error) {
       errorMessage.value = error instanceof Error ? error.message : 'Unexpected lyrics error'
     } finally {
@@ -35,26 +36,28 @@ export const useLyricsStore = defineStore('lyrics', () => {
     if (details.value[id]) {
       return details.value[id] as LyricsEntryDetailWithStyle
     }
-    const response = await apiClient.GET('/api/lyrics/{id}', {
+    const response: any = await apiClient.GET('/api/lyrics/{id}', {
       params: { path: { id } },
     })
     if (response.error) {
       throw new Error(response.error.error ?? 'Lyrics not found')
     }
     if (response.data) {
-      details.value[id] = response.data
+      const normalized = { ...response.data, author: response.data.author ?? null } as LyricsEntryDetailWithStyle
+      details.value[id] = normalized as LyricsEntryDetail
+      return normalized
     }
-    return (response.data as LyricsEntryDetailWithStyle) ?? null
+    return null
   }
 
   async function saveLyrics(payload: { id?: string; title: string; author?: string | null; lyricsChordPro: string; style?: LyricsStyle }) {
     let saved: LyricsEntryDetailWithStyle | null = null
     if (payload.id) {
-      const response = await apiClient.PUT('/api/lyrics/{id}', {
+      const response: any = await apiClient.PUT('/api/lyrics/{id}', {
         params: { path: { id: payload.id } },
         body: {
           title: payload.title,
-          author: payload.author,
+          author: payload.author ?? undefined,
           lyricsChordPro: payload.lyricsChordPro,
           style: payload.style,
         },
@@ -62,10 +65,10 @@ export const useLyricsStore = defineStore('lyrics', () => {
       if (response.error) throw new Error(response.error.error ?? 'Lyrics save failed')
       saved = response.data ?? null
     } else {
-      const response = await apiClient.POST('/api/lyrics', {
+      const response: any = await apiClient.POST('/api/lyrics', {
         body: {
           title: payload.title,
-          author: payload.author,
+          author: payload.author ?? undefined,
           lyricsChordPro: payload.lyricsChordPro,
           style: payload.style,
         },
@@ -74,8 +77,10 @@ export const useLyricsStore = defineStore('lyrics', () => {
       saved = response.data ?? null
     }
     if (saved) {
-      details.value[saved.id] = saved
+      const normalized = { ...saved, author: (saved as any).author ?? null } as LyricsEntryDetailWithStyle
+      details.value[normalized.id] = normalized as LyricsEntryDetail
       await loadLyrics()
+      return normalized
     }
     return saved
   }

@@ -78,6 +78,7 @@ public sealed record LyricsStatePatchBody
     public string? Author { get; init; }
     public string LyricsChordPro { get; init; } = string.Empty;
     public double? FontScale { get; init; }
+    public int? ColumnCount { get; init; }
 }
 
 public sealed record LyricsStateUpdateMessage
@@ -94,6 +95,7 @@ public sealed record LyricsStatePayload
     public string? Author { get; init; }
     public IReadOnlyList<string> Lines { get; init; } = Array.Empty<string>();
     public double? FontScale { get; init; }
+    public int? ColumnCount { get; init; }
 }
 
 public static class SessionDisplayCommands

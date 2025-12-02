@@ -114,6 +114,7 @@ public sealed class LyricsReadService
         {
             clamped = Math.Clamp(clamped.Value, 0.6, 3.0);
         }
-        return new LyricsStyleDto(clamped);
+        int? columnCount = style.ColumnCount is >= 1 and <= 2 ? style.ColumnCount : null;
+        return new LyricsStyleDto(clamped, columnCount);
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-2" :style="{ fontSize: `${fontScale}rem` }">
     <p v-if="reference" class="font-serif text-amber-100 text-3xl font-semibold">{{ reference }}</p>
-    <div class="space-y-2 text-slate-100">
+    <div class="space-y-2 text-slate-100 font-semibold">
       <p
         v-for="(verse, index) in verses"
         :key="verse.verse ?? index"

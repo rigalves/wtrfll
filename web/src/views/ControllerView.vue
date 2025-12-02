@@ -355,9 +355,9 @@
               <p class="text-[0.65rem] text-slate-500">
                 {{ t('controller.lyrics.chordProHint') }}
               </p>
-              <div class="flex items-center gap-3 pt-1">
-                <p class="text-[0.65rem] uppercase tracking-[0.2em] text-slate-500">Appearance</p>
+              <div class="flex flex-wrap items-center gap-4 pt-1">
                 <div class="flex items-center gap-2">
+                  <p class="text-[0.65rem] uppercase tracking-[0.2em] text-slate-500">Appearance</p>
                   <button
                     type="button"
                     class="rounded-full border border-white/15 px-3 py-1 text-xs text-slate-200 hover:border-sky-400 hover:text-white"
@@ -374,6 +374,25 @@
                     A+
                   </button>
                 </div>
+                <div class="flex items-center gap-2">
+                  <p class="text-[0.65rem] uppercase tracking-[0.2em] text-slate-500">Columns</p>
+                  <button
+                    type="button"
+                    class="rounded-full border border-white/15 px-3 py-1 text-xs transition"
+                    :class="(activeLyricsPayload.columnCount ?? defaultLyricsColumnCount) === 1 ? 'border-sky-400 bg-sky-500/20 text-white' : 'text-slate-200 hover:border-sky-400 hover:text-white'"
+                    @click="updateLyricsPayload({ columnCount: 1 })"
+                  >
+                    1
+                  </button>
+                  <button
+                    type="button"
+                    class="rounded-full border border-white/15 px-3 py-1 text-xs transition"
+                    :class="(activeLyricsPayload.columnCount ?? defaultLyricsColumnCount) === 2 ? 'border-sky-400 bg-sky-500/20 text-white' : 'text-slate-200 hover:border-sky-400 hover:text-white'"
+                    @click="updateLyricsPayload({ columnCount: 2 })"
+                  >
+                    2
+                  </button>
+                </div>
               </div>
             </div>
             <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
@@ -383,6 +402,7 @@
                 :author="activeLyricsPayload.author ?? ''"
                 :lines="lyricsPreviewLines"
                 :fontScale="fontScale"
+                :columnCount="activeLyricsPayload.columnCount ?? defaultLyricsColumnCount"
                 :emptyMessage="t('controller.lyrics.previewEmpty')"
               />
             </div>
@@ -412,6 +432,7 @@
               :author="liveLyricsPreview?.author ?? ''"
               :lines="liveLyricsPreview?.lines ?? []"
               :fontScale="liveLyricsPreview?.fontScale ?? fontScale"
+              :columnCount="liveLyricsPreview?.columnCount ?? defaultLyricsColumnCount"
               :emptyMessage="t('controller.lyrics.previewEmpty')"
             />
           </template>
@@ -467,6 +488,7 @@ interface LyricsSlidePayload {
   title?: string | null
   author?: string | null
   lyricsChordPro: string
+  columnCount?: number | null
 }
 
 const commandIconPaths: Record<DisplayCommand, string[]> = {
@@ -495,25 +517,6 @@ const lyricsStore = useLyricsStore()
 const lyricsSearchTerm = ref('')
 const lyricsSaveError = ref<string | null>(null)
 const lyricsSaveBusy = ref(false)
-const lyricsPreviewState = computed(() => {
-  if (isLyricsSlide.value) {
-    const payload = activeLyricsPayload.value
-    return {
-      title: payload.title ?? '',
-      author: payload.author ?? '',
-      lines: extractChordProLines(payload.lyricsChordPro ?? ''),
-    }
-  }
-  const current = sessionStore.lyricsViewModel?.value ?? null
-  if (current && (current.lyricsChordPro || current.title)) {
-    return {
-      title: current.title ?? '',
-      author: current.author ?? '',
-      lines: extractChordProLines(current.lyricsChordPro ?? ''),
-    }
-  }
-  return null
-})
 
 const livePassagePreview = computed(() => ({
   reference: publishedPassageViewModel.value.reference || t('controller.drafts.emptyScripture'),
@@ -535,6 +538,7 @@ const liveLyricsPreview = computed(() => {
     author: state.author ?? '',
     lines,
     fontScale: (state as any).fontScale ?? fontScale.value,
+    columnCount: (state as any).columnCount ?? defaultLyricsColumnCount,
   }
 })
 
@@ -567,6 +571,7 @@ const filteredTranslations = computed(() => {
   return matching.length ? matching : available
 })
 const fontScale = computed(() => presentationOptions.value.fontScale ?? 1)
+const defaultLyricsColumnCount = (presentationDefaults as any)?.lyrics?.columnCount ?? 2
 
 const joinToken = computed(() =>
   typeof route.query.token === 'string'
@@ -617,20 +622,12 @@ const activeLyricsPayload = computed<LyricsSlidePayload>(() => {
     title: (activeLyricsSlide.value.payload as LyricsSlidePayload).title ?? '',
     author: (activeLyricsSlide.value.payload as LyricsSlidePayload).author ?? '',
     lyricsChordPro: (activeLyricsSlide.value.payload as LyricsSlidePayload).lyricsChordPro ?? '',
+    columnCount: (activeLyricsSlide.value.payload as LyricsSlidePayload).columnCount ?? defaultLyricsColumnCount,
   }
 })
 const lyricsPreviewLines = computed(() => extractChordProLines(activeLyricsPayload.value.lyricsChordPro))
 
 const activeDisplayCommand = computed(() => sessionStore.displayCommand)
-const displayCommandLabel = computed(() => {
-  const labels: Record<DisplayCommand, string> = {
-    normal: t('controller.commands.normal'),
-    black: t('controller.commands.black'),
-    clear: t('controller.commands.clear'),
-    freeze: t('controller.commands.freeze'),
-  }
-  return labels[activeDisplayCommand.value]
-})
 const displayTimestamp = computed(() => {
   if (!displayViewModel.value.reference) {
     return ''
@@ -695,6 +692,7 @@ function publishActiveSlide() {
       title: payload.title,
       author: payload.author,
       lyricsChordPro: payload.lyricsChordPro,
+      columnCount: payload.columnCount ?? defaultLyricsColumnCount,
     })
     return
   }
@@ -761,6 +759,7 @@ async function selectLyricsEntry(id: string) {
     title: detail.title,
     author: detail.author ?? '',
     lyricsChordPro: detail.lyricsChordPro ?? '',
+    columnCount: (detail as any)?.style?.columnCount ?? defaultLyricsColumnCount,
   }
   const styleFontScale = (detail as any)?.style?.fontScale
   const defaultLyricsScale = (presentationDefaults as any)?.lyrics?.fontScale ?? 1
@@ -779,6 +778,9 @@ function updateLyricsPayload(changes: Partial<LyricsSlidePayload>) {
   const nextPayload: LyricsSlidePayload = {
     ...(slide.payload as LyricsSlidePayload),
     ...changes,
+  }
+  if (nextPayload.columnCount == null) {
+    nextPayload.columnCount = defaultLyricsColumnCount
   }
   slidesStore.updateSlide(slide.id, {
     payload: nextPayload,
@@ -812,7 +814,7 @@ async function saveLyricsFromSlide() {
       title: payload.title ?? '',
       author: payload.author ?? null,
       lyricsChordPro: payload.lyricsChordPro,
-      style: { fontScale: fontScale.value },
+      style: { fontScale: fontScale.value, columnCount: payload.columnCount ?? defaultLyricsColumnCount },
     })
     if (saved && activeLyricsSlide.value) {
       updateLyricsPayload({
